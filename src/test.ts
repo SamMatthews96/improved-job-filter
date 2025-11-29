@@ -1,1 +1,1 @@
-console.log('test working')
+console.log('test working', window.location.href)
