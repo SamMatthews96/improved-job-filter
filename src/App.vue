@@ -24,4 +24,8 @@ function sendMsgToBg() {
   <button @click="sendMsgToBg"> Hello </button>, I am: <input v-model="name" />
 </template>
 
-<style scoped></style>
+<style scoped>
+input {
+  padding: 10px;
+}
+</style>

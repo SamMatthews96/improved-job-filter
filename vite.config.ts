@@ -23,7 +23,6 @@ export default defineConfig({
       input: {
         content: 'src/test.ts', // Build `main.js` as the content script
         main: 'src/main.ts',
-        background: 'src/background.ts'
       },
       output: {
         entryFileNames: (chunkInfo) => {
