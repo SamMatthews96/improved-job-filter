@@ -21,20 +21,12 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        content: 'src/test.ts', // Build `main.js` as the content script
-        main: 'src/main.ts',
+        script: 'src/script.ts', // Build `main.js` as the content script
+        popup: 'src/popup.ts',
       },
       output: {
         entryFileNames: (chunkInfo) => {
-          // Dynamically name files based on their entry point
-          if (chunkInfo.name === 'content') {
-            return 'test.js'; // Output content script as `main.js`
-          }
-          if (chunkInfo.name === 'main') {
-            return 'main.js'; // Output background script into `background/`
-          }
-          
-          return '[name].js'; // Default naming for other files
+          return '[name].js';
         },
       },
 

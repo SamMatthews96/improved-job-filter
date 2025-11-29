@@ -5,7 +5,6 @@ import { ref } from "vue";
 const name = ref("");
 
 function sendMsgToBg() {
-  console.log(chrome)
   chrome.runtime.sendMessage(
     { action: "greet", message: { name: name.value } },
     (response) => {

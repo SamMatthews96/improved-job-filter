@@ -1,4 +1,3 @@
-console.log('service worker')
 
 function sayHello(name: string) {
     return `Hey ${name}, the background says Hello!`;
