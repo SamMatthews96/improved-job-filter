@@ -5,7 +5,8 @@ popup
     
 
 When the job list is updated
-
+    update storage
+    sendMessage to update 
 
 
 

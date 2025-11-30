@@ -1,3 +1,7 @@
 console.log('test working', window.location.href)
 
-console.log(chrome)
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "greet") {
+        
+    }
+})
