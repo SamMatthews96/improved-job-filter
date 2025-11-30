@@ -1,4 +1,4 @@
-import { reactive } from "vue"
+import { reactive, watch } from "vue"
 
 export interface StoredData {
     blacklistedJobTitles: string[];

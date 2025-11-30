@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
-import StringInputListItem from "@/components/StringInputListItem.vue";
 
+import { toRaw } from "vue";
+import StringInputListItem from "@/components/StringInputListItem.vue";
 import { state, type StoredData } from "@/state"
 
 
@@ -19,18 +20,7 @@ chrome.storage?.local
         state.blacklistedCompanies.push(company)
       })
     }
-
   });
-
-
-
-function addCompany() {
-  state.blacklistedCompanies.push('')
-}
-
-function addJobTitle() {
-  state.blacklistedJobTitles.push('')
-}
 
 function deleteCompany(index: number) {
   state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
@@ -44,38 +34,37 @@ function deleteJobTitle(index: number) {
   })
 }
 
+function clearConfig() {
+  state.blacklistedCompanies = []
+  state.blacklistedJobTitles = []
+}
 
 function onUpdatedConfig() {
-  console.log('config', state)
-
+  const newConfig = toRaw(state)
+  console.log(newConfig)
   if (!chrome.runtime) {
     console.warn('runtime not found')
     return
   }
-  chrome.storage.local.set(state).then(() => {
+
+  chrome.storage.local.set(newConfig).then(() => {
     console.log("Value is set");
   });
-
-  chrome.runtime.sendMessage({
-    action: "updatedConfig", message: state
-  }, (response) => {
-    if (chrome.runtime.lastError) {
-      console.error(chrome.runtime.lastError);
-    }
-  })
 }
 </script>
 
 <template>
   <h3>Blacklist Companies</h3>
-  <StringInputListItem
-    v-for="(_, i) in state.blacklistedCompanies"
-    :key="i"
-    v-model="state.blacklistedCompanies[i]"
-    @delete="() => deleteCompany(i)"
-  />
+  <div class="blacklisted-companies">
+    <StringInputListItem
+      v-for="(_, i) in state.blacklistedCompanies"
+      :key="i"
+      v-model="state.blacklistedCompanies[i]"
+      @delete="() => deleteCompany(i)"
+    />
+  </div>
 
-  <button @click="addCompany">Add Company</button>
+  <button @click="state.blacklistedCompanies.push('')">Add Company</button>
 
   <h3>Blacklist Job Title</h3>
   <StringInputListItem
@@ -85,7 +74,11 @@ function onUpdatedConfig() {
     @delete="() => deleteJobTitle(i)"
   />
 
-  <button @click="addJobTitle">Add Job Title</button>
+  <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
+
+  <br></br>
+  <button @click="clearConfig">Clear</button>
+  <button @click="onUpdatedConfig">Save</button>
 
 </template>
 

@@ -21,7 +21,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        script: 'src/script.ts', // Build `main.js` as the content script
+        script: 'src/script.ts',
         popup: 'src/popup.ts',
       },
       output: {
