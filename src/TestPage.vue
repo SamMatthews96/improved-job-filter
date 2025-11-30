@@ -1,15 +1,32 @@
 <template>
     <div id="test-page">
-        Test Page
+        <h3>Test Page</h3>
+        <button @click="length++">Add</button>
+        <button @click="length--">Remove</button>
         <div id="test-job-container">
 
-            <div v-for="item in 8" class="test-job">Job</div>
+            <div
+                v-for="item in length"
+                class="test-job"
+            >
+                <div
+                    class="test-title"
+                    title="Job Title"
+                >Job Title {{ item }}</div>
+                <div class="test-company">Company Title {{ item }}</div>
+            </div>
         </div>
     </div>
 
 
 
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const length = ref(8)
+</script>
 
 <style lang="scss" scoped>
 #test-page {
@@ -19,6 +36,7 @@
 #test-job-container {
     border: 1px solid blue;
     max-width: 800px;
+    margin: 20px;
 }
 
 .test-job {
