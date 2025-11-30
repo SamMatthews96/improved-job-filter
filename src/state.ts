@@ -1,9 +1,5 @@
-import { reactive, watch } from "vue"
-
-export interface StoredData {
-    blacklistedJobTitles: string[];
-    blacklistedCompanies: string[];
-}
+import { reactive } from "vue"
+import { type StoredData } from "@/utils/types"
 
 export const state = reactive<StoredData>({
     blacklistedCompanies: [],

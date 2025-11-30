@@ -3,8 +3,8 @@
 
 import { toRaw } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
-import { state, type StoredData } from "@/state"
-
+import { state } from "@/state"
+import { type StoredData } from "@/utils/types";
 
 chrome.storage?.local
   ?.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])

@@ -1,6 +1,7 @@
 
 export default class Filter {
     private containerSelector: string;
+    private defaultJobDisplayMode: string = '';
 
     constructor(containerSelector: string) {
         this.containerSelector = containerSelector
@@ -23,7 +24,6 @@ export default class Filter {
                 childList: true
             })
         }
-
         this.runFilter()
     }
 
@@ -50,12 +50,14 @@ export default class Filter {
         }
 
         // get jobs within container
-        container.childNodes
 
         // get display mode of jobs
-        const child = container.childNodes[0]
-        if (!child) return
-        console.log(child)
+        //@todo run this until we have the display mode 
+        // (after filter runs the display could have been changed by this script)
+        const child = container.children[0]
+        if (!(child instanceof HTMLElement)) return
+        this.defaultJobDisplayMode = child.style.display
+
         // get fields within job
         // compare against current filter
         // if match, hide item, else, set display to its default
