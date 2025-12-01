@@ -4,9 +4,9 @@ import { toRaw } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
 import { state } from "@/utils/state"
 import { type StoredData } from "@/utils/types";
+import Runtime from "./utils/runtime";
 
-chrome.storage?.local
-  ?.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
+Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
     console.log('result', result)
     if (result.blacklistedJobTitles) {
@@ -19,7 +19,9 @@ chrome.storage?.local
         state.blacklistedCompanies.push(company)
       })
     }
-  });
+  }).catch(() => {
+    console.log('todo')
+  })
 
 function deleteCompany(index: number) {
   state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
@@ -41,12 +43,8 @@ function clearConfig() {
 function onUpdatedConfig() {
   const newConfig = toRaw(state)
   console.log(newConfig)
-  if (!chrome.runtime) {
-    console.warn('runtime not found')
-    return
-  }
-
-  chrome.storage.local.set<StoredData>(newConfig).then(() => {
+  
+  Runtime.set<StoredData>(newConfig).then(() => {
     console.log("Value is set");
   });
 }

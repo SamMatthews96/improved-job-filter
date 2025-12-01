@@ -1,9 +1,12 @@
 import Filter from "@/utils/filter"
+import Runtime from "./utils/runtime"
+import ChromeRuntime from "./utils/chromeRuntime"
+type Manifest = chrome.runtime.Manifest
 
 console.log('script working [21:21/30-11-2025]', window.location.href)
 
-if (chrome.runtime) {
-    const manifest: chrome.runtime.Manifest = chrome.runtime.getManifest()
+if (Runtime instanceof ChromeRuntime) {
+    const manifest: Manifest = Runtime.getManifest()
     // indeed
     /* 
     */
