@@ -1,7 +1,5 @@
 
 
-when config updated, runFilter
-
 Script needs to pass params to Filter based on which website
 it is
 
@@ -23,6 +21,10 @@ as chrome.runtime does not work there. So inside the wrapper, we check if
 chrome.runtime is defined. If it is, we use the chrome runtime. If not, we 
 use a custom class that mimics the functionality.
 
+    when we send the message to update settings (currently save button)
+        update storage
+        when storage updated, run filter
+
 methods used:
 chrome
     storage.local
@@ -34,5 +36,8 @@ chrome
         ?onMessage.addListener
         ?sendMessage
 
+once the interface is defined, make a chrome implementation
+set, get, onchanged, getManifest
+once that is established to be working, make a mock one
 
 

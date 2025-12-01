@@ -3,7 +3,7 @@ import Filter from "@/utils/filter"
 console.log('script working [21:21/30-11-2025]', window.location.href)
 
 if (chrome.runtime) {
-    const manifest = chrome.runtime.getManifest()
+    const manifest: chrome.runtime.Manifest = chrome.runtime.getManifest()
     // indeed
     /* 
     */

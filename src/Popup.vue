@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-
 import { toRaw } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
 import { state } from "@/utils/state"
@@ -47,7 +46,7 @@ function onUpdatedConfig() {
     return
   }
 
-  chrome.storage.local.set(newConfig).then(() => {
+  chrome.storage.local.set<StoredData>(newConfig).then(() => {
     console.log("Value is set");
   });
 }
