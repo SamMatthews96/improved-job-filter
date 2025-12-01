@@ -4,7 +4,7 @@ import { toRaw } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
 import { state } from "@/utils/state"
 import { type StoredData } from "@/utils/types";
-import Runtime from "./utils/runtime";
+import Runtime from "@/utils/runtime";
 
 Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
@@ -43,9 +43,9 @@ function clearConfig() {
 function onUpdatedConfig() {
   const newConfig = toRaw(state)
   console.log(newConfig)
-  
+
   Runtime.set<StoredData>(newConfig).then(() => {
-    console.log("Value is set");
+    // console.log("Value is set");
   });
 }
 </script>

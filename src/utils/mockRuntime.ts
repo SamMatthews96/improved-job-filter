@@ -5,6 +5,11 @@ export default class MockRuntime implements RuntimeAPI {
     private storageListeners: Array<(...args: any) => void> = []
 
     set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
+        console.log('set', items)
+        Object.entries(items).forEach(([key,value]) => {
+            localStorage.setItem(String(key),JSON.stringify(value))
+        })
+
         setTimeout(() => {
             this.storageListeners.forEach(listener => listener(items))
         }, 100)
@@ -12,7 +17,16 @@ export default class MockRuntime implements RuntimeAPI {
     }
 
     get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
-        return Promise.reject()
+        const obj = {} as T
+        keys.forEach(key => {
+            const value = localStorage.getItem(String(key));
+            if (value == null){
+                return;
+            }
+            (obj as any)[key] = JSON.parse(value);
+        });
+
+        return Promise.resolve(obj);
     }
 
     getManifest(): Manifest {

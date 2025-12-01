@@ -5,11 +5,6 @@ on indeed it must look for different selectors for the container
 
 right now the filter can accept spaces, when it should not
 
-
-    when we send the message to update settings (currently save button)
-        update storage
-        when storage updated, run filter
-
 mock storage functions
 
 backlog

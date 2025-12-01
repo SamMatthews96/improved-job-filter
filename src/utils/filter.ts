@@ -49,7 +49,6 @@ export default class Filter {
     }
 
     public runFilter() {
-        console.log('filter', this.filterConfig)
         // get container
         const container: Element | null = this.getContainer()
         if (container == null) {
