@@ -3,7 +3,7 @@
 
 import { toRaw } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
-import { state } from "@/state"
+import { state } from "@/utils/state"
 import { type StoredData } from "@/utils/types";
 
 chrome.storage?.local

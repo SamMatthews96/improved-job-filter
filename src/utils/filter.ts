@@ -1,5 +1,5 @@
 import type { JobFieldSelectors } from "./types";
-import { state } from "@/state";
+import { state } from "@/utils/state";
 
 export default class Filter {
     private containerSelector: string;
@@ -89,7 +89,7 @@ export default class Filter {
             // compare against current filter
             const isMatch: boolean = false;
             // if match, hide item, else, set display to its default
-            if (isMatch){
+            if (isMatch) {
                 jobElement.style.display = 'none';
             } else {
                 jobElement.style.display = this.defaultJobDisplayMode;
