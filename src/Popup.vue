@@ -8,7 +8,6 @@ import Runtime from "@/utils/runtime";
 
 Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
-    console.log('result', result)
     if (result.blacklistedJobTitles) {
       Object.values(result.blacklistedJobTitles)?.forEach(jobTitle => {
         state.blacklistedJobTitles.push(jobTitle)
@@ -19,8 +18,6 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
         state.blacklistedCompanies.push(company)
       })
     }
-  }).catch(() => {
-    console.log('todo')
   })
 
 function deleteCompany(index: number) {

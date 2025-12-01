@@ -5,7 +5,6 @@ export default class MockRuntime implements RuntimeAPI {
     private storageListeners: Array<(...args: any) => void> = []
 
     set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
-        console.log('set', items)
         Object.entries(items).forEach(([key,value]) => {
             localStorage.setItem(String(key),JSON.stringify(value))
         })

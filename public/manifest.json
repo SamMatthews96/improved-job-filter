@@ -1,6 +1,6 @@
 {
-    "name": "chrome-vue-extension",
-    "version": "1.0",
+    "name": "improved-job-filter",
+    "version": "0.1.0",
     "manifest_version": 3,
     "action": {
         "default_popup": "popup.html"
