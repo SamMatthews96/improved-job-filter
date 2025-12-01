@@ -1,30 +1,28 @@
-import type { JobFieldSelectors } from "./types";
-import { state } from "@/utils/state";
+import type { JobFieldSelectors, StoredData } from "./types";
 import Runtime from "./runtime";
-
 
 export default class Filter {
     private containerSelector: string;
     private jobFilterSelectors: JobFieldSelectors;
+    private filterConfig: StoredData = {
+        blacklistedCompanies: [],
+        blacklistedJobTitles: []
+    }
 
     private defaultJobDisplayMode: string = '';
-
     private hasFilterRun: boolean = false;
 
     constructor(containerSelector: string, jobFieldSelectors: JobFieldSelectors) {
         this.containerSelector = containerSelector;
         this.jobFilterSelectors = jobFieldSelectors;
 
-
         // when storage changes, re apply filter
-        Runtime.addStorageListener(request => {
-            console.log('onchange', request)
+        Runtime.addStorageListener(storage => {
+            this.filterConfig = storage
             this.runFilter()
         })
-        console.log('listening')
         // when page content changes, re apply filter
-        const observer = new MutationObserver(mutations => {
-            console.log('mutation observed')
+        const observer = new MutationObserver(() => {
             this.runFilter()
         })
         const element = document.querySelector(this.containerSelector)
@@ -33,7 +31,7 @@ export default class Filter {
                 childList: true
             })
         }
-        this.runFilter()
+
     }
 
     private getContainer(): Element | null {
@@ -51,7 +49,7 @@ export default class Filter {
     }
 
     public runFilter() {
-        console.log('filter')
+        console.log('filter', this.filterConfig)
         // get container
         const container: Element | null = this.getContainer()
         if (container == null) {
@@ -66,7 +64,6 @@ export default class Filter {
             this.defaultJobDisplayMode = child.style.display
         }
 
-        console.log(state)
         // get fields within job
         for (let i = 0; i < container.children.length; i++) {
             const jobElement = container.children[i]
@@ -79,17 +76,28 @@ export default class Filter {
                 console.warn('[20251130.2335]')
                 continue
             }
-            const title = titleElement.innerText
+            const titleWords = titleElement.innerText.toLowerCase().split(' ')
 
             const companyElement = jobElement.querySelector(this.jobFilterSelectors.company)
             if (!(companyElement instanceof HTMLElement)) {
                 console.warn('[20251130.2336]')
                 continue
             }
-            const company = companyElement.innerText
+            const companyWords = companyElement.innerText.toLowerCase().split(' ')
+
+            let isMatch = false;
+            this.filterConfig.blacklistedCompanies.forEach(company => {
+                if (companyWords.includes(company.toLowerCase())) {
+                    isMatch = true;
+                }
+            })
+            this.filterConfig.blacklistedJobTitles.forEach(jobTitle => {
+                if (titleWords.includes(jobTitle.toLowerCase())) {
+                    isMatch = true;
+                }
+            })
 
             // compare against current filter
-            const isMatch: boolean = false;
             // if match, hide item, else, set display to its default
             if (isMatch) {
                 jobElement.style.display = 'none';
