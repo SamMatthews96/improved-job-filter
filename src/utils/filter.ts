@@ -19,7 +19,8 @@ export default class Filter {
         // when storage changes, re apply filter
         Runtime.addStorageListener(storage => {
             console.log('storage', storage)
-            this.filterConfig = storage
+            // storage can have empty values for some reason
+            Object.assign(this.filterConfig, storage)
             this.runFilter()
         })
         // when page content changes, re apply filter

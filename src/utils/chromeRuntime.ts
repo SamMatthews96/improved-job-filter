@@ -14,6 +14,12 @@ export default class ChromeRuntime implements RuntimeAPI {
     }
 
     addStorageListener(callback: (...args: any) => void): void {
-        chrome.storage.local.onChanged.addListener(callback)
+        chrome.storage.local.onChanged.addListener(arg => {
+            const data = {}
+            Object.entries(arg).forEach(([key, value]) => {
+                Object.assign(data, { [key]: value.newValue })
+            })
+            callback(data)
+        })
     }
 }
