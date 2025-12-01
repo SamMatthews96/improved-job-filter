@@ -35,6 +35,7 @@ function deleteJobTitle(index: number) {
 function clearConfig() {
   state.blacklistedCompanies = []
   state.blacklistedJobTitles = []
+  onUpdatedConfig()
 }
 
 function onUpdatedConfig() {

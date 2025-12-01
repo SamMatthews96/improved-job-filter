@@ -5,7 +5,5 @@ on indeed it must look for different selectors for the container
 
 right now the filter can accept spaces, when it should not
 
-mock storage functions
-
 backlog
     company could be a dropdown, picked from the page contents

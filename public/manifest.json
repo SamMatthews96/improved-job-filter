@@ -11,7 +11,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://uk.indeed.com/"
+                "https://uk.indeed.com/*"
             ],
             "js": [
                 "script.js"
