@@ -10,14 +10,18 @@ if (Runtime instanceof ChromeRuntime) {
 
     // indeed
     new Filter('#mosaic-provider-jobcards > div > ul', {
-        title: 'span[title]',
-        company: 'div[data-testid="company-name"]',
+        title: 'h2 > a > span',
+        company: 'span[data-testid="company-name"]',
     })
 
 } else {
-    new Filter('#test-job-container', {
-        title: 'div[class="test-title"]',
-        company: 'div[class="test-company"]'
+    // new Filter('#test-job-container', {
+    //     title: 'div[class="test-title"]',
+    //     company: 'div[class="test-company"]'
+    // })
+    new Filter('ul.css-pygyny', {
+        title: 'h2 > a > span',
+        company: 'span[data-testid="company-name"]',
     })
 }
 

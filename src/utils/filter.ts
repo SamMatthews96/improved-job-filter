@@ -18,6 +18,7 @@ export default class Filter {
 
         // when storage changes, re apply filter
         Runtime.addStorageListener(storage => {
+            console.log('storage', storage)
             this.filterConfig = storage
             this.runFilter()
         })
@@ -67,19 +68,19 @@ export default class Filter {
         for (let i = 0; i < container.children.length; i++) {
             const jobElement = container.children[i]
             if (!(jobElement instanceof HTMLElement) || jobElement == undefined) {
-                console.warn('[20251130.2331]')
+                console.warn('[20251130.2331]', jobElement)
                 continue
             }
             const titleElement = jobElement.querySelector(this.jobFilterSelectors.title)
             if (!(titleElement instanceof HTMLElement)) {
-                console.warn('[20251130.2335]')
+                console.warn('[20251130.2335]', titleElement)
                 continue
             }
             const titleWords = titleElement.innerText.toLowerCase().split(' ')
 
             const companyElement = jobElement.querySelector(this.jobFilterSelectors.company)
             if (!(companyElement instanceof HTMLElement)) {
-                console.warn('[20251130.2336]')
+                console.warn('[20251130.2336]', companyElement)
                 continue
             }
             const companyWords = companyElement.innerText.toLowerCase().split(' ')
