@@ -1,4 +1,6 @@
 import type { RuntimeAPI } from "./types";
+import manifest from "@public/manifest.json"
+
 type Manifest = chrome.runtime.Manifest
 
 export default class MockRuntime implements RuntimeAPI {
@@ -29,11 +31,7 @@ export default class MockRuntime implements RuntimeAPI {
     }
 
     getManifest(): Manifest {
-        return {
-            manifest_version: 3,
-            name: 'mock manifest',
-            version: '1.0.0'
-        }
+        return manifest as Manifest;
     }
 
     addStorageListener(callback: (...args: any) => void): void {
