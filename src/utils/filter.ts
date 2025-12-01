@@ -2,6 +2,7 @@ import type { JobFieldSelectors } from "./types";
 import { state } from "@/utils/state";
 import Runtime from "./runtime";
 
+
 export default class Filter {
     private containerSelector: string;
     private jobFilterSelectors: JobFieldSelectors;
@@ -14,11 +15,13 @@ export default class Filter {
         this.containerSelector = containerSelector;
         this.jobFilterSelectors = jobFieldSelectors;
 
+
         // when storage changes, re apply filter
         Runtime.addStorageListener(request => {
             console.log('onchange', request)
             this.runFilter()
         })
+        console.log('listening')
         // when page content changes, re apply filter
         const observer = new MutationObserver(mutations => {
             console.log('mutation observed')
