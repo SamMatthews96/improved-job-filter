@@ -18,8 +18,6 @@ export default class Filter {
 
         // when storage changes, re apply filter
         Runtime.addStorageListener(storage => {
-            console.log('storage', storage)
-            // storage can have empty values for some reason
             Object.assign(this.filterConfig, storage)
             this.runFilter()
         })
@@ -34,6 +32,7 @@ export default class Filter {
             })
         }
 
+        this.runFilter()
     }
 
     private getContainer(): Element | null {
@@ -61,8 +60,9 @@ export default class Filter {
         // get display mode of jobs
         if (!this.hasFilterRun) {
             const child = container.children[0]
-            if (!(child instanceof HTMLElement)) return
-            this.defaultJobDisplayMode = child.style.display
+            if (child instanceof HTMLElement) {
+                this.defaultJobDisplayMode = child.style.display
+            }
         }
 
         // get fields within job
