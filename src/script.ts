@@ -1,37 +1,14 @@
 import Filter from '@/utils/filter'
-import Runtime from '@/utils/runtime'
-import ChromeRuntime from '@/utils/chromeRuntime'
-type Manifest = chrome.runtime.Manifest
+import pageSelectors from '@/utils/pageSelectors.json'
 
-console.log('script working [16:07/01-12-2025]', window.location.href)
+const website = window.location.href.match(/^https?:\/\/[^\/]+\//)?.[0]
+if (!website) throw new Error()
 
-const manifest: Manifest = Runtime.getManifest()
+const key = website as keyof typeof pageSelectors
 
-function createFilter() {
-  if (Runtime instanceof ChromeRuntime) {
-    const matches = manifest?.content_scripts?.[0]?.matches ?? []
-    const pageMatches = matches
-      .map((match) => match.replace('*', ''))
-      .filter((match) => window.location.href.includes(match))
-    const pageMatch = pageMatches[0]
-
-    switch (pageMatch) {
-      case 'https://uk.indeed.com/':
-        new Filter('#mosaic-provider-jobcards > div > ul', {
-          title: 'h2 > a > span',
-          company: 'span[data-testid="company-name"]',
-        })
-        break
-      default:
-        throw new Error(`[20251201.2311] ${pageMatch}`)
-    }
-  } else {
-    new Filter('ul.css-pygyny', {
-      title: 'h2 > a > span',
-      company: 'span[data-testid="company-name"]',
-    })
-  }
+const selectors = pageSelectors[key]
+if (selectors != undefined) {
+  new Filter(selectors)
+} else {
+  console.warn(`[20251203.1438] could not find selectors for ${key} `)
 }
-
-createFilter()
-

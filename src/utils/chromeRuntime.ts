@@ -9,10 +9,6 @@ export default class ChromeRuntime implements RuntimeAPI {
         return chrome.storage.local.get<T>(keys)
     }
 
-    getManifest(): chrome.runtime.Manifest {
-        return chrome.runtime.getManifest()
-    }
-
     addStorageListener(callback: (...args: any) => void): void {
         chrome.storage.local.onChanged.addListener(arg => {
             const data = {}

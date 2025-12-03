@@ -18,10 +18,3 @@ Bugs, features in development, and ideas:
 *	create filter profiles that auto switch by website
 *	add an add custom website + css setting. 
   * Add a mini tutorial showing how it works
-		
-* convert the saved selector list into something readable by script
-
-* reconsider the logic used by script to determine which 
-filter rules to use. 
-  * It doesn't necessarily need to rely on the manifest. Perhaps
-  consider just getting the domain from the url and using a dict to decide based on that.

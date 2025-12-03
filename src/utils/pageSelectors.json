@@ -39,7 +39,7 @@
     "title": "h2.job__title > a",
     "company": "p.job__posted-by > a"
   },
-  "localhost:5173": {
+  "http://localhost:5173/": {
     "container": "ul.css-pygyny",
     "title": "h2 > a > span",
     "company": "span[data-testid=\"company-name\"]"

@@ -1,6 +1,4 @@
 
-type Manifest = chrome.runtime.Manifest
-
 export interface StoredData {
     blacklistedJobTitles: string[];
     blacklistedCompanies: string[];
@@ -15,7 +13,6 @@ export interface JobFieldSelectors {
 export interface RuntimeAPI {
     set<T = { [key: string]: any }>(items: Partial<T>): Promise<void>
     get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T>
-    getManifest(): Manifest;
     addStorageListener(callback: (...args: any) => void): void
 }
 
@@ -24,3 +21,4 @@ export type PageSelectors = {
   title: string;
   company: string;
 }
+

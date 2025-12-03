@@ -1,10 +1,9 @@
-import type { JobFieldSelectors, StoredData } from './types'
+import type { JobFieldSelectors, StoredData, PageSelectors } from './types'
 import Runtime from './runtime'
 import { state } from './state'
 
 export default class Filter {
-  private containerSelector: string
-  private jobFilterSelectors: JobFieldSelectors
+  private selectors: PageSelectors
   private filterConfig: StoredData = {
     blacklistedCompanies: [],
     blacklistedJobTitles: [],
@@ -14,9 +13,8 @@ export default class Filter {
   private defaultJobDisplayMode: string = ''
   private hasFilterRun: boolean = false
 
-  constructor(containerSelector: string, jobFieldSelectors: JobFieldSelectors) {
-    this.containerSelector = containerSelector
-    this.jobFilterSelectors = jobFieldSelectors
+  constructor(selectors: PageSelectors) {
+    this.selectors = selectors
 
     // when storage changes, re apply filter
     Runtime.addStorageListener((storage) => {
@@ -27,7 +25,7 @@ export default class Filter {
     const observer = new MutationObserver(() => {
       this.runFilter()
     })
-    const element = document.querySelector(this.containerSelector)
+    const element = document.querySelector(this.selectors.container)
     if (element) {
       observer.observe(element, {
         childList: true,
@@ -36,7 +34,7 @@ export default class Filter {
   }
 
   private getContainer(): Element | null {
-    const matches = document.querySelectorAll(this.containerSelector)
+    const matches = document.querySelectorAll(this.selectors.container)
     switch (matches.length) {
       case 0:
         console.error('[20251130.2201] Failed to get job list container')
@@ -72,14 +70,14 @@ export default class Filter {
         console.warn('[20251130.2331]', jobElement)
         continue
       }
-      const titleElement = jobElement.querySelector(this.jobFilterSelectors.title)
+      const titleElement = jobElement.querySelector(this.selectors.title)
       if (!(titleElement instanceof HTMLElement)) {
         console.warn('[20251130.2335]', titleElement)
         continue
       }
       const titleWords = titleElement.innerText.toLowerCase().split(' ')
 
-      const companyElement = jobElement.querySelector(this.jobFilterSelectors.company)
+      const companyElement = jobElement.querySelector(this.selectors.company)
       if (!(companyElement instanceof HTMLElement)) {
         console.warn('[20251130.2336]', companyElement)
         continue
