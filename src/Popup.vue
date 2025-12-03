@@ -18,6 +18,11 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
         state.blacklistedCompanies.push(company)
       })
     }
+    state.lastUpdated = (new Date()).toISOString()
+    Runtime.set<StoredData>(state)
+  })
+  .catch(result => {
+    console.error('[20251203.0023] Failed to get StoredData')
   })
 
 function deleteCompany(index: number) {
@@ -51,23 +56,15 @@ function onUpdatedConfig() {
 <template>
   <h3>Blacklist Companies</h3>
   <div class="blacklisted-companies">
-    <StringInputListItem
-      v-for="(_, i) in state.blacklistedCompanies"
-      :key="i"
-      v-model="state.blacklistedCompanies[i]"
-      @delete="() => deleteCompany(i)"
-    />
+    <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"
+      @delete="() => deleteCompany(i)" />
   </div>
 
   <button @click="state.blacklistedCompanies.push('')">Add Company</button>
 
   <h3>Blacklist Job Title</h3>
-  <StringInputListItem
-    v-for="(_, i) in state.blacklistedJobTitles"
-    :key="i"
-    v-model="state.blacklistedJobTitles[i]"
-    @delete="() => deleteJobTitle(i)"
-  />
+  <StringInputListItem v-for="(_, i) in state.blacklistedJobTitles" :key="i" v-model="state.blacklistedJobTitles[i]"
+    @delete="() => deleteJobTitle(i)" />
 
   <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
 

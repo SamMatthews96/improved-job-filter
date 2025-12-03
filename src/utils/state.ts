@@ -3,5 +3,6 @@ import { type StoredData } from "@/utils/types"
 
 export const state = reactive<StoredData>({
     blacklistedCompanies: [],
-    blacklistedJobTitles: []
+    blacklistedJobTitles: [],
+    lastUpdated: ''
 })
