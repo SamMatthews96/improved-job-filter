@@ -26,10 +26,6 @@ function createFilter() {
         throw new Error(`[20251201.2311] ${pageMatch}`)
     }
   } else {
-    // new Filter('#test-job-container', {
-    //     title: 'div[class="test-title"]',
-    //     company: 'div[class="test-company"]'
-    // })
     new Filter('ul.css-pygyny', {
       title: 'h2 > a > span',
       company: 'span[data-testid="company-name"]',

@@ -18,3 +18,9 @@ export interface RuntimeAPI {
     getManifest(): Manifest;
     addStorageListener(callback: (...args: any) => void): void
 }
+
+export type PageSelectors = {
+  container: string;
+  title: string;
+  company: string;
+}
