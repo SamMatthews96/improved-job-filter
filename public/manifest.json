@@ -1,21 +1,24 @@
 {
-    "name": "improved-job-filter",
-    "version": "0.1.0",
-    "manifest_version": 3,
-    "action": {
-        "default_popup": "popup.html"
-    },
-    "permissions": [
-        "storage"
-    ],
-    "content_scripts": [
-        {
-            "matches": [
-                "https://uk.indeed.com/*"
-            ],
-            "js": [
-                "script.js"
-            ]
-        }
-    ]
+  "name": "improved-job-filter",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://uk.indeed.com/*",
+        "https://www.reed.co.uk/*",
+        "https://www.totaljobs.com/*",
+        "https://findajob.dwp.gov.uk/*",
+        "https://4dayweek.io/",
+        "https://www.linkedin.com/",
+        "https://www.monster.com/",
+        "https://www.cv-library.co.uk/"
+      ],
+      "js": ["script.js"]
+    }
+  ]
 }

@@ -1,6 +1,5 @@
-import type { JobFieldSelectors, StoredData, PageSelectors } from './types'
+import type { StoredData, PageSelectors } from './types'
 import Runtime from './runtime'
-import { state } from './state'
 
 export default class Filter {
   private selectors: PageSelectors
@@ -18,7 +17,7 @@ export default class Filter {
 
     // when storage changes, re apply filter
     Runtime.addStorageListener((storage) => {
-      this.filterConfig = state
+      Object.assign(this.filterConfig, storage)
       this.runFilter()
     })
     // when page content changes, re apply filter
