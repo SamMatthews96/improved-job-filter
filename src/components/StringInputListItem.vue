@@ -4,17 +4,18 @@ import { defineEmits } from "vue";
 
 const model = defineModel<string>()
 const emit = defineEmits<{
-    (e: "delete"): void
+  (e: "delete"): void,
+  (e: "input"): void
 }>()
 </script>
 
 <template>
-    <input v-model="model"></input>
-    <button @click="emit('delete')">Delete</button>
+  <input v-model="model" @input="emit('input')"></input>
+  <button @click="emit('delete')">Delete</button>
 </template>
 
 <style lang="scss" scoped>
 input {
-    padding: 5px;
+  padding: 5px;
 }
 </style>
