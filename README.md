@@ -13,20 +13,17 @@ Currently supports:
 * https://www.cv-library.co.uk/
 
 Bugs, features in development, and ideas:
-* the saving/loading of config doesn't work properly:
-  * chrome.runtime will allow for saving of arrays, but returns them as dicts, indexed at "0","1" ...
-  * This causes an issue when trying to iterate using a foreach.
-
 * right now the filter can accept spaces, which don't work with the current filter-by-word logic
 * add support for other websites
-* add filter fields
+* add support for custom, user defined websites
+*	create filter profiles that auto switch by website
+* add more filter fields
   * pay (min,max)
   * tags
   * (consider how to handle & display fields that may not be present on every website)
-
-* What if it could automatically cycle through jobs, going to the next page upon being finished. For each job, pull information from the job description, and use AI to  
+  * custom, user defined fields
+* Remove the global state as it seems unnecessary
+* What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals
+  * Certainly a widening of the scope, so not yet.
 
 *	If a job container contains elements that are not jobs, ignore
-*	create filter profiles that auto switch by website
-*	add an add custom website + css setting. 
-  * Add a mini tutorial showing how it works

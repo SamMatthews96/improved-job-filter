@@ -41,10 +41,8 @@ function clearConfig() {
 
 function onUpdatedConfig() {
   const newConfig = toRaw(state)
-  console.log('onupdateconfig',newConfig)
 
-  Runtime.set<StoredData>(newConfig).then(() => {
-  });
+  Runtime.set<StoredData>(newConfig)
 }
 </script>
 

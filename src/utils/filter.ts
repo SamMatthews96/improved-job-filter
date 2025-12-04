@@ -26,7 +26,6 @@ export default class Filter {
     // when filter changes, apply filter
     Runtime.addStorageListener((storage) => {
       Object.assign(this.filterConfig, storage)
-      console.log('filter changed', this.filterConfig)
       this.runFilter()
     })
     // when page content changes, re apply filter
