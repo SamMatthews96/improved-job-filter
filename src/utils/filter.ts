@@ -6,7 +6,7 @@ export default class Filter {
   private filterConfig: StoredData = {
     blacklistedCompanies: [],
     blacklistedJobTitles: [],
-    lastUpdated: ''
+    lastUpdated: '',
   }
 
   private defaultJobDisplayMode: string = ''
@@ -14,10 +14,19 @@ export default class Filter {
 
   constructor(selectors: PageSelectors) {
     this.selectors = selectors
-
-    // when storage changes, re apply filter
+    // when storage loads, apply filter
+    Runtime.get<StoredData>(['blacklistedJobTitles', 'blacklistedCompanies'])
+      .then((result) => {
+        Object.assign(this.filterConfig, result)
+        this.runFilter()
+      })
+      .catch(() => {
+        console.error('[20251203.0023] Failed to get StoredData')
+      })
+    // when filter changes, apply filter
     Runtime.addStorageListener((storage) => {
       Object.assign(this.filterConfig, storage)
+      console.log('filter changed', this.filterConfig)
       this.runFilter()
     })
     // when page content changes, re apply filter

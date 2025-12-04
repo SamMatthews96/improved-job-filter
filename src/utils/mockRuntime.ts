@@ -1,34 +1,33 @@
-import type { RuntimeAPI } from "./types";
-
+import type { RuntimeAPI } from './types'
 
 export default class MockRuntime implements RuntimeAPI {
-    private storageListeners: Array<(...args: any) => void> = []
+  private storageListeners: Array<(...args: any) => void> = []
 
-    set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
-        Object.entries(items).forEach(([key,value]) => {
-            localStorage.setItem(String(key),JSON.stringify(value))
-        })
+  set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
+    Object.entries(items).forEach(([key, value]) => {
+      localStorage.setItem(String(key), JSON.stringify(value))
+    })
 
-        setTimeout(() => {
-            this.storageListeners.forEach(listener => listener(items))
-        }, 100)
-        return Promise.resolve()
-    }
+    setTimeout(() => {
+      this.storageListeners.forEach((listener) => listener(items))
+    }, 100)
+    return Promise.resolve()
+  }
 
-    get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
-        const obj = {} as T
-        keys.forEach(key => {
-            const value = localStorage.getItem(String(key));
-            if (value == null){
-                return;
-            }
-            (obj as any)[key] = JSON.parse(value);
-        });
+  get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
+    const obj = {} as T
+    keys.forEach((key) => {
+      const value = localStorage.getItem(String(key))
+      if (value == null) {
+        return
+      }
+      (obj as any)[key] = JSON.parse(value)
+    })
 
-        return Promise.resolve(obj);
-    }
+    return Promise.resolve(obj)
+  }
 
-    addStorageListener(callback: (...args: any) => void): void {
-        this.storageListeners.push(callback)
-    }
+  addStorageListener(callback: (...args: any) => void): void {
+    this.storageListeners.push(callback)
+  }
 }

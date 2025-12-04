@@ -2,9 +2,21 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 Currently consists of a popup window for configuring blacklists for keywords in the job title and company name.
 
-Only works for uk.indeed.com, but designed to be easily extendable to other websites with minimal effort.
+Currently supports:
+* https://uk.indeed.com/
+* https://www.reed.co.uk/
+* https://www.totaljobs.com/
+* https://findajob.dwp.gov.uk/
+* https://4dayweek.io/
+* https://www.linkedin.com/
+* https://www.monster.com/
+* https://www.cv-library.co.uk/
 
 Bugs, features in development, and ideas:
+* the saving/loading of config doesn't work properly:
+  * chrome.runtime will allow for saving of arrays, but returns them as dicts, indexed at "0","1" ...
+  * This causes an issue when trying to iterate using a foreach.
+
 * right now the filter can accept spaces, which don't work with the current filter-by-word logic
 * add support for other websites
 * add filter fields

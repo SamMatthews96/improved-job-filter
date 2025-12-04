@@ -8,16 +8,12 @@ import Runtime from "@/utils/runtime";
 
 Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
-    if (result.blacklistedJobTitles) {
-      Object.values(result.blacklistedJobTitles)?.forEach(jobTitle => {
-        state.blacklistedJobTitles.push(jobTitle)
-      })
-    }
-    if (result.blacklistedCompanies) {
-      Object.values(result.blacklistedCompanies)?.forEach(company => {
-        state.blacklistedCompanies.push(company)
-      })
-    }
+    result.blacklistedJobTitles.forEach(jobTitle => {
+      state.blacklistedJobTitles.push(jobTitle)
+    })
+    result.blacklistedCompanies.forEach(company => {
+      state.blacklistedCompanies.push(company)
+    })
     state.lastUpdated = (new Date()).toISOString()
     Runtime.set<StoredData>(state)
   })
@@ -45,10 +41,9 @@ function clearConfig() {
 
 function onUpdatedConfig() {
   const newConfig = toRaw(state)
-  console.log(newConfig)
+  console.log('onupdateconfig',newConfig)
 
   Runtime.set<StoredData>(newConfig).then(() => {
-    // console.log("Value is set");
   });
 }
 </script>

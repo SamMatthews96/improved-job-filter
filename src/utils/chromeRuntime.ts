@@ -1,21 +1,33 @@
-import type { RuntimeAPI } from "./types";
+import type { RuntimeAPI } from './types'
 
 export default class ChromeRuntime implements RuntimeAPI {
-    set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
-        return chrome.storage.local.set<T>(items)
-    }
+  set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
+    const formattedData = {}
+    Object.entries(items).forEach(([key, value]) => {
+      Object.assign(formattedData, {
+        [key]: JSON.stringify(value),
+      })
+    })
+    return chrome.storage.local.set(formattedData)
+  }
 
-    get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
-        return chrome.storage.local.get<T>(keys)
-    }
+  async get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
+    const res = await chrome.storage.local.get<T>(keys)
+    const data = {} as T
+    keys.forEach((key_1) => {
+      const value = JSON.parse(String(res[key_1]))
+      data[key_1] = value
+    })
+    return data
+  }
 
-    addStorageListener(callback: (...args: any) => void): void {
-        chrome.storage.local.onChanged.addListener(arg => {
-            const data = {}
-            Object.entries(arg).forEach(([key, value]) => {
-                Object.assign(data, { [key]: value.newValue })
-            })
-            callback(data)
-        })
-    }
+  addStorageListener(callback: (...args: any) => void): void {
+    chrome.storage.local.onChanged.addListener((arg) => {
+      const data = {}
+      Object.entries(arg).forEach(([key, value]) => {
+        Object.assign(data, { [key]: JSON.parse(String(value.newValue)) })
+      })
+      callback(data)
+    })
+  }
 }
