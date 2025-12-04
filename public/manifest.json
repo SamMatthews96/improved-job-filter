@@ -13,10 +13,10 @@
         "https://www.reed.co.uk/*",
         "https://www.totaljobs.com/*",
         "https://findajob.dwp.gov.uk/*",
-        "https://4dayweek.io/",
-        "https://www.linkedin.com/",
-        "https://www.monster.com/",
-        "https://www.cv-library.co.uk/"
+        "https://4dayweek.io/*",
+        "https://www.linkedin.com/*",
+        "https://www.monster.com/*",
+        "https://www.cv-library.co.uk/*"
       ],
       "js": ["script.js"]
     }
