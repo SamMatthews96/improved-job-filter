@@ -1,50 +1,56 @@
 <script setup lang="ts">
 
-import { toRaw, ref, type Ref } from "vue";
+import { ref, type Ref } from "vue";
 import StringInputListItem from "@/components/StringInputListItem.vue";
-import { state } from "@/utils/state"
 import { type StoredData } from "@/utils/types";
 import Runtime from "@/utils/runtime";
 
 function deleteCompany(index: number) {
-  state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
+  state.value.blacklistedCompanies = state.value.blacklistedCompanies.filter((e, i) => {
     return i != index
   })
 }
 
 function deleteJobTitle(index: number) {
-  state.blacklistedJobTitles = state.blacklistedJobTitles.filter((e, i) => {
+  state.value.blacklistedJobTitles = state.value.blacklistedJobTitles.filter((e, i) => {
     return i != index
   })
 }
 
 function clearConfig() {
-  state.blacklistedCompanies = []
-  state.blacklistedJobTitles = []
+  state.value = {
+    blacklistedJobTitles: [],
+    blacklistedCompanies: [],
+    lastUpdated: ''
+  }
   onUpdatedConfig()
 }
 
 function onUpdatedConfig() {
   clearTimeout(updatedTimeoutId.value)
   updatedTimeoutId.value = setTimeout(() => {
-    const newConfig = toRaw(state)
-    Runtime.set<StoredData>(newConfig)
+    Runtime.set<StoredData>(state.value)
   }, timeoutLength)
 }
 
 const timeoutLength: number = 300;
 const updatedTimeoutId: Ref<number> = ref(0)
+const state: Ref<StoredData> = ref({
+  blacklistedJobTitles: [],
+  blacklistedCompanies: [],
+  lastUpdated: ''
+})
 
 Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
     result.blacklistedJobTitles.forEach(jobTitle => {
-      state.blacklistedJobTitles.push(jobTitle)
+      state.value.blacklistedJobTitles.push(jobTitle)
     })
     result.blacklistedCompanies.forEach(company => {
-      state.blacklistedCompanies.push(company)
+      state.value.blacklistedCompanies.push(company)
     })
-    state.lastUpdated = (new Date()).toISOString()
-    Runtime.set<StoredData>(state)
+    state.value.lastUpdated = (new Date()).toISOString()
+    Runtime.set<StoredData>(state.value)
   })
   .catch(result => {
     console.error('[20251203.0023] Failed to get StoredData')

@@ -27,11 +27,11 @@ While this is currently a work in progress and not deployed to the google market
 
 ### ToDo List:
 * Styling
-* Remove save button and save automatically.
-* The filter fields allow spaces, which don't work with the current filter-by-word logic
-* If the filter works off of words anyway, then perhaps the config should just feature a single text field instead of requiring the user to click "add" for each keyword.
-* Better filter options: Whitelist, AND, OR, Groups of AND/OR.
-* The filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
+* Improve Filter
+  * The filter fields allow spaces, which don't work with the current filter-by-word logic
+  * If the filter works off of words anyway, then perhaps the config should just feature a single text field instead of requiring the user to click "add" for each keyword.
+  * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
+  * The filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
 * Add support for other websites
   * glassdoor
   * seek
@@ -42,7 +42,6 @@ While this is currently a work in progress and not deployed to the google market
   * Consider how to make as user friendly as possible. I built this by finding the CSS selectors of the search container, job title and company name, but that isn't user friendly.
   * At its core, the app needs to know the selector for the search container, and then any fields contained within each search item.  
 *	Create filter profiles: Currently the filter is universal, and a user might want different filters on different websites.
-* Remove the global state as it seems unnecessary.
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals
   * Certainly a widening of the scope, so not yet.
 *	If a job container contains elements that are not jobs, ignore
