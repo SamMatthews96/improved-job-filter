@@ -2,7 +2,6 @@
 export interface StoredData {
     blacklistedJobTitles: string[];
     blacklistedCompanies: string[];
-    lastUpdated: string;
 }
 
 export interface JobFieldSelectors {

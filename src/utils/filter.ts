@@ -6,7 +6,6 @@ export default class Filter {
   private filterConfig: StoredData = {
     blacklistedCompanies: [],
     blacklistedJobTitles: [],
-    lastUpdated: '',
   }
 
   private defaultJobDisplayMode: string = ''

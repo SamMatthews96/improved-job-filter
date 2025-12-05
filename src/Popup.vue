@@ -21,7 +21,6 @@ function clearConfig() {
   state.value = {
     blacklistedJobTitles: [],
     blacklistedCompanies: [],
-    lastUpdated: ''
   }
   onUpdatedConfig()
 }
@@ -38,21 +37,13 @@ const updatedTimeoutId: Ref<number> = ref(0)
 const state: Ref<StoredData> = ref({
   blacklistedJobTitles: [],
   blacklistedCompanies: [],
-  lastUpdated: ''
 })
 
 Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
-    result.blacklistedJobTitles.forEach(jobTitle => {
-      state.value.blacklistedJobTitles.push(jobTitle)
-    })
-    result.blacklistedCompanies.forEach(company => {
-      state.value.blacklistedCompanies.push(company)
-    })
-    state.value.lastUpdated = (new Date()).toISOString()
-    Runtime.set<StoredData>(state.value)
+    state.value = result
   })
-  .catch(result => {
+  .catch(() => {
     console.error('[20251203.0023] Failed to get StoredData')
   })
 </script>
