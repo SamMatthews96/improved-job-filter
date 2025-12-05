@@ -43,12 +43,12 @@ export default class Filter {
     const matches = document.querySelectorAll(this.selectors.container)
     switch (matches.length) {
       case 0:
-        console.error('[20251130.2201] Failed to get job list container')
+        console.log('[20251130.2201] Failed to get job list container')
         return null
       case 1:
         return matches[0] ?? null
       default:
-        console.error('[20251130.2202] Found multiple matches for job list container')
+        console.log('[20251130.2202] Found multiple matches for job list container')
         return null
     }
   }
@@ -57,7 +57,6 @@ export default class Filter {
     // get container
     const container: Element | null = this.getContainer()
     if (container == null) {
-      console.error('[20251130.2217] Failed to identify container')
       return
     }
 

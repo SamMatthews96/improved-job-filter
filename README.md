@@ -16,11 +16,12 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * [Glassdoor](https://www.glassdoor.co.uk/)
 
 ### ToDo List:
+* Publish the extension on the marketplace.
+
 * Styling
 
 * Improve Filter
   * The filter fields allow spaces, which don't work with the current filter-by-word logic
-  * If the filter works off of words anyway, then perhaps the config should just feature a single text field instead of requiring the user to click "add" for each keyword.
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
   * The filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
   *	Create filter profiles: Currently the filter is universal, and a user might want different filters on different websites.
