@@ -77,31 +77,28 @@ export default class Filter {
         console.warn('[20251130.2331]', jobElement)
         continue
       }
-      const titleElement = jobElement.querySelector(this.selectors.title)
-      if (!(titleElement instanceof HTMLElement)) {
-        console.warn('[20251130.2335]', titleElement)
-        continue
-      }
-      const titleWords = titleElement.innerText.toLowerCase().split(' ')
-
-      const companyElement = jobElement.querySelector(this.selectors.company)
-      if (!(companyElement instanceof HTMLElement)) {
-        console.warn('[20251130.2336]', companyElement)
-        continue
-      }
-      const companyWords = companyElement.innerText.toLowerCase().split(' ')
 
       let isMatch = false
-      this.filterConfig.blacklistedCompanies.forEach((company) => {
-        if (companyWords.includes(company.toLowerCase())) {
-          isMatch = true
-        }
-      })
-      this.filterConfig.blacklistedJobTitles.forEach((jobTitle) => {
-        if (titleWords.includes(jobTitle.toLowerCase())) {
-          isMatch = true
-        }
-      })
+
+      const titleElement = jobElement.querySelector(this.selectors.title)
+      if (titleElement instanceof HTMLElement) {
+        const titleWords = titleElement.innerText.toLowerCase().split(' ')
+        this.filterConfig.blacklistedJobTitles.forEach((jobTitle) => {
+          if (titleWords.includes(jobTitle.toLowerCase())) {
+            isMatch = true
+          }
+        })
+      }
+
+      const companyElement = jobElement.querySelector(this.selectors.company)
+      if (companyElement instanceof HTMLElement) {
+        const companyWords = companyElement.innerText.toLowerCase().split(' ')
+        this.filterConfig.blacklistedCompanies.forEach((company) => {
+          if (companyWords.includes(company.toLowerCase())) {
+            isMatch = true
+          }
+        })
+      }
 
       // compare against current filter
       // if match, hide item, else, set display to its default
