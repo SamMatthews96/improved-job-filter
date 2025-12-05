@@ -18,7 +18,8 @@
         "https://www.monster.com/*",
         "https://www.cv-library.co.uk/*",
         "https://www.seek.com.au/*",
-        "https://www.ziprecruiter.co.uk/*"
+        "https://www.ziprecruiter.co.uk/*",
+        "https://www.glassdoor.co.uk/*"
       ],
       "js": ["script.js"]
     }

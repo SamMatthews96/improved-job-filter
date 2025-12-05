@@ -53,6 +53,10 @@
     "container": "ul.jobList",
     "title": "a.jobList-title > strong",
     "company": "ul.jobList-introMeta > li:nth-child(1)"
+  },
+  "https://www.glassdoor.co.uk/": {
+    "container": "ul[aria-label=\"Jobs List\"]",
+    "title": "a[data-test=\"job-title\"]",
+    "company": "div[id*=\"job-employer\"]"
   }
-
 }

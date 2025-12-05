@@ -35,9 +35,6 @@ While this is currently a work in progress and not deployed to the google market
   * The filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
   *	Create filter profiles: Currently the filter is universal, and a user might want different filters on different websites.
 
-* Add support for other websites
-  * glassdoor
-
 * User customisation
   * Allow users to add websites to the filter list
   * Allow users to add filter fields.
