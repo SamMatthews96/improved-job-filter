@@ -34,8 +34,6 @@ While this is currently a work in progress and not deployed to the google market
   * The filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
 * Add support for other websites
   * glassdoor
-  * seek
-  * zip recruiter
 * User customisation
   * Allow users to customise their own filters for websites not included. Any website that features search results could use an app like this.
   * Allow users to add fields to the existing filter list.

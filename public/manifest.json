@@ -16,7 +16,9 @@
         "https://4dayweek.io/*",
         "https://www.linkedin.com/*",
         "https://www.monster.com/*",
-        "https://www.cv-library.co.uk/*"
+        "https://www.cv-library.co.uk/*",
+        "https://www.seek.com.au/*",
+        "https://www.ziprecruiter.co.uk/*"
       ],
       "js": ["script.js"]
     }

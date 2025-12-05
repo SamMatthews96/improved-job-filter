@@ -43,5 +43,16 @@
     "container": "ul.css-pygyny",
     "title": "h2 > a > span",
     "company": "span[data-testid=\"company-name\"]"
+  },
+  "https://www.seek.com.au/": {
+    "container": "#app > div > div._14hmoac0.lwskcb5g > div > section > div:nth-child(2) > div > div > div._14hmoac0.lwskcbo > div > div > div > div > div._14hmoac0.lwskcb50.lwskcbs.lwskcbq.lwskcbi0.lwskcbi4.lwskcbc0.lwskcbbu.lwskcb8o._1p4wzbf0._1p4wzbf7 > div > div._14hmoac0._21bfxf1 > div._14hmoac0.lwskcb5c.lwskcbhk.lwskcb70 > div._14hmoac0.lwskcb5c.lwskcbhk.lwskcb6s",
+    "title": "h3 > div > a",
+    "company": "h3 + div > span a"
+  },
+  "https://www.ziprecruiter.co.uk/": {
+    "container": "ul.jobList",
+    "title": "a.jobList-title > strong",
+    "company": "ul.jobList-introMeta > li:nth-child(1)"
   }
+
 }
