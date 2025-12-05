@@ -3,27 +3,17 @@
 A Chrome Extension Built in Vue, with the purpose of making people's (my) job search less tedious by enhancing the standard filtering options of job sites.
 
 While this is a work in progress, it is a MVP that delivers on the basic idea. Features a popup window for configuring blacklists for keywords in the job title and company name, and hides jobs containg any such keywords. Currently works for:
-* https://uk.indeed.com/
-* https://www.reed.co.uk/
-* https://www.totaljobs.com/
-* https://findajob.dwp.gov.uk/
-* https://4dayweek.io/
-* https://www.linkedin.com/
-* https://www.monster.com/
-* https://www.cv-library.co.uk/
-
-### Installation
-While this is currently a work in progress and not deployed to the google marketplace, this extension can still be used by doing the following:
-* Install Google Chrome, Node and NPM if not done so already.
-* Clone/Download this repository.
-* Navigate to the project's folder in the command line.
-* type "npm install" and enter, then wait for the required modules to install.
-* type "npm run build" and enter. Wait for the build to finish. In the project folder, a dist folder should have been created in the root of the project. Make a note of where the dist folder is.
-* Open Google Chrome and navigate to your extensions. Either click the triple dots in the top right corner and go to Extensions > Manage Extensions, or simply enter "chrome://extensions" in the brower search bar.
-* Enable Developer mode in the top right of the window.
-* Click "Load unpacked" in the top left of the window. 
-* Navigate to the location of the dist folder that was previously created and select that folder. You should now see improved-job-filter 
-* The extension should now be successfully installed.
+* [Indeed(uk)](https://uk.indeed.com/)
+* [Reed](https://www.reed.co.uk/)
+* [Totaljobs](https://www.totaljobs.com/)
+* [findajob.dwp.gov.uk](https://findajob.dwp.gov.uk/)
+* [4 Day Week](https://4dayweek.io/)
+* [LinkedIn](https://www.linkedin.com/)
+* [Monster](https://www.monster.com/)
+* [CV-Library](https://www.cv-library.co.uk/)
+* [Seek](https://www.seek.com.au/)
+* [ZipRecruiter](https://www.ziprecruiter.co.uk/)
+* [Glassdoor](https://www.glassdoor.co.uk/)
 
 ### ToDo List:
 * Styling
