@@ -30,4 +30,19 @@ export default class ChromeRuntime implements RuntimeAPI {
       callback(data)
     })
   }
+
+  async injectScript(): Promise<void> {
+    let queryOptions = { active: true, lastFocusedWindow: true }
+    let [tab] = await chrome.tabs.query(queryOptions)
+    if (!tab?.id) {
+      console.error('[20251206.1625] could not get tab.id of tab;', tab)
+      return
+    }
+    chrome.scripting
+      .executeScript({
+        target: { tabId: tab.id },
+        files: ['mytest.js'],
+      })
+      .then(() => console.log('script injected'))
+  }
 }

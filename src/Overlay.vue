@@ -1,13 +1,19 @@
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+console.log('overlay.vue')
+
+const show = ref(false)
+
+
+</script>
+
 <template>
   <div id="overlay" v-if="show">
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const show = ref(false)
-</script>
 
 <style scoped>
 #overlay {

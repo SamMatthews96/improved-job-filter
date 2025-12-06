@@ -5,23 +5,5 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["storage"],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://uk.indeed.com/*",
-        "https://www.reed.co.uk/*",
-        "https://www.totaljobs.com/*",
-        "https://findajob.dwp.gov.uk/*",
-        "https://4dayweek.io/*",
-        "https://www.linkedin.com/*",
-        "https://www.monster.com/*",
-        "https://www.cv-library.co.uk/*",
-        "https://www.seek.com.au/*",
-        "https://www.ziprecruiter.co.uk/*",
-        "https://www.glassdoor.co.uk/*"
-      ],
-      "js": ["script.js"]
-    }
-  ]
+  "permissions": ["storage", "scripting", "activeTab"]
 }

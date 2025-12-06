@@ -21,7 +21,7 @@ export default class MockRuntime implements RuntimeAPI {
       if (value == null) {
         return
       }
-      (obj as any)[key] = JSON.parse(value)
+      ;(obj as any)[key] = JSON.parse(value)
     })
 
     return Promise.resolve(obj)
@@ -29,5 +29,13 @@ export default class MockRuntime implements RuntimeAPI {
 
   addStorageListener(callback: (...args: any) => void): void {
     this.storageListeners.push(callback)
+  }
+
+  async injectScript(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      import('../script.ts')
+        .then(() => resolve())
+        .catch(err => reject(err))
+    })
   }
 }

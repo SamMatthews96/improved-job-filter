@@ -25,6 +25,14 @@ function clearConfig() {
   onUpdatedConfig()
 }
 
+function toggleOverlay() {
+  // todo
+  // in local, send Runtime eventemitter event
+  // in chrome, send Runtime sendmessage to current page script
+  // before adding to RuntimeAPI interface, just do a concrete implementation
+
+}
+
 function onUpdatedConfig() {
   clearTimeout(updatedTimeoutId.value)
   updatedTimeoutId.value = setTimeout(() => {
@@ -46,9 +54,14 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   .catch(() => {
     console.error('[20251203.0023] Failed to get StoredData')
   })
+
+Runtime.injectScript()
+  .then(() => console.log('injected script'))
+
 </script>
 
 <template>
+  <button @click="toggleOverlay()">Toggle Overlay</button>
   <h3>Blacklist Companies</h3>
   <div class="blacklisted-companies">
     <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"
