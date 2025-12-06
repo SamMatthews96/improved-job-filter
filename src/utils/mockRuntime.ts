@@ -41,7 +41,11 @@ export default class MockRuntime implements RuntimeAPI {
     })
   }
 
-  sendMessage(message: string, data?: object): void {
+  sendMessageToTab(message: string, data?: object): void {
+    this.eventEmitter.emit(message, data)
+  }
+
+  sendMessageToService(message: string, data?: object): void {
     this.eventEmitter.emit(message, data)
   }
 

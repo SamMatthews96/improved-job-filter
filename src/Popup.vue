@@ -26,7 +26,7 @@ function clearConfig() {
 }
 
 function toggleOverlay() {
-  Runtime.sendMessage('toggleOverlay')
+  Runtime.sendMessageToTab('toggleOverlay')
 }
 
 function onUpdatedConfig() {
@@ -52,12 +52,17 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
   })
 
 Runtime.injectScript()
-  .then(() => console.log('injected script'))
+  .then(() => console.log('injected script'));
+
+function bgMsg(){
+  chrome.runtime.sendMessage({key:'123'})
+}
 
 </script>
 
 <template>
   <button @click="toggleOverlay()">Toggle Overlay</button>
+  <button @click="bgMsg">BG test</button>
   <h3>Blacklist Companies</h3>
   <div class="blacklisted-companies">
     <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"

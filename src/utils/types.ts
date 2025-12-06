@@ -14,8 +14,9 @@ export interface RuntimeAPI {
     get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T>
     addStorageListener(callback: (...args: any) => void): void
     injectScript(): Promise<void>
-    sendMessage(message: string, data?: object): void
     addEventListener(message: string, callback: (...args: any) => void): void
+    sendMessageToService(message: string, data?: object): void
+    sendMessageToTab(message: string, data?: object): void
 }
 
 export type PageSelectors = {

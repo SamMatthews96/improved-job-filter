@@ -41,16 +41,9 @@ Perhaps it puts an overlay over the screen to indicate the mode.
 Then via some action(s) of the user, it identifies 
   - the search container. Could be identified by:
     - finding the common parent of child of two different search items
-
   - each field of a search item. Fields could be identified by
-    - highlighting them, then clicking a button
-      (not reliable if the search item is a button)
     - Enter text in a sub-window, then search page contents
       (should do it after the container is identified)
-
-Try to display vue content using script.ts
-Popup button -> runtime.signal -> set mode for current page
-
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.
