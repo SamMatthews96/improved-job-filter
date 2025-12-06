@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import Runtime from './utils/runtime';
 
 console.log('overlay.vue')
 
 const show = ref(true)
+// when signal, show = true
 
+Runtime.addEventListener('toggleOverlay', () => {
+  
+})
 
 </script>
 

@@ -1,7 +1,9 @@
+import { EventEmitter } from 'eventemitter3'
 import type { RuntimeAPI } from './types'
 
 export default class MockRuntime implements RuntimeAPI {
   private storageListeners: Array<(...args: any) => void> = []
+  private eventEmitter: EventEmitter = new EventEmitter();
 
   set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
     Object.entries(items).forEach(([key, value]) => {
@@ -37,5 +39,13 @@ export default class MockRuntime implements RuntimeAPI {
         .then(() => resolve())
         .catch(err => reject(err))
     })
+  }
+
+  sendMessage(message: string, data?: object): void {
+    this.eventEmitter.emit(message, data)
+  }
+
+  addEventListener(message: string, callback: (...args: any) => void): void {
+    this.eventEmitter.on(message, callback)
   }
 }

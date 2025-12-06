@@ -1,6 +1,8 @@
 import type { RuntimeAPI } from './types'
 
 export default class ChromeRuntime implements RuntimeAPI {
+  private currentTabId: number | undefined
+
   set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
     const formattedData = {}
     Object.entries(items).forEach(([key, value]) => {
@@ -32,16 +34,36 @@ export default class ChromeRuntime implements RuntimeAPI {
   }
 
   async injectScript(): Promise<void> {
+    await chrome.scripting.executeScript({
+      target: { tabId: await this.getCurrentTabId() },
+      files: ['script.js'],
+    })
+  }
+
+  private async getCurrentTabId(): Promise<number> {
+    if (this.currentTabId) return this.currentTabId
     let queryOptions = { active: true, lastFocusedWindow: true }
     let [tab] = await chrome.tabs.query(queryOptions)
     if (!tab?.id) {
-      console.error('[20251206.1625] could not get tab.id of tab;', tab)
-      return
+      throw new Error('[20251206.1625] could not get tab.id of tab')
     }
-    await chrome.scripting
-      .executeScript({
-        target: { tabId: tab.id },
-        files: ['script.js'],
-      })
+    this.currentTabId = tab.id
+    return tab.id
+  }
+
+  async sendMessage(message: string, data?: object): Promise<void> {
+    chrome.tabs.sendMessage(await this.getCurrentTabId(), {
+      message,
+      data,
+    })
+  }
+
+  addEventListener(message: string, callback: (...args: any) => void): void {
+    chrome.runtime.onMessage.addListener(
+      (payload: {message: string, data: object}) => {
+        if (message != payload.message) return;
+        callback(payload.data)
+      },
+    )
   }
 }

@@ -8,7 +8,6 @@ import Overlay from './Overlay.vue'
 const id = 'improved-job-filter-overlay'
 
 export default function createOverlay() {
-  console.log('createoverlay',id)
   if (document.querySelector(`#${id}`)){
     return
   }

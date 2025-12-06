@@ -26,11 +26,7 @@ function clearConfig() {
 }
 
 function toggleOverlay() {
-  // todo
-  // in local, send Runtime eventemitter event
-  // in chrome, send Runtime sendmessage to current page script
-  // before adding to RuntimeAPI interface, just do a concrete implementation
-
+  Runtime.sendMessage('toggleOverlay')
 }
 
 function onUpdatedConfig() {
