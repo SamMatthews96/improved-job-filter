@@ -18,6 +18,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 ### ToDo List:
 * Publish the extension on the marketplace.
 
+* Make sure overlay script runs only once
+
 * Styling
 
 * Improve Filter

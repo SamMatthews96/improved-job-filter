@@ -38,11 +38,10 @@ export default class ChromeRuntime implements RuntimeAPI {
       console.error('[20251206.1625] could not get tab.id of tab;', tab)
       return
     }
-    chrome.scripting
+    await chrome.scripting
       .executeScript({
         target: { tabId: tab.id },
-        files: ['mytest.js'],
+        files: ['script.js'],
       })
-      .then(() => console.log('script injected'))
   }
 }

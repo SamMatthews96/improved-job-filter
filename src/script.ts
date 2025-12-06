@@ -1,8 +1,13 @@
-import Filter from '@/utils/filter'
-import pageSelectors from '@/utils/pageSelectors.json'
-import '@/overlay'
+// import Filter from '@/utils/filter'
+// import pageSelectors from '@/utils/pageSelectors.json'
+
+// script will dynamically load every time the popup is opened.
+// there's probably a better way to handle, but not
+
+import createOverlay from '@/overlay'
 
 console.log('improved-job-filter loading')
+createOverlay()
 
 // const website = window.location.href.match(/^https?:\/\/[^\/]+\//)?.[0]
 // if (!website) throw new Error()

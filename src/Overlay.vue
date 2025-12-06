@@ -1,21 +1,21 @@
-
 <script setup lang="ts">
 import { ref } from 'vue';
 
 console.log('overlay.vue')
 
-const show = ref(false)
+const show = ref(true)
 
 
 </script>
 
 <template>
   <div id="overlay" v-if="show">
+    <button @click="show = false" class="overlay-close">Close</button>
   </div>
 </template>
 
 
-<style scoped>
+<style scoped lang="scss">
 #overlay {
   position: fixed;
   top: 0;
@@ -23,6 +23,15 @@ const show = ref(false)
   width: 100vw;
   height: 100vh;
   background-color: #88888888;
-  pointer-events: none;
+
+  .overlay-close {
+    position: absolute;
+    padding: 10px;
+    right: 20px;
+    top: 10px;
+  }
 }
+
+
+
 </style>
