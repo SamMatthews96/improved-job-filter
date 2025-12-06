@@ -30,7 +30,25 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Allow users to add websites to the filter list
   * Allow users to add filter fields.
   * Consider how to make as user friendly as possible. I built this by finding the CSS selectors of the search container, job title and company name, but that isn't user friendly.
-  * At its core, the app needs to know the selector for the search container, and then any fields contained within each search item. 
+  * At its core, the app needs to know the selector for the search container, and then any fields contained within each search item.
+
+Idea: selector mode
+There's a button on the popup, when clicked, it goes into "selector mode".
+The goal here is to allow the user to select fields to be used for filtering.
+Perhaps it puts an overlay over the screen to indicate the mode.
+Then via some action(s) of the user, it identifies 
+  - the search container. Could be identified by:
+    - finding the common parent of child of two different search items
+
+  - each field of a search item. Fields could be identified by
+    - highlighting them, then clicking a button
+      (not reliable if the search item is a button)
+    - Enter text in a sub-window, then search page contents
+      (should do it after the container is identified)
+
+Try to display vue content using script.ts
+Popup button -> runtime.signal -> set mode for current page
+
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.

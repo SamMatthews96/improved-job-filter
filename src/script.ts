@@ -1,5 +1,6 @@
 import Filter from '@/utils/filter'
 import pageSelectors from '@/utils/pageSelectors.json'
+import '@/overlay'
 
 console.log('improved-job-filter loading')
 
