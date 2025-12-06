@@ -2,20 +2,17 @@
 import { ref } from 'vue';
 import Runtime from './utils/runtime';
 
-console.log('overlay.vue')
-
-const show = ref(true)
-// when signal, show = true
+const isShowing = ref(false)
 
 Runtime.addEventListener('toggleOverlay', () => {
-  
+  isShowing.value = !isShowing.value
 })
 
 </script>
 
 <template>
-  <div id="overlay" v-if="show">
-    <button @click="show = false" class="overlay-close">Close</button>
+  <div id="overlay" v-if="isShowing">
+    <button @click="isShowing = false" class="overlay-close">Close</button>
   </div>
 </template>
 
