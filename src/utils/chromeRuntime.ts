@@ -59,9 +59,11 @@ export default class ChromeRuntime implements RuntimeAPI {
   }
 
   async sendMessageToService(message: string, data?: object): Promise<void> {
-    await this.sendMessageToTab(message, data)
+    await chrome.runtime.sendMessage({
+      message,
+      data,
+    })
   }
-
 
   addEventListener(message: string, callback: (...args: any) => void): void {
     chrome.runtime.onMessage.addListener(

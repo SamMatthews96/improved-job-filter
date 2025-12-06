@@ -6,7 +6,6 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -34,7 +33,6 @@ export default defineConfig({
     },
     commonjsOptions: {
       include: [/node_modules/], // Include dependencies in the bundle
-      // format: 'iife',
     },
   },
 

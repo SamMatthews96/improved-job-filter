@@ -35,9 +35,9 @@ export default class MockRuntime implements RuntimeAPI {
 
   async injectScript(): Promise<void> {
     return new Promise((resolve, reject) => {
-      import('../script.ts')
-        .then(() => resolve())
-        .catch(err => reject(err))
+      // import('../script.ts')
+      //   .then(() => resolve())
+      //   .catch(err => reject(err))
     })
   }
 

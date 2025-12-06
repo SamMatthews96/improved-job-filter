@@ -25,5 +25,9 @@ export default defineConfig({
         entryFileNames: 'script.js',
       },
     },
+    commonjsOptions: {
+      include: [/node_modules/], // Include dependencies in the bundle
+      // format: 'iife',
+    },
   },
 })

@@ -51,18 +51,16 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
     console.error('[20251203.0023] Failed to get StoredData')
   })
 
-Runtime.injectScript()
-  .then(() => console.log('injected script'));
-
-function bgMsg(){
-  chrome.runtime.sendMessage({key:'123'})
-}
+// Runtime.injectScript()
+//   .then(() => console.log('injected script'));
+Runtime.sendMessageToService('popupOpened', {
+  tabId: 1
+})
 
 </script>
 
 <template>
   <button @click="toggleOverlay()">Toggle Overlay</button>
-  <button @click="bgMsg">BG test</button>
   <h3>Blacklist Companies</h3>
   <div class="blacklisted-companies">
     <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"

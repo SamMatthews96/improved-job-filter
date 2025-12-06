@@ -1,6 +1,10 @@
+import Runtime from '@/utils/runtime'
 
-const enabledTabIds = []
+const enabledTabIds: number[] = []
 
-chrome.runtime.onMessage.addListener((message) =>{
-  console.log('background', message)
+Runtime.addEventListener('popupOpened', ({ tabId }) => {
+  if (enabledTabIds.includes(tabId)) return
+
+  enabledTabIds.push(tabId)
+  Runtime.injectScript()
 })
