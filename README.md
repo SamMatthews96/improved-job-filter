@@ -18,8 +18,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 ### ToDo List:
 * Publish the extension on the marketplace.
 
-* Make sure overlay script runs only once
-
 * Styling
 
 * Improve Filter
@@ -44,6 +42,12 @@ Then via some action(s) of the user, it identifies
   - each field of a search item. Fields could be identified by
     - Enter text in a sub-window, then search page contents
       (should do it after the container is identified)
+
+* Filter profiles
+  * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 
+* Website filters
+  * each website, after calculating the container element(s), will allow the user to identify fields. In this context, a field would be a element of a search-result. The text-content of this element is what would be matched against the current filter profile.
+  * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.

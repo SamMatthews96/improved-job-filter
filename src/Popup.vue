@@ -80,4 +80,8 @@ Runtime.sendMessageToService('popupOpened', {
 
 </template>
 
-<style scoped></style>
+<style scoped>
+button {
+  cursor: pointer;
+}
+</style>
