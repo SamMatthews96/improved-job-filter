@@ -32,21 +32,15 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Consider how to make as user friendly as possible. I built this by finding the CSS selectors of the search container, job title and company name, but that isn't user friendly.
   * At its core, the app needs to know the selector for the search container, and then any fields contained within each search item.
 
-Idea: selector mode
-There's a button on the popup, when clicked, it goes into "selector mode".
-The goal here is to allow the user to select fields to be used for filtering.
-Perhaps it puts an overlay over the screen to indicate the mode.
-Then via some action(s) of the user, it identifies 
-  - the search container. Could be identified by:
-    - finding the common parent of child of two different search items
-  - each field of a search item. Fields could be identified by
-    - Enter text in a sub-window, then search page contents
-      (should do it after the container is identified)
+* We have the beginnings of creating a function to create a relative selector: a string that, when we call container.children[i].querySelector, gets one of the fields to be filtered.
+  * Once it is refined, we need to pass the title selector in the emit,
+then make the UI to support custom fields.
+  * Also, the config needs to be saved.
+  * Also, the pageSelectors.json needs to added to the storage by default
 
-So far, selector mode can identify the container.
-We also have a direct reference to the title
-Now we need to be able to find the title, and other fields, relative 
-to the search result, and allow the user to select other fields of the search item.
+* Field entry QoL:
+  * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
+  * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
 
 * Filter profiles
   * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 

@@ -28,33 +28,29 @@ export function getElementWithText(text: string): HTMLElement | null {
 }
 
 export function getRelativeSelector(container: HTMLElement, fieldElements: HTMLElement[]): string {
-  const fieldAncestors: HTMLElement[][] = fieldElements.map((fieldElement) =>
-    getAncestorsBefore(fieldElement, container),
-  )
-  /*
-    for each ancestors for...
-    get elements in same position
-    extract common attributes
-  */
-  // iterate over each parent
-  const length = fieldAncestors[0]?.length as number
-  for (let currentAncestor = 0; currentAncestor < length; currentAncestor++) {
-    console.log(getCommonAttributes(fieldAncestors, fieldElements.length, currentAncestor))
+  let currentElements = fieldElements
+  const attributeList: ElementAttributes[] = [];
+  while (currentElements[0] != container) {
+    const attributes = getCommonAttributes(currentElements)
+    attributeList.push(attributes)
+    currentElements = currentElements.map((e) => e.parentElement) as HTMLElement[]
+    if (!currentElements[0]) throw new Error('[20251208.0041]')
   }
+  console.log(attributeList)
+  //@todo this selector logic will pay no mind to nth-child
+  // this could (unlikely) fail to narrow down to 1 element
+  
+
 
   return ''
 }
 
-function getCommonAttributes(
-  fieldAncestors: HTMLElement[][],
-  length: number,
-  ancestor: number,
-): ElementAttributes {
-  const firstElement = fieldAncestors?.[0]?.[ancestor] as HTMLElement
+function getCommonAttributes(fieldElements: HTMLElement[]): ElementAttributes {
+  const firstElement = fieldElements[0] as HTMLElement
   const commonAttributes: ElementAttributes = getElementAttributes(firstElement)
   // iterate over the equivalent elements
-  for (let currentField = 1; currentField < length; currentField++) {
-    const element = fieldAncestors?.[currentField]?.[ancestor]
+  for (let i = 1; i < length; i++) {
+    const element = fieldElements[i]
     if (!element) throw new Error('[20251207.2328]')
 
     // purge values that are different
@@ -70,21 +66,6 @@ function getCommonAttributes(
     })
   }
   return commonAttributes
-}
-
-function getAncestorsBefore(element: HTMLElement, ancestor: HTMLElement): HTMLElement[] {
-  const ancestors: HTMLElement[] = []
-
-  let currentElement: HTMLElement | null = element
-  // find every ancestor of element until reaching ancestor
-  while (currentElement != ancestor) {
-    ancestors.push(currentElement)
-    if (currentElement?.parentElement == null) {
-      throw new Error('[20251207.1832] invalid ancestor provided')
-    }
-    currentElement = currentElement.parentElement
-  }
-  return ancestors
 }
 
 function getElementAttributes(element: HTMLElement): ElementAttributes {
