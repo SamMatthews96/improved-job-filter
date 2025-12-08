@@ -2,12 +2,20 @@
 import { ref } from 'vue';
 import Runtime from '@/utils/runtime';
 import ConfigPane from '@/components/ConfigPane.vue';
+import type { WebsiteFilterCollection } from './utils/types';
 
 const isShowing = ref(false)
+const websiteFilterCollection = ref<WebsiteFilterCollection>({})
 
 Runtime.addEventListener('toggleOverlay', () => {
   isShowing.value = !isShowing.value
 })
+
+Runtime.get<WebsiteFilterCollection>(['websiteFilterCollection'])
+  .then(res => {
+    console.log('get', res)
+    Object.assign(websiteFilterCollection.value, res)
+  })
 
 /*
   will need to get storage when opened the first time
@@ -19,7 +27,7 @@ Runtime.addEventListener('toggleOverlay', () => {
 <template>
   <div id="overlay" v-if="isShowing">
     <button @click="isShowing = false" class="overlay-close">Close</button>
-    <ConfigPane />
+    <ConfigPane v-model="websiteFilterCollection"/>
 
   </div>
 </template>

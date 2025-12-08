@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCommonParent, getElementWithText, getUniqueElementPath, getUniqueRelativeElementPaths, identifyContainerAndTitlePaths } from '@/utils/helpers';
+import { identifyContainerAndTitlePaths } from '@/utils/helpers';
 import type { ElementPath } from '@/utils/types';
 import { ref } from 'vue';
 
@@ -31,7 +31,8 @@ const showError = ref(false)
 const emit = defineEmits<{
   (e: "foundContainer",
     containerPath: ElementPath,
-    titlePath: ElementPath
+    titlePath: ElementPath,
+    websitePrefix: string
   ): void
 }>()
 
@@ -43,7 +44,7 @@ function onSubmit() {
   // something for search container, and title field
   // if the checks are met, then submit
 
-  emit('foundContainer', containerPath, titlePath)
+  emit('foundContainer', containerPath, titlePath, websitePrefix.value)
 }
 
 

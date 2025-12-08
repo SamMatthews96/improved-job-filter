@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ConfigPaneSelectContainer from './ConfigPaneSelectContainer.vue';
-import type { ElementPath } from '@/utils/types';
+import type { WebsiteFilterCollection, ElementPath } from '@/utils/types';
 import Runtime from '@/utils/runtime';
 
-function onFoundContainer(containerPath: ElementPath, titlePath: ElementPath) {
+function onFoundContainer(containerPath: ElementPath, titlePath: ElementPath, websitePrefix: string) {
   showSelectContainer.value = false
-  // @todo
-  /*
-    so at this point we should have identified the container and
-    the title field. Save this to the website's config.
-  */
-  // Runtime.set({
 
-  // })
-  console.log('onfound', containerPath, titlePath)
+  Runtime.set<WebsiteFilterCollection>({
+    [websitePrefix]: {
+      selectedFilterId: 1,
+      containerProperties: containerPath,
+      fieldProperties: {
+        title: titlePath
+      }
+    }
+  })
+  console.log('onfound', containerPath, titlePath, websitePrefix)
 }
 
-
+const websiteFilterCollection = defineModel<WebsiteFilterCollection>()
 const showSelectContainer = ref(true)
 
 </script>
@@ -25,9 +27,7 @@ const showSelectContainer = ref(true)
 <template>
   <div class="config-pane">
     <h2>Config Pane</h2>
-    <ConfigPaneSelectContainer
-      @foundContainer="onFoundContainer"
-      v-if="showSelectContainer" />
+    <ConfigPaneSelectContainer @foundContainer="onFoundContainer" v-if="showSelectContainer" />
 
 
 
