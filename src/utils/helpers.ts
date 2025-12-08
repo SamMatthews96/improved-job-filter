@@ -81,13 +81,13 @@ function getElementProperties(element: HTMLElement): ElementProperties {
   const elementType = element.nodeName.toLowerCase()
   const nthChild = element.parentElement
     ? (() => {
-        for (let i = 0; i < element.parentElement.children.length; i++) {
-          if (element.parentElement.children[i] == element) {
-            return (i + 1).toString()
-          }
+      for (let i = 0; i < element.parentElement.children.length; i++) {
+        if (element.parentElement.children[i] == element) {
+          return (i + 1).toString()
         }
-        return ''
-      })()
+      }
+      return ''
+    })()
     : ''
 
   const elementProperties: ElementProperties = {
@@ -151,7 +151,7 @@ export function identifyContainerAndTitlePaths(textValues: string[]): {
   const matches = textValues.map(getElementWithText)
   if (matches.some((match) => !match)) throw new Error('[20251208.1802')
   matches as HTMLElement[]
-    if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
+  if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
   //@todo commonparent should be able to get common parent of many
   const commonParent = getCommonParent(matches[0], matches[1])
   if (!commonParent) throw new Error('[20251208.1804]')

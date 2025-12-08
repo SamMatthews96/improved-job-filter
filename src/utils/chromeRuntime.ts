@@ -67,7 +67,7 @@ export default class ChromeRuntime implements RuntimeAPI {
 
   addEventListener(message: string, callback: (...args: any) => void): void {
     chrome.runtime.onMessage.addListener(
-      (payload: {message: string, data: object}) => {
+      (payload: { message: string, data: object }) => {
         if (message != payload.message) return;
         callback(payload.data)
       },

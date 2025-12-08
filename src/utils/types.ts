@@ -5,8 +5,6 @@ export interface StoredData {
 
 }
 
-//@todo fix anything broken by change to set/get changes
-// use one class for stored data for now on
 export interface RuntimeAPI {
   set(items: Partial<StoredData>): Promise<void>
   get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>>

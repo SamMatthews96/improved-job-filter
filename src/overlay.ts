@@ -1,11 +1,11 @@
 import './assets/main.css'
 import { createApp } from 'vue'
-import Overlay from './Overlay.vue'
+import Overlay from './components/Overlay.vue'
 
 const id = 'improved-job-filter-overlay'
 
 export default function createOverlay() {
-  if (document.querySelector(`#${id}`)){
+  if (document.querySelector(`#${id}`)) {
     return
   }
   const overlayRoot = document.createElement('div')

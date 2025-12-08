@@ -1,7 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import App from './Popup.vue'
+import App from './components/Popup.vue'
 
 const app = createApp(App)
 

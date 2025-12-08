@@ -21,6 +21,7 @@ function clearConfig() {
   state.value = {
     blacklistedJobTitles: [],
     blacklistedCompanies: [],
+    websiteFilterCollection: {}
   }
   onUpdatedConfig()
 }
@@ -32,7 +33,7 @@ function toggleOverlay() {
 function onUpdatedConfig() {
   clearTimeout(updatedTimeoutId.value)
   updatedTimeoutId.value = setTimeout(() => {
-    Runtime.set<StoredData>(state.value)
+    Runtime.set(state.value)
   }, timeoutLength)
 }
 
@@ -41,11 +42,12 @@ const updatedTimeoutId: Ref<number> = ref(0)
 const state: Ref<StoredData> = ref({
   blacklistedJobTitles: [],
   blacklistedCompanies: [],
+  websiteFilterCollection: {}
 })
 
-Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
+Runtime.get(["blacklistedJobTitles", "blacklistedCompanies"])
   .then((result) => {
-    state.value = result
+    Object.assign(state.value, result)
   })
   .catch(() => {
     console.error('[20251203.0023] Failed to get StoredData')
@@ -61,15 +63,25 @@ Runtime.sendMessageToService('popupOpened', {
   <button @click="toggleOverlay()">Toggle Overlay</button>
   <h3>Blacklist Companies</h3>
   <div class="blacklisted-companies">
-    <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"
-      @delete="() => deleteCompany(i)" @input="onUpdatedConfig()" />
+    <StringInputListItem
+      v-for="(_, i) in state.blacklistedCompanies"
+      :key="i"
+      v-model="state.blacklistedCompanies[i]"
+      @delete="() => deleteCompany(i)"
+      @input="onUpdatedConfig()"
+    />
   </div>
 
   <button @click="state.blacklistedCompanies.push('')">Add Company</button>
 
   <h3>Blacklist Job Title</h3>
-  <StringInputListItem v-for="(_, i) in state.blacklistedJobTitles" :key="i" v-model="state.blacklistedJobTitles[i]"
-    @delete="() => deleteJobTitle(i)" @input="onUpdatedConfig()" />
+  <StringInputListItem
+    v-for="(_, i) in state.blacklistedJobTitles"
+    :key="i"
+    v-model="state.blacklistedJobTitles[i]"
+    @delete="() => deleteJobTitle(i)"
+    @input="onUpdatedConfig()"
+  />
 
   <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
 

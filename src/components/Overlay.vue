@@ -2,10 +2,14 @@
 import { ref } from 'vue';
 import Runtime from '@/utils/runtime';
 import ConfigPane from '@/components/ConfigPane.vue';
-import type { WebsiteFilterCollection } from './utils/types';
+import type { StoredData } from '@/utils/types';
 
 const isShowing = ref(false)
-const websiteFilterCollection = ref<WebsiteFilterCollection>({})
+const state = ref<StoredData>({
+  blacklistedJobTitles: [],
+  blacklistedCompanies: [],
+  websiteFilterCollection: {}
+})
 
 Runtime.addEventListener('toggleOverlay', () => {
   isShowing.value = !isShowing.value
@@ -13,21 +17,22 @@ Runtime.addEventListener('toggleOverlay', () => {
 
 Runtime.get(['websiteFilterCollection'])
   .then(res => {
-    console.log('get', res)
-    // Object.assign(websiteFilterCollection.value, res)
+    Object.assign(state.value, res)
+    console.log(state.value)
   })
-
-/*
-  will need to get storage when opened the first time
-  if no storage exists, create an item and store it
-*/
 
 </script>
 
 <template>
-  <div id="overlay" v-if="isShowing">
-    <button @click="isShowing = false" class="overlay-close">Close</button>
-    <ConfigPane v-model="websiteFilterCollection"/>
+  <div
+    id="overlay"
+    v-if="isShowing"
+  >
+    <button
+      @click="isShowing = false"
+      class="overlay-close"
+    >Close</button>
+    <ConfigPane v-model="state" />
 
   </div>
 </template>
