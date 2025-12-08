@@ -1,6 +1,7 @@
 <template>
   <template v-if="displayMode == 'start'">
     <p>Improved Job Filter is unconfigured for this page</p>
+    <input name="websitePrefix" v-model="websitePrefix"></input>
     <p>Please enter the title of the first and second search results:</p>
 
     <input name="firstSearchName" v-model="firstSearchName"></input>
@@ -15,10 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import { createSelector, getCommonParent, getElementWithText, getUniqueElementPath, getUniqueRelativeElementPaths } from '@/utils/helpers';
+import { getCommonParent, getElementWithText, getUniqueElementPath, getUniqueRelativeElementPaths, identifyContainerAndTitlePaths } from '@/utils/helpers';
+import type { ElementPath } from '@/utils/types';
 import { ref } from 'vue';
 
 const displayMode = ref('start')
+const websitePrefix = ref(window.location.href)
 const firstSearchName = ref('')
 const secondSearchName = ref('')
 
@@ -27,34 +30,20 @@ const showError = ref(false)
 
 const emit = defineEmits<{
   (e: "foundContainer",
-    containerSelector: string,
-
+    containerPath: ElementPath,
+    titlePath: ElementPath
   ): void
 }>()
-/* ensure the user has input both strings
-  user clicks button
-  identify container ElementPath
-  identify title relative ElementPath
-//  */
+
 function onSubmit() {
-  const match1 = getElementWithText(firstSearchName.value)
-  const match2 = getElementWithText(secondSearchName.value)
-  if (!match1 || !match2) return
+  const { containerPath, titlePath } = identifyContainerAndTitlePaths(
+    [firstSearchName.value, secondSearchName.value]
+  )
+  // @todo, visual check to confirm that we have the correct fields selected
+  // something for search container, and title field
+  // if the checks are met, then submit
 
-  const commonParent = getCommonParent(match1, match2)
-  if (!commonParent) return;
-
-  const containerPath = getUniqueElementPath(commonParent)
-  console.log('container', containerPath)
-  console.log(createSelector(containerPath))
-
-  const titlePath = getUniqueRelativeElementPaths(
-    [match1, match2], commonParent)
-  console.log('title', titlePath)
-  console.log(createSelector(titlePath))
-
-  // emit('foundContainer', 'commonParent')
-
+  emit('foundContainer', containerPath, titlePath)
 }
 
 

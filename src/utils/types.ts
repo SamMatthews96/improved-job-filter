@@ -26,3 +26,15 @@ export type ElementProperties = {
 }
 
 export type ElementPath = ElementProperties[]
+
+export type WebsiteFilter = {
+  selectedFilterId: number
+  containerProperties: ElementPath,
+  fieldProperties: {
+    [fieldName: string] : ElementPath
+  }
+}
+
+export type WebsiteFilterCollection = {
+  [url: string]: WebsiteFilter
+}

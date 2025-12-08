@@ -51,8 +51,6 @@ Runtime.get<StoredData>(["blacklistedJobTitles", "blacklistedCompanies"])
     console.error('[20251203.0023] Failed to get StoredData')
   })
 
-// Runtime.injectScript()
-//   .then(() => console.log('injected script'));
 Runtime.sendMessageToService('popupOpened', {
   tabId: 1
 })

@@ -129,12 +129,10 @@ export function getUniqueRelativeElementPaths(
 }
 
 export function createSelector(path: ElementPath): string {
-  // elementAttrs start low level and go up
-  // hence, starts at the end of the selector and goes back
   return path
     .map((properties, i) => {
       let selectorFragment = `${properties.elementType}`
-      if (i < path.length - 1){
+      if (i < path.length - 1) {
         selectorFragment += `:nth-child(${properties.nthChild})`
       }
       Object.entries(properties.attributes).forEach(([key, value]) => {
@@ -144,4 +142,25 @@ export function createSelector(path: ElementPath): string {
     })
     .reverse()
     .join(' > ')
+}
+
+export function identifyContainerAndTitlePaths(textValues: string[]): {
+  containerPath: ElementPath
+  titlePath: ElementPath
+} {
+  const matches = textValues.map(getElementWithText)
+  if (matches.some((match) => !match)) throw new Error('[20251208.1802')
+  matches as HTMLElement[]
+    if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
+  //@todo commonparent should be able to get common parent of many
+  const commonParent = getCommonParent(matches[0], matches[1])
+  if (!commonParent) throw new Error('[20251208.1804]')
+
+  const containerPath = getUniqueElementPath(commonParent)
+  const titlePath = getUniqueRelativeElementPaths(matches as HTMLElement[], commonParent)
+
+  return {
+    containerPath: containerPath,
+    titlePath: titlePath,
+  }
 }

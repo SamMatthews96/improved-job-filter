@@ -12,12 +12,6 @@ Runtime.addEventListener('toggleOverlay', () => {
 /*
   will need to get storage when opened the first time
   if no storage exists, create an item and store it
-  WebsiteFilters: { [key: string(url)]: WebsiteFilter }
-  WebsiteFilter: {
-    selectedFilterId: number,
-    containerSelector: string,
-    fieldSelectors: { fieldName: string, selector: string }[]
-  }
 */
 
 </script>
