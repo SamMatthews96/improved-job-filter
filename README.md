@@ -32,6 +32,12 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Consider how to make as user friendly as possible. I built this by finding the CSS selectors of the search container, job title and company name, but that isn't user friendly.
   * At its core, the app needs to know the selector for the search container, and then any fields contained within each search item.
 
+* Filter profiles
+  * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 
+* Website filters
+  * each website, after calculating the container element(s), will allow the user to identify fields. In this context, a field would be a element of a search-result. The text-content of this element is what would be matched against the current filter profile.
+  * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
+  
 * We have the beginnings of creating a function to create a relative selector: a string that, when we call container.children[i].querySelector, gets one of the fields to be filtered.
   * Once it is refined, we need to pass the title selector in the emit,
 then make the UI to support custom fields.
@@ -42,11 +48,6 @@ then make the UI to support custom fields.
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
   * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
 
-* Filter profiles
-  * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 
-* Website filters
-  * each website, after calculating the container element(s), will allow the user to identify fields. In this context, a field would be a element of a search-result. The text-content of this element is what would be matched against the current filter profile.
-  * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.

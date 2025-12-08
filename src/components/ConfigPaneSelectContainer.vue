@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCommonParent, getElementWithText, getRelativeSelector } from '@/utils/helpers';
+import { createSelector, getCommonParent, getElementWithText, getUniqueElementPath, getUniqueRelativeElementPaths } from '@/utils/helpers';
 import { ref } from 'vue';
 
 const displayMode = ref('start')
@@ -24,27 +24,37 @@ const secondSearchName = ref('')
 
 const showError = ref(false)
 
+
 const emit = defineEmits<{
   (e: "foundContainer",
-    node: HTMLElement,
+    containerSelector: string,
 
   ): void
 }>()
-
+/* ensure the user has input both strings
+  user clicks button
+  identify container ElementPath
+  identify title relative ElementPath
+//  */
 function onSubmit() {
   const match1 = getElementWithText(firstSearchName.value)
   const match2 = getElementWithText(secondSearchName.value)
+  if (!match1 || !match2) return
 
-  if (match1 && match2) {
-    const commonParent = getCommonParent(match1, match2)
-    if (commonParent) {
-      getRelativeSelector(commonParent, [match1, match2])
+  const commonParent = getCommonParent(match1, match2)
+  if (!commonParent) return;
 
-      emit('foundContainer', commonParent)
-    } else {
+  const containerPath = getUniqueElementPath(commonParent)
+  console.log('container', containerPath)
+  console.log(createSelector(containerPath))
 
-    }
-  }
+  const titlePath = getUniqueRelativeElementPaths(
+    [match1, match2], commonParent)
+  console.log('title', titlePath)
+  console.log(createSelector(titlePath))
+
+  // emit('foundContainer', 'commonParent')
+
 }
 
 

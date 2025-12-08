@@ -3,6 +3,22 @@
         <h3>Test Page</h3>
         <button @click="length++">Add</button>
         <button @click="length--">Remove</button>
+
+        <div id="mytest">
+          <p>
+
+          </p>
+          <div>
+
+          </div>
+          <ul>
+
+          </ul>
+          <div>
+            
+          </div>
+        </div>
+
         <div id="test-job-container">
 
             <div
