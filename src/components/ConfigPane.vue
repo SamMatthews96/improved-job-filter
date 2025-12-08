@@ -9,7 +9,7 @@ function onFoundContainer(node: Node) {
   /*
     so at this point we should have identified the container and
     the title field. Save this to the website's config.
-    
+
   */
 }
 
@@ -21,8 +21,8 @@ const showSelectContainer = ref(true)
   <div class="config-pane">
     <h2>Config Pane</h2>
     <ConfigPaneSelectContainer
-    @foundContainer="onFoundContainer"
-    v-if="showSelectContainer" />
+      @foundContainer="onFoundContainer"
+      v-if="showSelectContainer" />
 
 
 

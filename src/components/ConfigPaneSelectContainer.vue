@@ -8,13 +8,14 @@
     <button @click="onSubmit">Submit</button>
   </template>
   <p v-if="showError">Sorry, I couldn't identify the container.
-    Please double check your spelling.
+    Please double check your spelling and try again.
   </p>
 
 
 </template>
 
 <script setup lang="ts">
+import { getCommonParent, getElementWithText, getRelativeSelector } from '@/utils/helpers';
 import { ref } from 'vue';
 
 const displayMode = ref('start')
@@ -24,48 +25,28 @@ const secondSearchName = ref('')
 const showError = ref(false)
 
 const emit = defineEmits<{
-  (e: "foundContainer", node: Node): void
+  (e: "foundContainer",
+    node: HTMLElement,
+
+  ): void
 }>()
 
 function onSubmit() {
-  let xpath = `//*[text()='${firstSearchName.value}']`;
-  const match1 = document.evaluate(
-    xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue;
-  xpath = `//*[text()='${secondSearchName.value}']`;
-  const match2 = document.evaluate(
-    xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue;
+  const match1 = getElementWithText(firstSearchName.value)
+  const match2 = getElementWithText(secondSearchName.value)
 
   if (match1 && match2) {
-    const ans = getCommonAncestor(match1, match2)
-    if (ans) {
-      emit('foundContainer', ans)
+    const commonParent = getCommonParent(match1, match2)
+    if (commonParent) {
+      getRelativeSelector(commonParent, [match1, match2])
+
+      emit('foundContainer', commonParent)
     } else {
 
     }
   }
 }
 
-function getCommonAncestor(node1: Node, node2: Node): Node | null {
-  // Determine which API is available on the node
-  const method: "contains" | "compareDocumentPosition" =
-    "contains" in node1 ? "contains" : "compareDocumentPosition";
-
-  const test = method === "contains" ? 1 : Node.DOCUMENT_POSITION_CONTAINED_BY;
-
-  let current: Node | null = node1;
-
-  while ((current = current.parentNode)) {
-    // TypeScript refinement for dynamic method access
-    const result = (current as any)[method](node2);
-    if ((result & test) === test) {
-      return current;
-    }
-  }
-
-  return null;
-}
 
 </script>
 

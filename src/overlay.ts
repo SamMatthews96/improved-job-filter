@@ -2,9 +2,6 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import Overlay from './Overlay.vue'
 
-// @todo
-// make it show / hide based on a signal
-
 const id = 'improved-job-filter-overlay'
 
 export default function createOverlay() {

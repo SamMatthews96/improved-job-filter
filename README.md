@@ -43,6 +43,11 @@ Then via some action(s) of the user, it identifies
     - Enter text in a sub-window, then search page contents
       (should do it after the container is identified)
 
+So far, selector mode can identify the container.
+We also have a direct reference to the title
+Now we need to be able to find the title, and other fields, relative 
+to the search result, and allow the user to select other fields of the search item.
+
 * Filter profiles
   * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 
 * Website filters

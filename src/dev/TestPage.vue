@@ -12,6 +12,7 @@
                 <div
                     class="test-title"
                     title="Job Title"
+                    :myAttr="`test att `"
                 >Job Title {{ item }}</div>
                 <div class="test-company">Company Title {{ item }}</div>
             </div>
