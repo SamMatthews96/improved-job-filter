@@ -1,11 +1,11 @@
 import { EventEmitter } from 'eventemitter3'
-import type { RuntimeAPI } from './types'
+import type { RuntimeAPI, StoredData } from './types'
 
 export default class MockRuntime implements RuntimeAPI {
   private storageListeners: Array<(...args: any) => void> = []
   private eventEmitter: EventEmitter = new EventEmitter();
 
-  set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
+  set(items: Partial<StoredData>): Promise<void> {
     Object.entries(items).forEach(([key, value]) => {
       localStorage.setItem(String(key), JSON.stringify(value))
     })
@@ -16,8 +16,8 @@ export default class MockRuntime implements RuntimeAPI {
     return Promise.resolve()
   }
 
-  get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
-    const obj = {} as T
+  get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>> {
+    const obj = {} as StoredData
     keys.forEach((key) => {
       const value = localStorage.getItem(String(key))
       if (value == null) {

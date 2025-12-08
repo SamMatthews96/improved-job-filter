@@ -1,11 +1,15 @@
 export interface StoredData {
   blacklistedJobTitles: string[]
-  blacklistedCompanies: string[]
+  blacklistedCompanies: string[],
+  websiteFilterCollection: WebsiteFilterCollection
+
 }
 
+//@todo fix anything broken by change to set/get changes
+// use one class for stored data for now on
 export interface RuntimeAPI {
-  set<T = { [key: string]: any }>(items: Partial<T>): Promise<void>
-  get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T>
+  set(items: Partial<StoredData>): Promise<void>
+  get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>>
   addStorageListener(callback: (...args: any) => void): void
   injectScript(): Promise<void>
   addEventListener(message: string, callback: (...args: any) => void): void

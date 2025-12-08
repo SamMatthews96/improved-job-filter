@@ -7,14 +7,14 @@ import Runtime from '@/utils/runtime';
 function onFoundContainer(containerPath: ElementPath, titlePath: ElementPath, websitePrefix: string) {
   showSelectContainer.value = false
 
-  Runtime.set<WebsiteFilterCollection>({
-    [websitePrefix]: {
-      selectedFilterId: 1,
-      containerProperties: containerPath,
-      fieldProperties: {
-        title: titlePath
-      }
-    }
+  Runtime.set({
+    // [websitePrefix]: {
+    //   selectedFilterId: 1,
+    //   containerProperties: containerPath,
+    //   fieldProperties: {
+    //     title: titlePath
+    //   }
+    // }
   })
   console.log('onfound', containerPath, titlePath, websitePrefix)
 }

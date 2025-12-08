@@ -11,10 +11,10 @@ Runtime.addEventListener('toggleOverlay', () => {
   isShowing.value = !isShowing.value
 })
 
-Runtime.get<WebsiteFilterCollection>(['websiteFilterCollection'])
+Runtime.get(['websiteFilterCollection'])
   .then(res => {
     console.log('get', res)
-    Object.assign(websiteFilterCollection.value, res)
+    // Object.assign(websiteFilterCollection.value, res)
   })
 
 /*

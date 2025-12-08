@@ -1,9 +1,9 @@
-import type { RuntimeAPI } from './types'
+import type { RuntimeAPI, StoredData } from './types'
 
 export default class ChromeRuntime implements RuntimeAPI {
   private currentTabId: number | undefined
 
-  set<T = { [key: string]: any }>(items: Partial<T>): Promise<void> {
+  set(items: Partial<StoredData>): Promise<void> {
     const formattedData = {}
     Object.entries(items).forEach(([key, value]) => {
       Object.assign(formattedData, {
@@ -13,9 +13,9 @@ export default class ChromeRuntime implements RuntimeAPI {
     return chrome.storage.local.set(formattedData)
   }
 
-  async get<T = { [key: string]: unknown }>(keys: Array<keyof T>): Promise<T> {
-    const res = await chrome.storage.local.get<T>(keys)
-    const data = {} as T
+  async get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>> {
+    const res = await chrome.storage.local.get<StoredData>(keys)
+    const data = {} as StoredData
     keys.forEach((key_1) => {
       const value = JSON.parse(String(res[key_1]))
       data[key_1] = value
