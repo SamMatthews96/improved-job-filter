@@ -1,5 +1,5 @@
 <template>
-    <div id="test-page">
+    <div class="test-page">
         <h3>Test Page</h3>
         <button @click="length++">Add</button>
         <button @click="length--">Remove</button>
@@ -46,7 +46,7 @@ const length = ref(8)
 </script>
 
 <style lang="scss" scoped>
-#test-page {
+.test-page {
     text-align: center;
 }
 

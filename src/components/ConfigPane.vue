@@ -62,11 +62,13 @@ showSelectContainer.value = !isSaved
 .config-pane {
   display: inline-block;
   position: absolute;
-  background-color: black;
+  background-color: #444;
+  color: #bbb;
   right: 20px;
   top: 60px;
   padding: 10px;
   border-radius: 10px;
+  border: 2px black solid;
   pointer-events: all;
 }
 </style>

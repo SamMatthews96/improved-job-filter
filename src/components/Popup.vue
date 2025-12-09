@@ -60,38 +60,37 @@ Runtime.sendMessageToService('popupOpened', {
 </script>
 
 <template>
-  <button @click="toggleOverlay()">Toggle Overlay</button>
-  <h3>Blacklist Companies</h3>
-  <div class="blacklisted-companies">
-    <StringInputListItem
-      v-for="(_, i) in state.blacklistedCompanies"
-      :key="i"
-      v-model="state.blacklistedCompanies[i]"
-      @delete="() => deleteCompany(i)"
-      @input="onUpdatedConfig()"
-    />
+  <div class="improved-job-filter-root">
+    <button @click="toggleOverlay()">Toggle Overlay</button>
+    <h3>Blacklist Companies</h3>
+    <div class="blacklisted-companies">
+      <StringInputListItem v-for="(_, i) in state.blacklistedCompanies" :key="i" v-model="state.blacklistedCompanies[i]"
+        @delete="() => deleteCompany(i)" @input="onUpdatedConfig()" />
+    </div>
+
+    <button @click="state.blacklistedCompanies.push('')">Add Company</button>
+
+    <h3>Blacklist Job Title</h3>
+    <StringInputListItem v-for="(_, i) in state.blacklistedJobTitles" :key="i" v-model="state.blacklistedJobTitles[i]"
+      @delete="() => deleteJobTitle(i)" @input="onUpdatedConfig()" />
+
+    <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
+
+    <br></br>
+    <button @click="clearConfig">Clear</button>
   </div>
-
-  <button @click="state.blacklistedCompanies.push('')">Add Company</button>
-
-  <h3>Blacklist Job Title</h3>
-  <StringInputListItem
-    v-for="(_, i) in state.blacklistedJobTitles"
-    :key="i"
-    v-model="state.blacklistedJobTitles[i]"
-    @delete="() => deleteJobTitle(i)"
-    @input="onUpdatedConfig()"
-  />
-
-  <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
-
-  <br></br>
-  <button @click="clearConfig">Clear</button>
-
 </template>
 
 <style scoped>
 button {
   cursor: pointer;
+}
+
+.improved-job-filter-root {
+  color: #bbb;
+  background: #444;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 2px black;
 }
 </style>
