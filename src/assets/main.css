@@ -1,8 +1,0 @@
-@import './base.css';
-
-#app {
-  width: 400px;
-  padding: 1rem;
-  font-weight: normal;
-  border: solid red 1px;
-}

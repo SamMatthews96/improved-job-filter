@@ -5,18 +5,18 @@
         <button @click="length--">Remove</button>
 
         <div id="mytest">
-          <p>
+            <p>
 
-          </p>
-          <div>
+            </p>
+            <div>
 
-          </div>
-          <ul>
+            </div>
+            <ul>
 
-          </ul>
-          <div>
-            
-          </div>
+            </ul>
+            <div>
+
+            </div>
         </div>
 
         <div id="test-job-container">
