@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref, toRaw } from 'vue';
 import Runtime from '@/utils/runtime';
 import ConfigPane from '@/components/ConfigPane.vue';
 import type { StoredData } from '@/utils/types';
 
 const isShowing = ref(false)
-const state = ref<StoredData>({
+const state = reactive<StoredData>({
   blacklistedJobTitles: [],
   blacklistedCompanies: [],
   websiteFilterCollection: {}
@@ -17,8 +17,8 @@ Runtime.addEventListener('toggleOverlay', () => {
 
 Runtime.get(['websiteFilterCollection'])
   .then(res => {
-    Object.assign(state.value, res)
-    console.log(state.value)
+    Object.assign(state, res)
+    console.log(toRaw(state))
   })
 
 </script>

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
 import type { StoredData, ElementPath } from '@/utils/types';
 import Runtime from '@/utils/runtime';
+import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
 function addWebsiteFilter(
   containerPath: ElementPath,
@@ -29,16 +30,14 @@ function addWebsiteFilter(
 const state = defineModel<StoredData>()
 const showSelectContainer = ref(false)
 
-// we want to find out if there is any saved info for this page
-function getWebsiteFilter() {
-  const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)
-  if (!match) throw new Error('[20251208.2322]')
-  const isSaved = Boolean(state.value?.websiteFilterCollection[match[0]])
-  console.log('isSaved', isSaved)
-  // if it is not saved, we take the user through the selectContainer process
-  showSelectContainer.value = !isSaved
+
+const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)!
+const isSaved = Boolean(state.value?.websiteFilterCollection[match[0]])
+if (isSaved){
+  console.log(state.value?.websiteFilterCollection[match[0]])
 }
-getWebsiteFilter()
+// if it is not saved, we take the user through the selectContainer process
+showSelectContainer.value = !isSaved
 
 </script>
 
@@ -49,7 +48,10 @@ getWebsiteFilter()
       @foundContainer="addWebsiteFilter"
       v-if="showSelectContainer"
     />
-    
+    <WebsiteFieldConfig
+      v-else
+      :filter="state?.websiteFilterCollection[match[0]]!"
+    />
 
 
 
