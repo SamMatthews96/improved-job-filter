@@ -13,7 +13,10 @@ export default class ChromeRuntime implements RuntimeAPI {
     return chrome.storage.local.set(formattedData)
   }
 
-  async get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>> {
+  async get(): Promise<Partial<StoredData>> {
+    const keys: (keyof StoredData)[] = [
+      'blacklistedJobTitles', 'blacklistedCompanies', 'websiteFilterCollection'
+    ]
     const res = await chrome.storage.local.get<StoredData>(keys)
     const data = {} as StoredData
     keys.forEach((key_1) => {

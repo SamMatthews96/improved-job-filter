@@ -16,7 +16,8 @@ export default class MockRuntime implements RuntimeAPI {
     return Promise.resolve()
   }
 
-  get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>> {
+  get(): Promise<Partial<StoredData>> {
+    const keys = ['blacklistedJobTitles', 'blacklistedCompanies', 'websiteFilterCollection']
     const obj = {} as StoredData
     keys.forEach((key) => {
       const value = localStorage.getItem(String(key))

@@ -45,7 +45,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
 
 Priority:
-  * Support Custom Fields
   * Consider how Filter Profiles will work
 
 ### Future Development Ideas:

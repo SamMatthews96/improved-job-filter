@@ -7,7 +7,7 @@ export interface StoredData {
 
 export interface RuntimeAPI {
   set(items: Partial<StoredData>): Promise<void>
-  get(keys: Array<keyof StoredData>): Promise<Partial<StoredData>>
+  get(): Promise<Partial<StoredData>>
   addStorageListener(callback: (...args: any) => void): void
   injectScript(): Promise<void>
   addEventListener(message: string, callback: (...args: any) => void): void

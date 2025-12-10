@@ -1,8 +1,6 @@
 <template>
     Website Config
     <div
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
         v-for="fieldName in fieldNames"
         class="website-field-config"
     >{{ fieldName }}</div>
@@ -12,13 +10,6 @@
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
 
-function onMouseEnter(){
-    // console.log(props.filter)
-}
-
-function onMouseLeave(){
-
-}
 
 const props = defineProps<{
     filter: WebsiteFilter

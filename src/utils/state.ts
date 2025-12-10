@@ -1,4 +1,4 @@
-import { reactive, watch, type Reactive } from "vue";
+import { reactive, toRaw, watch, type Reactive } from "vue";
 import Runtime from "./runtime";
 import type { StoredData } from "./types";
 
@@ -8,11 +8,12 @@ export const state: Reactive<StoredData> = reactive({
     websiteFilterCollection: {}
 })
 
-Runtime.get(['websiteFilterCollection'])
+Runtime.get()
     .then(res => {
         Object.assign(state, res)
 
         watch(state, (val) => {
+            console.log(toRaw(state))
             Runtime.set(val)
         })
 

@@ -15,14 +15,15 @@ export default class Filter {
     constructor(selectors: PageSelectors) {
         this.selectors = selectors
         // when storage loads, apply filter
-        Runtime.get(['blacklistedJobTitles', 'blacklistedCompanies'])
-            .then((result) => {
-                Object.assign(this.filterConfig, result)
-                this.runFilter()
-            })
-            .catch(() => {
-                console.error('[20251203.0023] Failed to get StoredData')
-            })
+        // @todo put state here, listen for state change
+        // Runtime.get()
+        //     .then((result) => {
+        //         Object.assign(this.filterConfig, result)
+        //         this.runFilter()
+        //     })
+        //     .catch(() => {
+        //         console.error('[20251203.0023] Failed to get StoredData')
+        //     })
         // when filter changes, apply filter
         Runtime.addStorageListener((storage) => {
             Object.assign(this.filterConfig, storage)
