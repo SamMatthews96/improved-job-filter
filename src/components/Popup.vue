@@ -5,6 +5,8 @@ import StringInputListItem from "@/components/StringInputListItem.vue";
 import { type StoredData } from "@/utils/types";
 import Runtime from "@/utils/runtime";
 
+import '@/utils/state.ts'
+
 function deleteCompany(index: number) {
   state.value.blacklistedCompanies = state.value.blacklistedCompanies.filter((e, i) => {
     return i != index

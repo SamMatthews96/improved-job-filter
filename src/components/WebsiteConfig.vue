@@ -1,26 +1,15 @@
 <script setup lang="ts">
 
-import { reactive, ref, toRaw } from 'vue';
+import { ref } from 'vue';
 import Runtime from '@/utils/runtime';
 import ConfigPane from '@/components/ConfigPane.vue';
-import type { StoredData } from '@/utils/types';
 
 const isShowing = ref(false)
-const state = reactive<StoredData>({
-  blacklistedJobTitles: [],
-  blacklistedCompanies: [],
-  websiteFilterCollection: {}
-})
 
 Runtime.addEventListener('toggleOverlay', () => {
   isShowing.value = !isShowing.value
 })
 
-Runtime.get(['websiteFilterCollection'])
-  .then(res => {
-    Object.assign(state, res)
-    console.log(toRaw(state))
-  })
 
 </script>
 
@@ -33,7 +22,7 @@ Runtime.get(['websiteFilterCollection'])
       @click="isShowing = false"
       class="overlay-close"
     >Close</button>
-    <ConfigPane v-model="state" />
+    <ConfigPane />
 
   </div>
 </template>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
-import type { StoredData, ElementPath } from '@/utils/types';
-import Runtime from '@/utils/runtime';
+import type { ElementPath } from '@/utils/types';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
+import { state } from '@/utils/state'
+
 
 function addWebsiteFilter(
   containerPath: ElementPath,
@@ -11,30 +12,23 @@ function addWebsiteFilter(
   websitePrefix: string
 ) {
   showSelectContainer.value = false
-
-  Runtime.set({
-    websiteFilterCollection: {
-      [websitePrefix]: {
-        selectedFilterId: 1,
-        containerProperties: containerPath,
-        fieldProperties: {
-          title: titlePath
-        }
+  state.websiteFilterCollection = {
+    [websitePrefix]: {
+      selectedFilterId: 1,
+      containerProperties: containerPath,
+      fieldProperties: {
+        title: titlePath
       }
     }
-
-  })
-  console.log('onfound', containerPath, titlePath, websitePrefix)
+  }
 }
 
-const state = defineModel<StoredData>()
 const showSelectContainer = ref(false)
 
-
 const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)!
-const isSaved = Boolean(state.value?.websiteFilterCollection[match[0]])
-if (isSaved){
-  console.log(state.value?.websiteFilterCollection[match[0]])
+const isSaved = Boolean(state.websiteFilterCollection[match[0]])
+if (isSaved) {
+  console.log(state.websiteFilterCollection[match[0]])
 }
 // if it is not saved, we take the user through the selectContainer process
 showSelectContainer.value = !isSaved
@@ -50,7 +44,7 @@ showSelectContainer.value = !isSaved
     />
     <WebsiteFieldConfig
       v-else
-      :filter="state?.websiteFilterCollection[match[0]]!"
+      :filter="state.websiteFilterCollection[match[0]]!"
     />
 
 

@@ -34,6 +34,7 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 * Filter profiles
   * Each filter profile would be a collection of filter settings, for example, a number of blacklisted & whitelisted fields. 
+
 * Website filters
   * each website, after calculating the container element(s), will allow the user to identify fields. In this context, a field would be a element of a search-result. The text-content of this element is what would be matched against the current filter profile.
   * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
@@ -47,6 +48,12 @@ then make the UI to support custom fields.
 * Field entry QoL:
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
   * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
+
+* need to keep app state and storage synced. Current thought: as long as 
+  * state is updated upon open -> Runtime.get, 
+  * state is updated on Runtime.storageChanged,
+  * state and Runtime.set are synced
+  
 
 
 ### Future Development Ideas:
