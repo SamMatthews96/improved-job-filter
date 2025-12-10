@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
+import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import type { ElementPath } from '@/utils/types';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 import { state } from '@/utils/state'
@@ -23,15 +24,13 @@ function addWebsiteFilter(
   }
 }
 
+function clearSiteData() {
+  delete state.websiteFilterCollection[match]
+}
+
 const showSelectContainer = ref(false)
 
-const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)!
-const isSaved = Boolean(state.websiteFilterCollection[match[0]])
-if (isSaved) {
-  console.log(state.websiteFilterCollection[match[0]])
-}
-// if it is not saved, we take the user through the selectContainer process
-showSelectContainer.value = !isSaved
+const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
 
 </script>
 
@@ -40,14 +39,14 @@ showSelectContainer.value = !isSaved
     <h2>Config Pane</h2>
     <ConfigPaneSelectContainer
       @foundContainer="addWebsiteFilter"
-      v-if="showSelectContainer"
+      v-if="!(state.websiteFilterCollection[match])"
     />
-    <WebsiteFieldConfig
-      v-else
-      :filter="state.websiteFilterCollection[match[0]]!"
-    />
-
-
+    <template v-else>
+      <WebsiteFieldConfig :filter="state.websiteFilterCollection[match]!" />
+      <AddWebsiteFilterField />
+      <br></br>
+      <button @click="clearSiteData">Clear Site Data</button>
+    </template>
 
   </div>
 </template>
@@ -64,5 +63,6 @@ showSelectContainer.value = !isSaved
   border-radius: 10px;
   border: 2px black solid;
   pointer-events: all;
+  min-width: 400px;
 }
 </style>

@@ -1,14 +1,24 @@
 <template>
     Website Config
     <div
-        @click="console.log(props.filter.fieldProperties[fieldName])"
+        @mouseenter="onMouseEnter"
+        @mouseleave="onMouseLeave"
         v-for="fieldName in fieldNames"
+        class="website-field-config"
     >{{ fieldName }}</div>
 </template>
 
 <script setup lang="ts">
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
+
+function onMouseEnter(){
+    // console.log(props.filter)
+}
+
+function onMouseLeave(){
+
+}
 
 const props = defineProps<{
     filter: WebsiteFilter
@@ -27,3 +37,11 @@ Object.entries(props.filter.fieldProperties).forEach(([key, value]) => {
     console.log(key, value)
 })
 </script>
+
+<style scoped lang="scss">
+.website-field-config {
+    border: 1px red solid;
+    text-align: center;
+    cursor: default;
+}
+</style>

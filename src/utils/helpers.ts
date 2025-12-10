@@ -1,6 +1,6 @@
 import type { ElementProperties, ElementPath } from './types'
 
-export function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | null {
+function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | null {
   // Determine which API is available on the node
   const method: 'contains' | 'compareDocumentPosition' =
     'contains' in node1 ? 'contains' : 'compareDocumentPosition'
@@ -20,7 +20,7 @@ export function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLEle
   return null
 }
 
-export function getElementWithText(text: string): HTMLElement | null {
+function getElementWithText(text: string): HTMLElement | null {
   let xpath = `//*[text()='${text}']`
   const match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue as HTMLElement | null
@@ -28,7 +28,7 @@ export function getElementWithText(text: string): HTMLElement | null {
 }
 
 // use for getting search-results container
-export function getUniqueElementPath(element: HTMLElement): ElementPath {
+function getUniqueElementPath(element: HTMLElement): ElementPath {
   const attributes: ElementProperties[] = []
   let current: HTMLElement | null = element
   while (current) {
@@ -149,7 +149,7 @@ export function identifyContainerAndTitlePaths(textValues: string[]): {
   titlePath: ElementPath
 } {
   const matches = textValues.map(getElementWithText)
-  if (matches.some((match) => !match)) throw new Error('[20251208.1802')
+  if (matches.some((match) => !match)) throw new Error('[20251208.1802]')
   matches as HTMLElement[]
   if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
   //@todo commonparent should be able to get common parent of many
@@ -163,4 +163,47 @@ export function identifyContainerAndTitlePaths(textValues: string[]): {
     containerPath: containerPath,
     titlePath: titlePath,
   }
+}
+
+export function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string): ElementPath {
+  const fieldElement = getElementWithText(fieldValue)
+  if (!fieldElement) {
+    throw new Error('[20251210.1401]')
+  }
+  const container = getElementWithPath(containerPath)
+
+  return getUniqueRelativeElementPath(
+    fieldElement, container
+  )
+}
+
+function getUniqueRelativeElementPath(
+  fieldElement: HTMLElement,
+  container: HTMLElement,
+): ElementPath {
+  let currentElement = fieldElement
+  const attributeList: ElementPath = []
+
+  while (currentElement != container) {
+    const attributes = getElementProperties(currentElement)
+    attributeList.push(attributes)
+    currentElement = currentElement.parentElement as HTMLElement
+    if (!currentElement) throw new Error('[20251208.0041]')
+  }
+
+  const isValid = currentElement == container
+  if (!isValid) {
+    throw new Error('[20251208.1436]')
+  }
+
+  return attributeList
+}
+
+function getElementWithPath(path: ElementPath): HTMLElement {
+  const selector = createSelector(path)
+  const matches = document.querySelectorAll(selector)
+  if (matches.length != 1) {
+    throw new Error('[20251210.1406]')
+  }
+  return matches[0] as HTMLElement
 }
