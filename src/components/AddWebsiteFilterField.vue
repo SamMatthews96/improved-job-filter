@@ -22,10 +22,10 @@ const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
 
 function addFilterField() {
     const elementPath = identifyFieldChildPath(
-        state.websiteFilterCollection[match]!.containerProperties,
+        state.websiteFilterSettings[match]!.containerProperties,
         fieldValue.value
     )
-    state.websiteFilterCollection[match]!
+    state.websiteFilterSettings[match]!
         .fieldProperties[nameField.value] = elementPath
 
 }

@@ -13,7 +13,7 @@ function addWebsiteFilter(
   websitePrefix: string
 ) {
   showSelectContainer.value = false
-  state.websiteFilterCollection = {
+  state.websiteFilterSettings = {
     [websitePrefix]: {
       selectedFilterId: 1,
       containerProperties: containerPath,
@@ -25,7 +25,7 @@ function addWebsiteFilter(
 }
 
 function clearSiteData() {
-  delete state.websiteFilterCollection[match]
+  delete state.websiteFilterSettings[match]
 }
 
 const showSelectContainer = ref(false)
@@ -39,10 +39,10 @@ const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
     <h2>Config Pane</h2>
     <ConfigPaneSelectContainer
       @foundContainer="addWebsiteFilter"
-      v-if="!(state.websiteFilterCollection[match])"
+      v-if="!(state.websiteFilterSettings[match])"
     />
     <template v-else>
-      <WebsiteFieldConfig :filter="state.websiteFilterCollection[match]!" />
+      <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
       <AddWebsiteFilterField />
       <br></br>
       <button @click="clearSiteData">Clear Site Data</button>

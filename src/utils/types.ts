@@ -1,8 +1,6 @@
 export interface StoredData {
-  blacklistedJobTitles: string[]
-  blacklistedCompanies: string[],
-  websiteFilterCollection: WebsiteFilterCollection
-
+  filterProfiles: FilterProfileSettings
+  websiteFilterSettings: WebsiteFilterSettings
 }
 
 export interface RuntimeAPI {
@@ -33,10 +31,18 @@ export type WebsiteFilter = {
   selectedFilterId: number
   containerProperties: ElementPath,
   fieldProperties: {
-    [fieldName: string] : ElementPath
+    [fieldName: string]: ElementPath
   }
 }
 
-export type WebsiteFilterCollection = {
+export type FilterProfile = {
+
+}
+
+export type FilterProfileSettings = {
+  [name: string]: FilterProfile
+}
+
+export type WebsiteFilterSettings = {
   [url: string]: WebsiteFilter
 }

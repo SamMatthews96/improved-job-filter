@@ -3,9 +3,8 @@ import Runtime from "./runtime";
 import type { StoredData } from "./types";
 
 export const state: Reactive<StoredData> = reactive({
-    blacklistedJobTitles: [],
-    blacklistedCompanies: [],
-    websiteFilterCollection: {}
+    filterProfiles: {},
+    websiteFilterSettings: {}
 })
 
 Runtime.get()

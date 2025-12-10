@@ -5,15 +5,15 @@ import Runtime from "@/utils/runtime";
 import { state } from "@/utils/state.ts";
 
 function deleteCompany(index: number) {
-  state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
-    return i != index
-  })
+  // state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
+  //   return i != index
+  // })
 }
 
 function deleteJobTitle(index: number) {
-  state.blacklistedJobTitles = state.blacklistedJobTitles.filter((e, i) => {
-    return i != index
-  })
+  // state.blacklistedJobTitles = state.blacklistedJobTitles.filter((e, i) => {
+  //   return i != index
+  // })
 }
 
 function clearConfig() {
@@ -27,6 +27,10 @@ function toggleOverlay() {
   Runtime.sendMessageToTab('toggleOverlay')
 }
 
+function addFilter(){
+
+}
+
 Runtime.sendMessageToService('popupOpened', {
   tabId: 1
 })
@@ -36,29 +40,9 @@ Runtime.sendMessageToService('popupOpened', {
 <template>
   <div class="improved-job-filter-root">
     <button @click="toggleOverlay()">Toggle Overlay</button>
-    <h3>Blacklist Companies</h3>
-    <div class="blacklisted-companies">
-      <StringInputListItem
-        v-for="(_, i) in state.blacklistedCompanies"
-        :key="i"
-        v-model="state.blacklistedCompanies[i]"
-        @delete="() => deleteCompany(i)"
-      />
-    </div>
-
-    <button @click="state.blacklistedCompanies.push('')">Add Company</button>
-
-    <h3>Blacklist Job Title</h3>
-    <StringInputListItem
-      v-for="(_, i) in state.blacklistedJobTitles"
-      :key="i"
-      v-model="state.blacklistedJobTitles[i]"
-      @delete="() => deleteJobTitle(i)"
-    />
-
-    <br></br><button @click="state.blacklistedJobTitles.push('')">Add Job Title</button>
-
+    
     <br></br>
+    <button @click="addFilter">Add Filter</button>
     <button @click="clearConfig">Clear</button>
   </div>
 </template>

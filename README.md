@@ -46,6 +46,19 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 Priority:
   * Consider how Filter Profiles will work
+  * Create Profile Button
+    * Name field
+  * Delete Profile Button
+  * Profile dropdown
+  * Profile Config
+
+  * Where do I select the profile to use for a given website
+    * Put it in the Script view for now
+
+  * Matching fields from profile to element
+    * Having to write the same string in both is not ideal
+    
+    
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.
