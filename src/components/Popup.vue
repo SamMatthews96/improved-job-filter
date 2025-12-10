@@ -1,35 +1,24 @@
 <script setup lang="ts">
 
-import StringInputListItem from "@/components/StringInputListItem.vue";
 import Runtime from "@/utils/runtime";
 import { state } from "@/utils/state.ts";
+import NewFilterModel from "@/components/NewFilterModel.vue";
+import { ref } from "vue";
 
-function deleteCompany(index: number) {
-  // state.blacklistedCompanies = state.blacklistedCompanies.filter((e, i) => {
-  //   return i != index
-  // })
-}
-
-function deleteJobTitle(index: number) {
-  // state.blacklistedJobTitles = state.blacklistedJobTitles.filter((e, i) => {
-  //   return i != index
-  // })
-}
-
-function clearConfig() {
-  Object.assign(state, {
-    blacklistedJobTitles: [],
-    blacklistedCompanies: [],
-  })
+function addFilterClicked() {
+  isNewFilterModal.value = !isNewFilterModal.value;
 }
 
 function toggleOverlay() {
   Runtime.sendMessageToTab('toggleOverlay')
 }
 
-function addFilter(){
-
+function filterAdded(name: string) {
+  state.filterProfiles[name] = {}
+  isNewFilterModal.value = false;
 }
+
+const isNewFilterModal = ref(false)
 
 Runtime.sendMessageToService('popupOpened', {
   tabId: 1
@@ -39,11 +28,14 @@ Runtime.sendMessageToService('popupOpened', {
 
 <template>
   <div class="improved-job-filter-root">
+    <NewFilterModel
+      v-if="isNewFilterModal"
+      @create="filterAdded"
+    />
     <button @click="toggleOverlay()">Toggle Overlay</button>
-    
     <br></br>
-    <button @click="addFilter">Add Filter</button>
-    <button @click="clearConfig">Clear</button>
+    <button @click="addFilterClicked">Add Filter</button>
+
   </div>
 </template>
 
@@ -53,11 +45,13 @@ button {
 }
 
 .improved-job-filter-root {
+  position: relative;
   color: #bbb;
   background: #444;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 10px;
   border: solid 2px black;
   max-width: 500px;
+  min-height: 200px;
 }
 </style>

@@ -2,7 +2,12 @@
 
 import { ref } from 'vue';
 import Runtime from '@/utils/runtime';
-import ConfigPane from '@/components/ConfigPane.vue';
+import type { ElementPath } from '@/utils/types';
+import { state } from '@/utils/state'
+
+import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
+import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
+import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
 const isShowing = ref(false)
 
@@ -10,41 +15,83 @@ Runtime.addEventListener('toggleOverlay', () => {
   isShowing.value = !isShowing.value
 })
 
+function addWebsiteFilter(
+  containerPath: ElementPath,
+  titlePath: ElementPath,
+  websitePrefix: string
+) {
+  showSelectContainer.value = false
+  state.websiteFilterSettings = {
+    [websitePrefix]: {
+      selectedFilterId: 1,
+      containerProperties: containerPath,
+      fieldProperties: {
+        title: titlePath
+      }
+    }
+  }
+}
+
+function clearSiteData() {
+  delete state.websiteFilterSettings[match]
+}
+
+const showSelectContainer = ref(false)
+
+const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
 
 </script>
 
 <template>
   <div
-    id="overlay"
+    class="config-pane"
     v-if="isShowing"
   >
     <button
       @click="isShowing = false"
-      class="overlay-close"
+      class="overlay-close-button"
     >Close</button>
-    <ConfigPane />
+    <h2>Config Pane</h2>
+    <ConfigPaneSelectContainer
+      @foundContainer="addWebsiteFilter"
+      v-if="!(state.websiteFilterSettings[match])"
+    />
+    <template v-else>
+      <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
+      <AddWebsiteFilterField />
+      <br></br>
+      <button @click="clearSiteData">Clear Site Data</button>
+    </template>
 
   </div>
+
 </template>
 
 
 <style scoped lang="scss">
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
+.overlay-close-button {
+  position: absolute;
+  padding: 10px;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+}
 
-  .overlay-close {
-    position: absolute;
-    padding: 10px;
-    right: 20px;
-    top: 10px;
-    pointer-events: all;
-  }
+h2 {
+  margin-top: 5px;
+}
 
-
+.config-pane {
+  display: inline-block;
+  position: absolute;
+  background-color: #444;
+  color: #bbb;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px black solid;
+  pointer-events: all;
+  min-width: 400px;
 }
 </style>

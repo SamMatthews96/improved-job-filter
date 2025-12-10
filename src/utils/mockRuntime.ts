@@ -17,14 +17,14 @@ export default class MockRuntime implements RuntimeAPI {
   }
 
   get(): Promise<Partial<StoredData>> {
-    const keys = ['blacklistedJobTitles', 'blacklistedCompanies', 'websiteFilterCollection']
+    const keys: (keyof StoredData)[] = ['filterProfiles', 'websiteFilterSettings']
     const obj = {} as StoredData
     keys.forEach((key) => {
       const value = localStorage.getItem(String(key))
       if (value == null) {
         return
       }
-      ;(obj as any)[key] = JSON.parse(value)
+      ; (obj as any)[key] = JSON.parse(value)
     })
 
     return Promise.resolve(obj)
