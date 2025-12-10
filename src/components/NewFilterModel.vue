@@ -3,6 +3,7 @@
         <span>
             <input v-model="newName"></input>
             <button @click="onCreateClicked">Create</button>
+            <button @click="onCancelClicked">Cancel</button>
         </span>
     </div>
 
@@ -13,12 +14,18 @@ import { ref } from 'vue';
 
 const newName = ref('')
 const emit = defineEmits<{
-    (e: 'create', name: string): void
+    (e: 'create', name: string): void,
+    (e: 'cancel'): void
 }>()
 
 function onCreateClicked() {
     emit('create', newName.value)
 }
+
+function onCancelClicked(){
+    emit('cancel')
+}
+
 
 </script>
 
@@ -28,10 +35,15 @@ function onCreateClicked() {
     padding: 0;
     background: #88888888;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+
     display: flex;
-    border-radius: 10px;
+    border-radius: 8px;
     
     justify-content: center;
     align-items: center;

@@ -36,7 +36,7 @@ export type WebsiteFilter = {
 }
 
 export type FilterProfile = {
-
+  
 }
 
 export type FilterProfileSettings = {
