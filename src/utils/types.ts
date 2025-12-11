@@ -28,7 +28,7 @@ export type ElementProperties = {
 export type ElementPath = ElementProperties[]
 
 export type WebsiteFilter = {
-  selectedFilterId: number
+  selectedFilterId: string | undefined
   containerProperties: ElementPath,
   fieldProperties: {
     [fieldName: string]: ElementPath

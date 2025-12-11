@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import { ref } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 import Runtime from '@/utils/runtime';
-import type { ElementPath } from '@/utils/types';
+import type { ElementPath, FilterProfile } from '@/utils/types';
 import { state } from '@/utils/state'
 
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
@@ -23,7 +23,7 @@ function addWebsiteFilter(
   showSelectContainer.value = false
   state.websiteFilterSettings = {
     [websitePrefix]: {
-      selectedFilterId: 1,
+      selectedFilterId: undefined,
       containerProperties: containerPath,
       fieldProperties: {
         title: titlePath
@@ -39,6 +39,22 @@ function clearSiteData() {
 const showSelectContainer = ref(false)
 
 const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
+const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref(
+  Object.entries(state.filterProfiles).map(([name, filterProfile]) => {
+    return {
+      name, filterProfile
+    }
+  }))
+watch(state, () => {
+  filterProfileArray.value =
+    Object.entries(state.filterProfiles).map(([name, filterProfile]) => {
+      return {
+        name, filterProfile
+      }
+    })
+})
+
+
 
 </script>
 
@@ -52,6 +68,17 @@ const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
       class="overlay-close-button"
     >Close</button>
     <h2>Config Pane</h2>
+    <label for="profile">Profile: </label>
+    <select
+      name="profile"
+      v-model="state.websiteFilterSettings[match]!.selectedFilterId"
+    >
+      <option
+        v-for="filterProfile in filterProfileArray"
+        :value="filterProfile.name"
+      >{{ filterProfile.name }}</option>
+    </select>
+    <br></br>
     <ConfigPaneSelectContainer
       @foundContainer="addWebsiteFilter"
       v-if="!(state.websiteFilterSettings[match])"

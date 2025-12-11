@@ -33,32 +33,18 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * each website, after calculating the container element(s), will allow the user to identify fields. In this context, a field would be a element of a search-result. The text-content of this element is what would be matched against the current filter profile.
   * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
 
-* Support custom fields.
-  * So like we have for title, we need to add that process for adding custom fields
-  * Company name, for example. 
-  * Add button to add field, then a field name and sample text
-  * Eg: "Company Name" and "Company Title 2"
 * The pageSelectors.json needs to added to config by default
 
 * Field entry QoL:
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
   * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
-
+  * Matching fields from profile to element: Having to write the name in both is not ideal
+    
 Priority:
-  * Consider how Filter Profiles will work
-  * Create Profile Button
-    * Name field
-  * Delete Profile Button
-  * Profile dropdown
   * Profile Config
 
-  * Where do I select the profile to use for a given website
-    * Put it in the Script view for now
 
-  * Matching fields from profile to element
-    * Having to write the same string in both is not ideal
-    
-    
+
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and use AI to give jobs a score based on the user's qualifications and goals.

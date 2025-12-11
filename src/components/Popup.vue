@@ -64,12 +64,11 @@ watch(state, () => {
       <button @click="toggleOverlay()">Toggle Overlay</button>
       <button @click="addFilterClicked">Add Filter</button>
       <br></br>
-      <label for="cars">Choose a car:</label>
 
       <select
         name="cars"
         id="cars"
-        :value="selectedProfileId"
+        v-model="selectedProfileId"
         @change="onSelectChange"
       >
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
