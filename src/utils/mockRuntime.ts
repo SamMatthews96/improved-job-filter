@@ -17,7 +17,7 @@ export default class MockRuntime implements RuntimeAPI {
   }
 
   get(): Promise<Partial<StoredData>> {
-    const keys: (keyof StoredData)[] = ['filterProfiles', 'websiteFilterSettings']
+    const keys: (keyof StoredData)[] = ['filterProfileSettings', 'websiteFilterSettings']
     const obj = {} as StoredData
     keys.forEach((key) => {
       const value = localStorage.getItem(String(key))

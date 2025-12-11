@@ -15,7 +15,7 @@ export default class ChromeRuntime implements RuntimeAPI {
 
   async get(): Promise<Partial<StoredData>> {
     const keys: (keyof StoredData)[] = [
-      'filterProfiles', 'websiteFilterSettings'
+      'filterProfileSettings', 'websiteFilterSettings'
     ]
     const res = await chrome.storage.local.get<StoredData>(keys)
     const data = {} as StoredData

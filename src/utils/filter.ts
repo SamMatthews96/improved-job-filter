@@ -4,7 +4,7 @@ import Runtime from './runtime'
 export default class Filter {
     private selectors: PageSelectors
     private filterConfig: StoredData = {
-        filterProfiles: {},
+        filterProfileSettings: {},
         websiteFilterSettings: {}
     }
 

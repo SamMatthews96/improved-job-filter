@@ -1,5 +1,5 @@
 export interface StoredData {
-  filterProfiles: FilterProfileSettings
+  filterProfileSettings: FilterProfileSettings
   websiteFilterSettings: WebsiteFilterSettings
 }
 
@@ -36,11 +36,14 @@ export type WebsiteFilter = {
 }
 
 export type FilterProfile = {
-  
+
 }
 
 export type FilterProfileSettings = {
-  [name: string]: FilterProfile
+  selectedFilterId: string | undefined,
+  profiles: {
+    [name: string]: FilterProfile
+  }
 }
 
 export type WebsiteFilterSettings = {

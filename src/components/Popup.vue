@@ -17,7 +17,7 @@ function toggleOverlay() {
 }
 
 function filterAdded(name: string) {
-  state.filterProfiles[name] = {}
+  state.filterProfileSettings.profiles[name] = {}
   isNewFilterModal.value = false;
 }
 
@@ -25,17 +25,16 @@ function filterCancel() {
   isNewFilterModal.value = false;
 }
 
-function onSelectChange(e: Event) {
-  selectedProfileId.value = ((e as InputEvent).target as HTMLSelectElement).value
-}
-
 function onDeleteClicked() {
-  delete state.filterProfiles[selectedProfileId.value!]
-  selectedProfileId.value = Object.keys(state.filterProfiles)[0]
+  const selectedFilterId = state.filterProfileSettings.selectedFilterId
+  delete state.filterProfileSettings.profiles[selectedFilterId!]
+  const firstKey = Object.keys(state.filterProfileSettings.profiles)[0]
+  if (firstKey){
+    state.filterProfileSettings.selectedFilterId = firstKey;
+  }
 }
 
 const isNewFilterModal = ref(false)
-const selectedProfileId: Ref<string | undefined> = ref(undefined)
 const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref([])
 
 Runtime.sendMessageToService('popupOpened', {
@@ -44,7 +43,7 @@ Runtime.sendMessageToService('popupOpened', {
 
 watch(state, () => {
   filterProfileArray.value =
-    Object.entries(state.filterProfiles).map(([name, filterProfile]) => {
+    Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
       return {
         name, filterProfile
       }
@@ -68,15 +67,14 @@ watch(state, () => {
       <select
         name="cars"
         id="cars"
-        v-model="selectedProfileId"
-        @change="onSelectChange"
+        v-model="state.filterProfileSettings.selectedFilterId"
       >
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
       </select>
 
       <FilterProfileEdit
-        v-if="selectedProfileId != null"
-        :selectedProfileId="selectedProfileId"
+        v-if="state.filterProfileSettings.selectedFilterId != undefined"
+        :selectedProfileId="state.filterProfileSettings.selectedFilterId"
         @delete="onDeleteClicked"
       />
     </div>

@@ -40,20 +40,22 @@ const showSelectContainer = ref(false)
 
 const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
 const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref(
-  Object.entries(state.filterProfiles).map(([name, filterProfile]) => {
+  Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
     return {
       name, filterProfile
     }
   }))
 watch(state, () => {
   filterProfileArray.value =
-    Object.entries(state.filterProfiles).map(([name, filterProfile]) => {
+    Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
       return {
         name, filterProfile
       }
     })
+  console.log(state)
 })
 
+console.log(state)
 
 
 </script>
@@ -72,6 +74,7 @@ watch(state, () => {
     <select
       name="profile"
       v-model="state.websiteFilterSettings[match]!.selectedFilterId"
+      v-if="state.websiteFilterSettings[match]"
     >
       <option
         v-for="filterProfile in filterProfileArray"
