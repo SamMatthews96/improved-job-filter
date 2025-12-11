@@ -19,6 +19,9 @@ function toggleOverlay() {
 function filterAdded(name: string) {
   state.filterProfileSettings.profiles[name] = {}
   isNewFilterModal.value = false;
+  if (state.filterProfileSettings.selectedFilterId == undefined){
+    state.filterProfileSettings.selectedFilterId = name
+  }
 }
 
 function filterCancel() {
@@ -29,7 +32,7 @@ function onDeleteClicked() {
   const selectedFilterId = state.filterProfileSettings.selectedFilterId
   delete state.filterProfileSettings.profiles[selectedFilterId!]
   const firstKey = Object.keys(state.filterProfileSettings.profiles)[0]
-  if (firstKey){
+  if (firstKey) {
     state.filterProfileSettings.selectedFilterId = firstKey;
   }
 }
@@ -73,7 +76,8 @@ watch(state, () => {
       </select>
 
       <FilterProfileEdit
-        v-if="state.filterProfileSettings.selectedFilterId != undefined"
+        v-if="state.filterProfileSettings.selectedFilterId != undefined &&
+          state.filterProfileSettings.profiles[state.filterProfileSettings.selectedFilterId]"
         :selectedProfileId="state.filterProfileSettings.selectedFilterId"
         @delete="onDeleteClicked"
       />

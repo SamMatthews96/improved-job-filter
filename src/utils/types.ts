@@ -35,8 +35,22 @@ export type WebsiteFilter = {
   }
 }
 
-export type FilterProfile = {
+export type FilterField = {
+  blacklistKeywords: string
+}
 
+export type FilterFieldList = {
+  name: string
+  field: FilterField
+}[]
+
+export type FilterProfileList = {
+  name: string,
+  filterProfile: FilterProfile
+}[]
+
+export type FilterProfile = {
+  [name: string]: FilterField
 }
 
 export type FilterProfileSettings = {

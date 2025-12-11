@@ -2,7 +2,7 @@
 
 import { ref, watch, type Ref } from 'vue';
 import Runtime from '@/utils/runtime';
-import type { ElementPath, FilterProfile } from '@/utils/types';
+import type { ElementPath, FilterProfile, FilterProfileList } from '@/utils/types';
 import { state } from '@/utils/state'
 
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
@@ -36,26 +36,24 @@ function clearSiteData() {
   delete state.websiteFilterSettings[match]
 }
 
-const showSelectContainer = ref(false)
-
-const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
-const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref(
-  Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
+function getFilterProfileList(): FilterProfileList {
+  return Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
     return {
       name, filterProfile
     }
-  }))
+  })
+}
+
+const showSelectContainer = ref(false)
+const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
+
+const filterProfileArray: Ref<FilterProfileList> = ref(getFilterProfileList())
 watch(state, () => {
-  filterProfileArray.value =
-    Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
-      return {
-        name, filterProfile
-      }
-    })
-  console.log(state)
+  filterProfileArray.value = getFilterProfileList()
 })
 
-console.log(state)
+
+
 
 
 </script>
