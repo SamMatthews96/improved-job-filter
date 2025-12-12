@@ -1,103 +1,73 @@
-import type { StoredData, PageSelectors } from './types'
-import Runtime from './runtime'
+
+import { createSelector, getElementWithPath, getWindowUrl } from './helpers'
+import { state } from './state'
+import { watch } from 'vue'
+import type { WebsiteFilter } from './types'
 
 export default class Filter {
-    private selectors: PageSelectors
-    private filterConfig: StoredData = {
-        filterProfileSettings: {},
-        websiteFilterSettings: {}
-    }
 
     private defaultJobDisplayMode: string = ''
     private hasFilterRun: boolean = false
+    private websiteFilter: WebsiteFilter
+    private container: HTMLElement | null = null;
 
-    constructor(selectors: PageSelectors) {
-        this.selectors = selectors
-        // when storage loads, apply filter
-        // @todo put state here, listen for state change
-        // Runtime.get()
-        //     .then((result) => {
-        //         Object.assign(this.filterConfig, result)
-        //         this.runFilter()
-        //     })
-        //     .catch(() => {
-        //         console.error('[20251203.0023] Failed to get StoredData')
-        //     })
+    constructor() {
+        console.log('filter', state)
+        this.websiteFilter = state.websiteFilterSettings[getWindowUrl()]!
+        this.setContainer()
         // when filter changes, apply filter
-        Runtime.addStorageListener((storage) => {
-            Object.assign(this.filterConfig, storage)
+        watch(state, () => {
+            console.log('filter', state)
             this.runFilter()
         })
+        this.runFilter()
         // when page content changes, re apply filter
+
+    }
+
+    private setContainer() {
+        if (!this.websiteFilter?.containerProperties) return;
+        this.container = getElementWithPath(this.websiteFilter.containerProperties)
         const observer = new MutationObserver(() => {
             this.runFilter()
         })
-        const element = document.querySelector(this.selectors.container)
-        if (element) {
-            observer.observe(element, {
-                childList: true,
-            })
-        }
-    }
-
-    private getContainer(): Element | null {
-        const matches = document.querySelectorAll(this.selectors.container)
-        switch (matches.length) {
-            case 0:
-                console.log('[20251130.2201] Failed to get job list container')
-                return null
-            case 1:
-                return matches[0] ?? null
-            default:
-                console.log('[20251130.2202] Found multiple matches for job list container')
-                return null
-        }
+        this.setContainer()
+        observer.observe(this.container, {
+            childList: true,
+        })
     }
 
     public runFilter() {
-        // get container
-        const container: Element | null = this.getContainer()
-        if (container == null) {
-            return
-        }
+        if (!this.container) return;
 
         // get display mode of jobs
         if (!this.hasFilterRun) {
-            const child = container.children[0]
+            const child = this.container.children[0]
             if (child instanceof HTMLElement) {
                 this.defaultJobDisplayMode = child.style.display
             }
         }
 
         // get fields within job
-        for (let i = 0; i < container.children.length; i++) {
-            const jobElement = container.children[i]
-            if (!(jobElement instanceof HTMLElement) || jobElement == undefined) {
-                console.warn('[20251130.2331]', jobElement)
-                continue
-            }
+        for (let i = 0; i < this.container.children.length; i++) {
+            const jobElement = this.container.children[i] as HTMLElement
 
             let isMatch = false
 
-            const titleElement = jobElement.querySelector(this.selectors.title)
-            if (titleElement instanceof HTMLElement) {
-                const titleWords = titleElement.innerText.toLowerCase().split(' ')
-                // this.filterConfig.blacklistedJobTitles.forEach((jobTitle) => {
-                //     if (titleWords.includes(jobTitle.toLowerCase())) {
-                //         isMatch = true
-                //     }
-                // })
-            }
-
-            const companyElement = jobElement.querySelector(this.selectors.company)
-            if (companyElement instanceof HTMLElement) {
-                const companyWords = companyElement.innerText.toLowerCase().split(' ')
-                // this.filterConfig.blacklistedCompanies.forEach((company) => {
-                //     if (companyWords.includes(company.toLowerCase())) {
-                //         isMatch = true
-                //     }
-                // })
-            }
+            Object.entries(this.websiteFilter.fieldProperties)
+                .forEach(([fieldName, elementPath]) => {
+                    const element = getElementWithPath(elementPath, jobElement)
+                    const elementWords = element.innerText.toLowerCase().split(' ')
+                    const profileId = state.filterProfileSettings.selectedFilterId
+                    if (!profileId) return
+                    const currentProfile = state.filterProfileSettings.profiles[profileId]!
+                    currentProfile[fieldName]?.blacklistKeywords.split(' ')
+                        .forEach(keyword => {
+                            if (elementWords.includes(keyword.toLowerCase())) {
+                                isMatch = true
+                            }
+                        })
+                })
 
             // compare against current filter
             // if match, hide item, else, set display to its default

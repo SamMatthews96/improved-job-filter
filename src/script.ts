@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import WebsiteConfig from './components/WebsiteConfig.vue'
+import Filter from './utils/filter'
 
 const id = 'improved-job-filter-overlay'
 
@@ -20,3 +21,5 @@ function createOverlay() {
 
 console.log('improved-job-filter loading')
 createOverlay()
+
+new Filter()

@@ -106,7 +106,7 @@ function getElementProperties(element: HTMLElement): ElementProperties {
 }
 
 // used to identify "packed" selector path to get field of a search item
-export function getUniqueRelativeElementPaths(
+function getUniqueRelativeElementPaths(
   fieldElements: HTMLElement[],
   container: HTMLElement,
 ): ElementPath {
@@ -128,7 +128,7 @@ export function getUniqueRelativeElementPaths(
   return attributeList
 }
 
-export function createSelector(path: ElementPath): string {
+function createSelector(path: ElementPath): string {
   return path
     .map((properties, i) => {
       let selectorFragment = `${properties.elementType}`
@@ -144,7 +144,7 @@ export function createSelector(path: ElementPath): string {
     .join(' > ')
 }
 
-export function identifyContainerAndTitlePaths(textValues: string[]): {
+function identifyContainerAndTitlePaths(textValues: string[]): {
   containerPath: ElementPath
   titlePath: ElementPath
 } {
@@ -165,7 +165,7 @@ export function identifyContainerAndTitlePaths(textValues: string[]): {
   }
 }
 
-export function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string): ElementPath {
+function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string): ElementPath {
   const fieldElement = getElementWithText(fieldValue)
   if (!fieldElement) {
     throw new Error('[20251210.1401]')
@@ -199,11 +199,27 @@ function getUniqueRelativeElementPath(
   return attributeList
 }
 
-function getElementWithPath(path: ElementPath): HTMLElement {
+function getElementWithPath(path: ElementPath, parent: HTMLElement | null = null): HTMLElement {
+  const element = parent ? parent : document
   const selector = createSelector(path)
-  const matches = document.querySelectorAll(selector)
+  const matches = element.querySelectorAll(selector)
   if (matches.length != 1) {
     throw new Error('[20251210.1406]')
   }
   return matches[0] as HTMLElement
+}
+
+
+
+function getWindowUrl(): string {
+  return (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
+}
+
+export {
+  getUniqueRelativeElementPaths,
+  createSelector,
+  identifyContainerAndTitlePaths,
+  identifyFieldChildPath,
+  getWindowUrl,
+  getElementWithPath
 }

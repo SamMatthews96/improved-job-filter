@@ -36,11 +36,7 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
   * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
     
-Priority:
-  * Filter Profile Config
-  * Add Field to profile
-    * Add Keywords
-  
+* Re implement Filter
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?
