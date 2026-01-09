@@ -1,5 +1,6 @@
 import type { ElementProperties, ElementPath } from './types'
 
+ //@todo should commonparent be able to get common parent of many
 function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | null {
   // Determine which API is available on the node
   const method: 'contains' | 'compareDocumentPosition' =
@@ -153,7 +154,7 @@ function identifyContainerAndTitlePaths(textValues: string[]): {
   if (matches.some((match) => !match)) throw new Error('[20251208.1802]')
   matches as HTMLElement[]
   if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
-  //@todo commonparent should be able to get common parent of many
+
   const commonParent = getCommonParent(matches[0], matches[1])
   if (!commonParent) throw new Error('[20251208.1804]')
 

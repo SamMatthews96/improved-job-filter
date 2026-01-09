@@ -40,7 +40,8 @@ function onSubmit() {
   const { containerPath, titlePath } = identifyContainerAndTitlePaths(
     [firstSearchName.value, secondSearchName.value]
   )
-  // @todo, visual check to confirm that we have the correct fields selected
+  // @todo, to confirm that we have the correct fields selected
+  // we could highlight the identified fields
   // something for search container, and title field
   // if the checks are met, then submit
 
