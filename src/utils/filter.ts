@@ -12,22 +12,18 @@ export default class Filter {
     private observer?: MutationObserver;
 
     constructor() {
-        console.log('filter', state)
-
         this.updateContainer()
 
         watch(state, () => {
             clearTimeout(this.stateChangedTimeoutId)
             this.stateChangedTimeoutId = setTimeout(() => {
-                console.log('filter', state)
-
                 this.updateContainer()
-
             }, this.stateTimeoutDelay)
         })
     }
 
     private updateContainer(): void {
+        console.log('filter', state)
         this.observer?.disconnect()
 
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
@@ -48,45 +44,47 @@ export default class Filter {
             this.runFilter()
         } else {
             if (this.container) {
-                for (let i = 0; i < this.container.children.length; i++) {
-                    const jobElement = this.container.children[i] as HTMLElement
-                    jobElement.style.display = this.defaultJobDisplayMode
-                }
+                this.clearFilter()
                 this.container = undefined
             }
         }
-
     }
 
     public runFilter(): void {
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-        const fieldPropertyArray = websiteFilter
-            ? Object.entries(websiteFilter.fieldProperties) : []
 
-        // get fields within job
+        const profileId = state.filterProfileSettings.selectedFilterId
+        if (!profileId) {
+            this.clearFilter()
+            return
+        }
+        const currentProfile = state.filterProfileSettings.profiles[profileId]
+
+        if (!websiteFilter || !currentProfile) {
+            this.clearFilter()
+            return
+        }
+
+        const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
+
         for (let i = 0; i < this.container!.children.length; i++) {
             const jobElement = this.container!.children[i] as HTMLElement
-
-            let isMatch = false
-
-            fieldPropertyArray.forEach(([fieldName, elementPath]) => {
+            const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
                 const element = getElementWithPath(elementPath, jobElement)
                 const elementWords = element.innerText.toLowerCase().split(' ')
-                const profileId = state.filterProfileSettings.selectedFilterId
-                if (!profileId) return
-                const currentProfile = state.filterProfileSettings.profiles[profileId]
-                if (!currentProfile) return;
-                currentProfile[fieldName]?.blacklistKeywords.split(' ')
-                    .forEach(keyword => {
-                        if (elementWords.includes(keyword.toLowerCase())) {
-                            isMatch = true
-                        }
-                    })
+                return currentProfile[fieldName]?.blacklistKeywords.split(' ')
+                    .some(keyword => elementWords.includes(keyword.toLowerCase()))
             })
 
             jobElement.style.display = isMatch
                 ? 'none' : this.defaultJobDisplayMode
         }
+    }
 
+    private clearFilter(): void {
+        for (let i = 0; i < this.container!.children.length; i++) {
+            const jobElement = this.container!.children[i] as HTMLElement
+            jobElement.style.display = this.defaultJobDisplayMode
+        }
     }
 }

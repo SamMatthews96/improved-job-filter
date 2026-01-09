@@ -136,8 +136,8 @@ function createSelector(path: ElementPath): string {
       if (i < path.length - 1) {
         selectorFragment += `:nth-child(${properties.nthChild})`
       }
-      // console.log(properties.attributes)
       Object.entries(properties.attributes).forEach(([key, value]) => {
+        if (key == 'style') return
         selectorFragment += `[${key}="${value}"]`
       })
       return selectorFragment
