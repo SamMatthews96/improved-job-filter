@@ -67,7 +67,7 @@ watch(state, () => {
       @click="isShowing = false"
       class="overlay-close-button"
     >Close</button>
-    <h2>Config Pane</h2>
+    <h2>Website Config Pane</h2>
     <label for="profile">Profile: </label>
     <select
       name="profile"

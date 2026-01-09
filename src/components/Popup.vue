@@ -64,7 +64,7 @@ watch(state, () => {
     />
     <div>
       <button @click="toggleOverlay()">Toggle Overlay</button>
-      <button @click="addFilterClicked">Add Filter</button>
+      <button @click="addFilterClicked">Add Filter Profile</button>
       <br></br>
 
       <select

@@ -1,27 +1,30 @@
 
-import { createSelector, getElementWithPath, getWindowUrl } from './helpers'
+import { getElementWithPath, getWindowUrl } from './helpers'
 import { state } from './state'
 import { watch } from 'vue'
 import type { WebsiteFilter } from './types'
 
 export default class Filter {
-
     private defaultJobDisplayMode: string = ''
     private hasFilterRun: boolean = false
     private websiteFilter: WebsiteFilter
     private container: HTMLElement | null = null;
 
+    private stateChangedTimeoutId: number = 0;
+    private stateTimeoutDelay = 300;
+
     constructor() {
         console.log('filter', state)
         this.websiteFilter = state.websiteFilterSettings[getWindowUrl()]!
         this.setContainer()
-        // when filter changes, apply filter
         watch(state, () => {
-            console.log('filter', state)
-            this.runFilter()
+            clearTimeout(this.stateChangedTimeoutId)
+            this.stateChangedTimeoutId = setTimeout(() => {
+                console.log('filter', state)
+                this.runFilter()
+            }, this.stateTimeoutDelay)
         })
         this.runFilter()
-        // when page content changes, re apply filter
 
     }
 
@@ -31,7 +34,6 @@ export default class Filter {
         const observer = new MutationObserver(() => {
             this.runFilter()
         })
-        this.setContainer()
         observer.observe(this.container, {
             childList: true,
         })
@@ -60,7 +62,8 @@ export default class Filter {
                     const elementWords = element.innerText.toLowerCase().split(' ')
                     const profileId = state.filterProfileSettings.selectedFilterId
                     if (!profileId) return
-                    const currentProfile = state.filterProfileSettings.profiles[profileId]!
+                    const currentProfile = state.filterProfileSettings.profiles[profileId]
+                    if (!currentProfile) return;
                     currentProfile[fieldName]?.blacklistKeywords.split(' ')
                         .forEach(keyword => {
                             if (elementWords.includes(keyword.toLowerCase())) {
