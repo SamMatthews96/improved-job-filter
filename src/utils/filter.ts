@@ -52,18 +52,13 @@ export default class Filter {
 
     public runFilter(): void {
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+        if (!websiteFilter) return this.clearFilter()
 
-        const profileId = state.filterProfileSettings.selectedFilterId
-        if (!profileId) {
-            this.clearFilter()
-            return
-        }
+        const profileId = websiteFilter.selectedFilterId
+        if (!profileId) return this.clearFilter()
+
         const currentProfile = state.filterProfileSettings.profiles[profileId]
-
-        if (!websiteFilter || !currentProfile) {
-            this.clearFilter()
-            return
-        }
+        if (!currentProfile) return this.clearFilter()
 
         const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
 

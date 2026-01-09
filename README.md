@@ -21,7 +21,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * Styling
 
 * Improve Filters
-  * The filter fields allow spaces, which don't work with the current filter-by-word logic
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
   * The keyword filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
   * import to profile from websites that use that profile
@@ -33,11 +32,7 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * The pageSelectors.json adds to config by default
 
 * Field entry QoL:
-  * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission.
-  * it may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
-    
-* Re implement Filter
+  * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission. It may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?
-* Perhaps even have AI review for suitability
