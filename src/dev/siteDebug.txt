@@ -1,0 +1,17 @@
+#mosaic-provider-jobcards > div > ul > li:nth-child(1)
+
+li[class="css-1ac2h1w eu4oa1w0"] 
+> div:nth-child(1) 
+> div:nth-child(1)[class="slider_container css-weo834 eu4oa1w0"][data-testid="slider_container"] 
+> div:nth-child(1)[class="slider_list css-1bej0z4 eu4oa1w0"] 
+> div:nth-child(1)[data-testid="slider_item"][class="slider_item css-17bghu4 eu4oa1w0"] 
+> div:nth-child(1)[data-testid="fade-in-wrapper"][class="css-u74ql7 eu4oa1w0"] 
+> div:nth-child(1)[class="job_seen_beacon"] 
+> table:nth-child(1)[class="mainContentTable css-131ju4w eu4oa1w0"][cellpadding="0"][cellspacing="0"][role="presentation"] 
+> tbody:nth-child(1) 
+> tr:nth-child(1) 
+> td:nth-child(1)[class="resultContent css-1o6lhys eu4oa1w0"] 
+> div:nth-child(1)[class="css-pt3vth e37uo190"] 
+> h2:nth-child(1)[class="jobTitle css-1o1rnx9 eu4oa1w0"][tabindex="-1"] 
+> a:nth-child(1)[data-mobtk="1jel0fm31j0j2805"][data-hiring-event="false"][target="_blank"][data-hide-spinner="true"][role="button"][class="jcs-JobTitle css-1baag51 eu4oa1w0"] 
+> span:nth-child(1)

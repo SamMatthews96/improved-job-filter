@@ -2,21 +2,15 @@ import { getCommonProperties } from '@/utils/helpers'
 import { expect, test } from 'vitest'
 
 const element1 = document.createRange().createContextualFragment(`
-    <div class="hello" my-attr="kevin">
-
-    </div>
+    <div class="hello" my-attr="kevin"></div>
 `).querySelector('div')
 
 const element2 = document.createRange().createContextualFragment(`
-    <div class="hello" my-attr="kevin">
-
-    </div>
+    <div class="hello" my-attr="kevin"></div>
 `).querySelector('div')
 
 const element3 = document.createRange().createContextualFragment(`
-    <div class="hello" my-attr="dave">
-
-    </div>
+    <div class="hello" my-attr="kevi"></div>
 `).querySelector('div')
 
 test('same attributes and type', () => {

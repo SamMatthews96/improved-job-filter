@@ -1,6 +1,6 @@
 import type { ElementProperties, ElementPath } from './types'
 
- //@todo should commonparent be able to get common parent of many
+//@todo should commonparent be able to get common parent of many
 function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | null {
   // Determine which API is available on the node
   const method: 'contains' | 'compareDocumentPosition' =
@@ -52,10 +52,8 @@ function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
   const firstElement = fieldElements[0] as HTMLElement
   const commonProperties: ElementProperties = getElementProperties(firstElement)
   // iterate over the equivalent elements
-  for (let i = 1; i < length; i++) {
-    const element = fieldElements[i]
-    if (!element) throw new Error('[20251207.2328]')
-
+  for (let i = 1; i < fieldElements.length; i++) {
+    const element = fieldElements[i]!
     const elementProperties = getElementProperties(element)
     if (commonProperties.elementType != elementProperties.elementType) {
       throw new Error('[20251208.1605]')
@@ -204,11 +202,11 @@ function getUniqueRelativeElementPath(
 function getElementWithPath(path: ElementPath, parent: HTMLElement | null = null): HTMLElement {
   const element = parent ? parent : document
   const selector = createSelector(path)
-  console.log(element)
-  console.log(selector)
   const matches = element.querySelectorAll(selector)
   if (matches.length != 1) {
-    throw new Error('[20251210.1406]')
+    console.log(element)
+    console.log(selector)
+    throw new Error(`[20251210.1407] ${matches.length} matches found`)
   }
   return matches[0] as HTMLElement
 }
