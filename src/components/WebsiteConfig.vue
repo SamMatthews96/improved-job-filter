@@ -52,10 +52,6 @@ watch(state, () => {
   filterProfileArray.value = getFilterProfileList()
 })
 
-
-
-
-
 </script>
 
 <template>

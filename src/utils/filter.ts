@@ -29,6 +29,9 @@ export default class Filter {
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
         if (websiteFilter) {
             this.container = getElementWithPath(websiteFilter.containerProperties)
+            if (!this.container) {
+                throw new Error('[20260110.2310]')
+            }
             if (
                 this.container.children[0] instanceof HTMLElement
                 && this.container.children[0].style.display != 'none'
@@ -66,6 +69,7 @@ export default class Filter {
             const jobElement = this.container!.children[i] as HTMLElement
             const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
                 const element = getElementWithPath(elementPath, jobElement)
+                if (!element) return;
                 const elementWords = element.innerText.toLowerCase().split(' ')
                 return currentProfile[fieldName]?.blacklistKeywords.split(' ')
                     .some(keyword => elementWords.includes(keyword.toLowerCase()))

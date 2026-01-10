@@ -88,7 +88,12 @@ watch(state, () => {
 
 <style scoped>
 button {
+  font-size: 18px;
   cursor: pointer;
+}
+
+select {
+  font-size: 18px;
 }
 
 .improved-job-filter-root {
@@ -103,7 +108,6 @@ button {
 
   div {
     padding: 10px;
-
   }
 }
 </style>

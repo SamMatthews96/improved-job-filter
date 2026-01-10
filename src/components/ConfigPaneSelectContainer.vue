@@ -61,6 +61,7 @@ button {
 input {
   display: block;
   margin: auto;
-  font-size: 20px;
+  width: calc(100% - 20px);
+  font-size: 18px;
 }
 </style>

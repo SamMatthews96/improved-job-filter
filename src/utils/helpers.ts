@@ -133,11 +133,13 @@ function createSelector(path: ElementPath): string {
       let selectorFragment = `${properties.elementType}`
       if (i < path.length - 1) {
         selectorFragment += `:nth-child(${properties.nthChild})`
+      } else {
+        Object.entries(properties.attributes).forEach(([key, value]) => {
+          if (key == 'style') return
+          selectorFragment += `[${key}="${value}"]`
+        })
       }
-      Object.entries(properties.attributes).forEach(([key, value]) => {
-        if (key == 'style') return
-        selectorFragment += `[${key}="${value}"]`
-      })
+
       return selectorFragment
     })
     .reverse()
@@ -171,10 +173,11 @@ function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string):
     throw new Error('[20251210.1401]')
   }
   const container = getElementWithPath(containerPath)
+  if (!container) {
+    throw new Error('[20260110.2309]')
+  }
 
-  return getUniqueRelativeElementPath(
-    fieldElement, container
-  )
+  return getUniqueRelativeElementPath(fieldElement, container)
 }
 
 function getUniqueRelativeElementPath(
@@ -199,19 +202,20 @@ function getUniqueRelativeElementPath(
   return attributeList
 }
 
-function getElementWithPath(path: ElementPath, parent: HTMLElement | null = null): HTMLElement {
+function getElementWithPath(path: ElementPath, parent: HTMLElement | null = null)
+  : HTMLElement | undefined {
   const element = parent ? parent : document
   const selector = createSelector(path)
   const matches = element.querySelectorAll(selector)
-  if (matches.length != 1) {
-    console.log(element)
-    console.log(selector)
-    throw new Error(`[20251210.1407] ${matches.length} matches found`)
+  switch (matches.length) {
+    case 0:
+      return undefined
+    case 1:
+      return matches[0] as HTMLElement
+    default:
+      throw new Error('[20260110.2311]')
   }
-  return matches[0] as HTMLElement
 }
-
-
 
 function getWindowUrl(): string {
   return (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
