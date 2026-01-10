@@ -18,7 +18,6 @@ export default class ChromeRuntime implements RuntimeAPI {
       'filterProfileSettings', 'websiteFilterSettings'
     ]
     const res: Partial<StoredData> = await chrome.storage.local.get<StoredData>(keys)
-    console.log('res', res)
     const data = {} as StoredData
     keys.forEach((key_1) => {
       if (!res[key_1]) return;

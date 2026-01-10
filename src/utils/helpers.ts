@@ -204,6 +204,8 @@ function getUniqueRelativeElementPath(
 function getElementWithPath(path: ElementPath, parent: HTMLElement | null = null): HTMLElement {
   const element = parent ? parent : document
   const selector = createSelector(path)
+  console.log(element)
+  console.log(selector)
   const matches = element.querySelectorAll(selector)
   if (matches.length != 1) {
     throw new Error('[20251210.1406]')
@@ -222,5 +224,6 @@ export {
   identifyContainerAndTitlePaths,
   identifyFieldChildPath,
   getWindowUrl,
-  getElementWithPath
+  getElementWithPath,
+  getCommonProperties
 }

@@ -37,5 +37,13 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * Field entry QoL:
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission. It may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
 
+* Chrome issues
+  * 20251210.1406
+  * popup text is too small
+  * text fields for title is large
+  * not all elements follow the exact same structure
+    e.g. > a:nth-child(1)[id="sj_5f88c33f92150522"][data-mobtk="1jeimd6q4iohq800"]
+    and > a:nth-child(1)[id="sj_5f88c33f92150522"][data-mobtk="1jeimd6q4iohq801"]
+
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?
