@@ -20,8 +20,6 @@ import { state } from '@/utils/state';
 import type { FilterFieldList } from '@/utils/types';
 import { ref, watch, type Ref } from 'vue';
 
-const { profiles } = state.filterProfileSettings
-
 const emit = defineEmits<{
     (e: 'delete'): void
 }>()
@@ -31,7 +29,7 @@ const filterFieldList: Ref<FilterFieldList> = ref(getFilterFieldList())
 
 
 function addField() {
-    profiles[props.selectedProfileId]![newFieldName.value] = {
+    state.filterProfileSettings.profiles[props.selectedProfileId]![newFieldName.value] = {
         blacklistKeywords: ''
     }
 }
@@ -41,7 +39,7 @@ watch(state, () => {
 })
 
 function getFilterFieldList(): FilterFieldList {
-    return Object.entries(profiles[props.selectedProfileId]!)
+    return Object.entries(state.filterProfileSettings.profiles[props.selectedProfileId]!)
         .map(([name, field]) => ({ name, field }))
 }
 
