@@ -98,6 +98,7 @@ button {
   border-radius: 10px;
   border: solid 2px black;
   max-width: 500px;
+  min-width: 400px;
   min-height: 200px;
 
   div {

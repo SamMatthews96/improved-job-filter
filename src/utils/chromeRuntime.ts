@@ -17,9 +17,11 @@ export default class ChromeRuntime implements RuntimeAPI {
     const keys: (keyof StoredData)[] = [
       'filterProfileSettings', 'websiteFilterSettings'
     ]
-    const res = await chrome.storage.local.get<StoredData>(keys)
+    const res: Partial<StoredData> = await chrome.storage.local.get<StoredData>(keys)
+    console.log('res', res)
     const data = {} as StoredData
     keys.forEach((key_1) => {
+      if (!res[key_1]) return;
       const value = JSON.parse(String(res[key_1]))
       data[key_1] = value
     })

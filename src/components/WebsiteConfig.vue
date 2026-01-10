@@ -2,7 +2,7 @@
 
 import { ref, watch, type Ref } from 'vue';
 import Runtime from '@/utils/runtime';
-import type { ElementPath, FilterProfile, FilterProfileList } from '@/utils/types';
+import type { ElementPath, FilterProfileList } from '@/utils/types';
 import { state } from '@/utils/state'
 
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
@@ -121,5 +121,6 @@ h2 {
   border: 2px black solid;
   pointer-events: all;
   min-width: 400px;
+  z-index: 10000;
 }
 </style>

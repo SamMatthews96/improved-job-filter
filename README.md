@@ -19,6 +19,9 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * Publish the extension on the marketplace.
 
 * Styling
+  * just make it not look like shit
+
+* error in script, possibly due to creating multiple overlays
 
 * Improve Filters
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
