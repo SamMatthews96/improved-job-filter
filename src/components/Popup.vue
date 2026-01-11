@@ -19,7 +19,7 @@ function toggleOverlay() {
 function filterAdded(name: string) {
   state.filterProfileSettings.profiles[name] = {}
   isNewFilterModal.value = false;
-  if (state.filterProfileSettings.selectedFilterId == undefined){
+  if (state.filterProfileSettings.selectedFilterId == undefined) {
     state.filterProfileSettings.selectedFilterId = name
   }
 }
@@ -100,14 +100,21 @@ select {
   position: relative;
   color: #bbb;
   background: #444;
-  border-radius: 10px;
   border: solid 2px black;
   max-width: 500px;
   min-width: 400px;
   min-height: 200px;
 
-  div {
+  &>div {
     padding: 10px;
   }
+}
+</style>
+
+<style>
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

@@ -27,9 +27,6 @@ watch(props.filter.fieldProperties, () => {
     fieldNames.value = Object.keys(props.filter.fieldProperties)
 })
 
-Object.entries(props.filter.fieldProperties).forEach(([key, value]) => {
-    console.log(key, value)
-})
 </script>
 
 <style scoped lang="scss">

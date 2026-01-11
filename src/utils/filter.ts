@@ -23,7 +23,6 @@ export default class Filter {
     }
 
     private updateContainer(): void {
-        console.log('filter', state)
         this.observer?.disconnect()
 
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]

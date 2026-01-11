@@ -17,21 +17,40 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 ### ToDo List:
 
-* Improve Filters
-  * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
-  * The keyword filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
-  * import to profile from websites that use that profile
-  * import to website from profile that website uses (will need to support empty ElementPath)
+-- current phase --
 
-* QoL:
-  * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission. It may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
-  * It should inform the user if there is a mismatch between the website config and the selected filter
-  * pageSelectors.json should add to config by default
+* pageSelectors.json should add to config by default
 
-* Styling
-  * just make it not look like shit
+* Ignore ", /" when splitting by word.
+
+* Appearance
+  * use a theme that doesn't look like shit
+    * consistent text size, font
+    * borders, background, spacing
+  * General ease of use, presentation, word choice
+  * svg icons for buttons, add, delete, close
+  * Filter Profile
+  * Website Config
+
+* Inform the user if there is a mismatch between the website config and the selected filter.
+  * If a filter in website is missing from profile, show message (and button?) in profile
+  * If a filter in profile is missing from website, show message (and button?) in website
+
+* Warning if the filter cannot find the container or any child fields
+
+* highlight elements on the page when mouseover website filter fields
+* edit button to update website filter fields
+
+* Confirmation upon trying to add any website filter field
+* Confirmation upon adding the title filter field 
+* Confirmation before clear site data
+
+* Partial match for website filter field
 
 * Publish the extension on the marketplace.
 
-### Future Development Ideas:
-* What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?
+-- backlog --
+
+* Better filter options: Whitelist, AND, OR, Groups of AND/OR.
+* Uncaught SyntaxError: Identifier 'lr' has already been declared
+* A "how-to" guide
