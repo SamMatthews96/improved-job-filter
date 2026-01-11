@@ -21,25 +21,19 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * Styling
   * just make it not look like shit
 
-* error in script, possibly due to creating multiple overlays
-
 * Improve Filters
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
   * The keyword filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.
   * import to profile from websites that use that profile
   * import to website from profile that website uses (will need to support empty ElementPath)
 
-* Website filters
-  * Will need to make sure that the app gracefully handles a mismatch of keys between a page vs profile filter. 
-
-* The pageSelectors.json adds to config by default
-
-* Field entry QoL:
+* QoL:
   * after clicking submit, getElementWithText may target a different field, so there should be a confirmation after doing the initial ConfigPageSelectContainer submission. It may need to be a partial text, in which case contains would be more appropriate. This will need ^^ the first item done first, as going by partial text allows for more uncertainty. The first option should account for that.
+  * It should inform the user if there is a mismatch between the website config and the selected filter
+  * pageSelectors.json should add to config by default
 
-* Chrome issues
-  * config pane should be fixed
-  * config pane should have a button once initialised
+* Delete Field button for website config
+* Delete Field button for filter profiles
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?

@@ -55,6 +55,11 @@ watch(state, () => {
 </script>
 
 <template>
+  <button
+    class="config-pane-button"
+    @click="isShowing = !isShowing"
+    v-if="state.websiteFilterSettings[match]"
+  >Open Config</button>
   <div
     class="config-pane"
     v-if="isShowing"
@@ -107,7 +112,7 @@ h2 {
 
 .config-pane {
   display: inline-block;
-  position: absolute;
+  position: fixed;
   background-color: #444;
   color: #bbb;
   right: 10px;
@@ -118,5 +123,13 @@ h2 {
   pointer-events: all;
   min-width: 400px;
   z-index: 10000;
+}
+
+.config-pane-button {
+  right: 12px;
+  top: 12px;
+  padding: 10px;
+  display: inline-block;
+  position: fixed;
 }
 </style>
