@@ -19,8 +19,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
-* pageSelectors.json should add to config by default
-
 * Show error if user includes punctuation (, or /) in filter profile field
 
 * Appearance
@@ -45,6 +43,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * Confirmation before clear site data
 
 * Partial match for website filter field
+
+* Add all the default page selectors
 
 * Publish the extension on the marketplace.
 
