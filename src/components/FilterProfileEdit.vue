@@ -10,6 +10,9 @@
         <template v-for="filterField in filterFieldList">
             <div>{{ filterField.name }}</div>
             <input v-model="filterField.field.blacklistKeywords"></input>
+            <button @click="() => {
+                delete state.filterProfileSettings.profiles[props.selectedProfileId]![filterField.name]
+            }">Delete Field</button>
         </template>
     </div>
 </template>
@@ -26,7 +29,6 @@ const emit = defineEmits<{
 const props = defineProps<{ selectedProfileId: string }>()
 const newFieldName = ref('')
 const filterFieldList: Ref<FilterFieldList> = ref(getFilterFieldList())
-
 
 function addField() {
     state.filterProfileSettings.profiles[props.selectedProfileId]![newFieldName.value] = {

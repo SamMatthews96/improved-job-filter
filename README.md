@@ -17,9 +17,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 ### ToDo List:
 
-* Delete Field button for website config
-* Delete Field button for filter profiles
-
 * Improve Filters
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
   * The keyword filter considers "C++," and "C++" to be distinct words. Consider ignoring commas when splitting titles by word.

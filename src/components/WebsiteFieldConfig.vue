@@ -17,8 +17,6 @@
 <script setup lang="ts">
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
-import { state } from '@/utils/state';
-
 
 const props = defineProps<{
     filter: WebsiteFilter
