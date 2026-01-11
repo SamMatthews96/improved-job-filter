@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   build: {
+    // minify: false,
     rollupOptions: {
       input: {
         popup: 'src/popup.ts',

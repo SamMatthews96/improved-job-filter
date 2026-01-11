@@ -69,7 +69,7 @@ export default class Filter {
             const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
                 const element = getElementWithPath(elementPath, jobElement)
                 if (!element) return;
-                const elementWords = element.innerText.toLowerCase().split(' ')
+                const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
                 return currentProfile[fieldName]?.blacklistKeywords.split(' ')
                     .some(keyword => elementWords.includes(keyword.toLowerCase()))
             })

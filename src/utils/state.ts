@@ -12,6 +12,7 @@ export const state: Reactive<StoredData> = reactive({
 
 Runtime.get()
     .then(res => {
+        console.log('get', res)
         Object.assign(state, res)
 
         watch(state, (val) => {

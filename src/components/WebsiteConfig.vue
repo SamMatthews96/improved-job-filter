@@ -132,5 +132,6 @@ h2 {
   padding: 10px;
   display: inline-block;
   position: fixed;
+  cursor: pointer;
 }
 </style>

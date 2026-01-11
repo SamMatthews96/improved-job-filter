@@ -20,7 +20,16 @@
         </div>
 
         <div id="test-job-container">
-
+            <div
+                class="test-job"
+            >
+                <div
+                    class="test-title"
+                    title="Job Title"
+                    :myAttr="`test att `"
+                >C#/.NET, C++</div>
+                <div class="test-company">Noir</div>
+            </div>
             <div
                 v-for="item in length"
                 class="test-job"

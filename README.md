@@ -21,7 +21,7 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 * pageSelectors.json should add to config by default
 
-* Ignore ", /" when splitting by word.
+* Show error if user includes punctuation (, or /) in filter profile field
 
 * Appearance
   * use a theme that doesn't look like shit
@@ -32,11 +32,10 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Filter Profile
   * Website Config
 
-* Inform the user if there is a mismatch between the website config and the selected filter.
-  * If a filter in website is missing from profile, show message (and button?) in profile
-  * If a filter in profile is missing from website, show message (and button?) in website
+* If a filter in profile is missing from website, show message (and button?) in website
+* and Vice Versa
 
-* Warning if the filter cannot find the container or any child fields
+* Warning (and resolve option) if the filter cannot find the container or any child fields
 
 * highlight elements on the page when mouseover website filter fields
 * edit button to update website filter fields
