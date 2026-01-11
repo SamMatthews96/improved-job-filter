@@ -16,10 +16,9 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 * [Glassdoor](https://www.glassdoor.co.uk/)
 
 ### ToDo List:
-* Publish the extension on the marketplace.
 
-* Styling
-  * just make it not look like shit
+* Delete Field button for website config
+* Delete Field button for filter profiles
 
 * Improve Filters
   * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
@@ -32,8 +31,10 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * It should inform the user if there is a mismatch between the website config and the selected filter
   * pageSelectors.json should add to config by default
 
-* Delete Field button for website config
-* Delete Field button for filter profiles
+* Styling
+  * just make it not look like shit
+
+* Publish the extension on the marketplace.
 
 ### Future Development Ideas:
 * What if it could automatically cycle through jobs, going to the next page upon reaching the end. For each job, pull information from the job description, and export them somewhere?

@@ -13,12 +13,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { identifyFieldChildPath } from '@/utils/helpers';
+import { identifyFieldChildPath, getWindowUrl } from '@/utils/helpers';
 import { state } from '@/utils/state';
 
-const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
-
-
+const match = getWindowUrl()
 
 function addFilterField() {
     const elementPath = identifyFieldChildPath(

@@ -4,6 +4,7 @@ import { ref, watch, type Ref } from 'vue';
 import Runtime from '@/utils/runtime';
 import type { ElementPath, FilterProfileList } from '@/utils/types';
 import { state } from '@/utils/state'
+import { getWindowUrl } from '@/utils/helpers';
 
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
 import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
@@ -45,7 +46,7 @@ function getFilterProfileList(): FilterProfileList {
 }
 
 const showSelectContainer = ref(false)
-const match = (window.location.href).match(/^https?:\/\/[^\/]+\//)![0]
+const match = getWindowUrl()
 
 const filterProfileArray: Ref<FilterProfileList> = ref(getFilterProfileList())
 watch(state, () => {

@@ -3,12 +3,21 @@
     <div
         v-for="fieldName in fieldNames"
         class="website-field-config"
-    >{{ fieldName }}</div>
+    >
+        <span>{{ fieldName }}</span>
+        <button
+            v-if="fieldName != 'title'"
+            @click="() => {
+                delete props.filter.fieldProperties[fieldName]
+            }"
+        >Delete</button>
+    </div>
 </template>
 
 <script setup lang="ts">
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
+import { state } from '@/utils/state';
 
 
 const props = defineProps<{
@@ -20,10 +29,6 @@ watch(props.filter.fieldProperties, () => {
     fieldNames.value = Object.keys(props.filter.fieldProperties)
 })
 
-// for each element of fieldProperties, display the field name
-// idea: what if mouseing over a field would highlight it
-
-
 Object.entries(props.filter.fieldProperties).forEach(([key, value]) => {
     console.log(key, value)
 })
@@ -32,7 +37,15 @@ Object.entries(props.filter.fieldProperties).forEach(([key, value]) => {
 <style scoped lang="scss">
 .website-field-config {
     border: 1px red solid;
+    padding: 3px;
+    margin: 2px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
     cursor: default;
+
+    button {
+        cursor: pointer;
+    }
 }
 </style>
