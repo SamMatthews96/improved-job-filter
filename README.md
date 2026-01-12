@@ -19,6 +19,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
+* 20251206.1625
+
 * Show error if user includes punctuation (, or /) in filter profile field
 
 * Appearance

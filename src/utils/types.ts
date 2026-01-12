@@ -11,7 +11,7 @@ export interface RuntimeAPI {
   addEventListener(message: string, callback: (...args: any) => void): void
   sendMessageToService(message: string, data?: object): void
   sendMessageToTab(message: string, data?: object): void
-  getCurrentTab(): Promise<chrome.tabs.Tab>
+  getCurrentTab(): Promise<chrome.tabs.Tab | undefined>
   addPageLoadListener(callback: (...args: any) => void): void
 }
 

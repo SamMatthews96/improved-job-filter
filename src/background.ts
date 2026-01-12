@@ -21,7 +21,7 @@ Runtime.addEventListener('enableCurrentPage', ({ tab }) => {
 Runtime.addPageLoadListener(async (tabId) => {
   const tab = await Runtime.getCurrentTab()
   console.log('pageload', tab, state)
-  if (!tab.url) throw new Error('[20260111.2307]')
+  if (!tab?.url) return;
   if (!state.websiteFilterSettings[tab.url]) return;
   Runtime.injectScript(tabId)
 })

@@ -14,7 +14,7 @@ function addFilterClicked() {
 
 async function enableCurrentPage() {
   const tab = await Runtime.getCurrentTab()
-  if (!tab.id){
+  if (!tab?.id){
     throw new Error('[20260111.2235]')
   }
   console.log('enabledCurrentPage clicked')

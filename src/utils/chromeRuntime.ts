@@ -59,18 +59,18 @@ export default class ChromeRuntime implements RuntimeAPI {
     })
   }
 
-  public async getCurrentTab(): Promise<chrome.tabs.Tab> {
+  public async getCurrentTab(): Promise<chrome.tabs.Tab | undefined> {
     let queryOptions = { active: true, lastFocusedWindow: true }
     let [tab] = await chrome.tabs.query(queryOptions)
     if (!tab) {
-      throw new Error('[20251206.1625] could not get tab')
+      return
     }
     return tab
   }
 
   async sendMessageToTab(message: string, data?: object): Promise<void> {
     const tab = await this.getCurrentTab()
-    if (!tab.id) {
+    if (!tab?.id) {
       throw new Error('[20260111.2209]')
     }
     chrome.tabs.sendMessage(tab.id, {
