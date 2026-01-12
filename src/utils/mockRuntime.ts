@@ -1,5 +1,6 @@
 import { EventEmitter } from 'eventemitter3'
 import type { RuntimeAPI, StoredData } from './types'
+import { getWindowUrl } from './helpers';
 
 export default class MockRuntime implements RuntimeAPI {
   private storageListeners: Array<(...args: any) => void> = []
@@ -34,12 +35,37 @@ export default class MockRuntime implements RuntimeAPI {
     this.storageListeners.push(callback)
   }
 
-  async injectScript(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // import('../script.ts')
-      //   .then(() => resolve())
-      //   .catch(err => reject(err))
-    })
+  addEventListener(message: string, callback: (...args: any) => void): void {
+    this.eventEmitter.on(message, callback)
+  }
+
+  addPageLoadListener(callback: (...args: any) => void): void {
+    window.setTimeout(() => {
+      callback(1)
+    }, 1000)
+  }
+
+  async injectScript(tabId: number): Promise<void> {
+    // So far, I haven't needed to mock the injectScript functionality
+  }
+
+  async getCurrentTab(): Promise<chrome.tabs.Tab> {
+    return {
+      "active": true,
+      "audible": true,
+      "autoDiscardable": true,
+      "discarded": false,
+      "frozen": false,
+      "groupId": -1,
+      "highlighted": true,
+      "id": 1,
+      "incognito": false,
+      "index": 1,
+      "pinned": false,
+      "selected": true,
+      "windowId": 1612133047,
+      url: getWindowUrl()
+    }
   }
 
   sendMessageToTab(message: string, data?: object): void {
@@ -48,9 +74,5 @@ export default class MockRuntime implements RuntimeAPI {
 
   sendMessageToService(message: string, data?: object): void {
     this.eventEmitter.emit(message, data)
-  }
-
-  addEventListener(message: string, callback: (...args: any) => void): void {
-    this.eventEmitter.on(message, callback)
   }
 }

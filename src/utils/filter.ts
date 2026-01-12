@@ -10,6 +10,7 @@ export default class Filter {
     private stateChangedTimeoutId: number = 0;
     private stateTimeoutDelay = 300;
     private observer?: MutationObserver;
+    private failedAttempts: number = 0;
 
     constructor() {
         this.updateContainer()
@@ -26,10 +27,18 @@ export default class Filter {
         this.observer?.disconnect()
 
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-        if (websiteFilter) {
+        if (websiteFilter?.containerProperties) {
             this.container = getElementWithPath(websiteFilter.containerProperties)
             if (!this.container) {
-                throw new Error('[20260110.2310]')
+                if (this.failedAttempts >= 3){
+                    throw new Error('[20260112.0036]')
+                }
+                this.failedAttempts ++
+                console.log('failed to get container, reattempting ...')
+                setTimeout(() => {
+                    this.updateContainer()
+                }, 1000)
+                return
             }
             if (
                 this.container.children[0] instanceof HTMLElement

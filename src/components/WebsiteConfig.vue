@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { ref, watch, type Ref } from 'vue';
-import Runtime from '@/utils/runtime';
 import type { ElementPath, FilterProfileList } from '@/utils/types';
 import { state } from '@/utils/state'
 import { getWindowUrl } from '@/utils/helpers';
@@ -11,10 +10,6 @@ import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
 const isShowing = ref(false)
-
-Runtime.addEventListener('toggleOverlay', () => {
-  isShowing.value = !isShowing.value
-})
 
 function addWebsiteFilter(
   containerPath: ElementPath,
@@ -59,7 +54,6 @@ watch(state, () => {
   <button
     class="config-pane-button"
     @click="isShowing = !isShowing"
-    v-if="state.websiteFilterSettings[match]"
   >Open Config</button>
   <div
     class="config-pane"

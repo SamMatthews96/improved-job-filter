@@ -12,8 +12,15 @@ function addFilterClicked() {
   isNewFilterModal.value = !isNewFilterModal.value;
 }
 
-function toggleOverlay() {
-  Runtime.sendMessageToTab('toggleOverlay')
+async function enableCurrentPage() {
+  const tab = await Runtime.getCurrentTab()
+  if (!tab.id){
+    throw new Error('[20260111.2235]')
+  }
+  console.log('enabledCurrentPage clicked')
+  Runtime.sendMessageToService('enableCurrentPage', {
+    tab
+  })
 }
 
 function filterAdded(name: string) {
@@ -40,10 +47,6 @@ function onDeleteClicked() {
 const isNewFilterModal = ref(false)
 const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref([])
 
-Runtime.sendMessageToService('popupOpened', {
-  tabId: 1
-})
-
 watch(state, () => {
   filterProfileArray.value =
     Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
@@ -63,7 +66,7 @@ watch(state, () => {
       @cancel="filterCancel"
     />
     <div>
-      <button @click="toggleOverlay()">Toggle Overlay</button>
+      <button @click="enableCurrentPage()">Enable current page</button>
       <button @click="addFilterClicked">Add Filter Profile</button>
       <br></br>
 

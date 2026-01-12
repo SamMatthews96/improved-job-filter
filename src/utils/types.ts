@@ -7,10 +7,12 @@ export interface RuntimeAPI {
   set(items: Partial<StoredData>): Promise<void>
   get(): Promise<Partial<StoredData>>
   addStorageListener(callback: (...args: any) => void): void
-  injectScript(): Promise<void>
+  injectScript(tabId: number): Promise<void>
   addEventListener(message: string, callback: (...args: any) => void): void
   sendMessageToService(message: string, data?: object): void
   sendMessageToTab(message: string, data?: object): void
+  getCurrentTab(): Promise<chrome.tabs.Tab>
+  addPageLoadListener(callback: (...args: any) => void): void
 }
 
 export type PageSelectors = {
@@ -28,8 +30,8 @@ export type ElementProperties = {
 export type ElementPath = ElementProperties[]
 
 export type WebsiteFilter = {
-  selectedFilterId: string | undefined
-  containerProperties: ElementPath,
+  selectedFilterId?: string
+  containerProperties?: ElementPath,
   fieldProperties: {
     [fieldName: string]: ElementPath
   }
