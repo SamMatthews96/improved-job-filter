@@ -1,121 +1,149 @@
-
 import { getElementWithPath, getWindowUrl } from './helpers'
 import { state, highlightName } from '@/utils/state'
 import { watch } from 'vue'
 
 export default class Filter {
-    private defaultJobDisplayMode: string = 'none';
-    private container?: HTMLElement;
+  private defaultJobDisplayMode: string = 'none'
+  private container?: HTMLElement
 
-    private stateChangedTimeoutId: number = 0;
-    private stateTimeoutDelay = 300;
-    private observer?: MutationObserver;
-    private failedAttempts: number = 0;
+  private stateChangedTimeoutId: number = 0
+  private stateTimeoutDelay = 300
+  private observer?: MutationObserver
+  private failedAttempts: number = 0
 
-    constructor() {
+  constructor() {
+    this.updateContainer()
+
+    watch(state, () => {
+      clearTimeout(this.stateChangedTimeoutId)
+      this.stateChangedTimeoutId = window.setTimeout(() => {
         this.updateContainer()
+      }, this.stateTimeoutDelay)
+    })
 
-        watch(state, () => {
-            clearTimeout(this.stateChangedTimeoutId)
-            this.stateChangedTimeoutId = window.setTimeout(() => {
-                this.updateContainer()
-            }, this.stateTimeoutDelay)
-        })
+    watch(highlightName, (newValue, oldValue) => {
+      if (newValue) {
+        this.highlightFieldsByName(newValue)
+      }
+      if (oldValue) {
+        this.unhighlightFieldsByName(oldValue)
+      }
+    })
+  }
 
-        watch(highlightName, () => {
-            if (highlightName.value){
-                this.highlightFieldsByName(highlightName.value)
-            }
-        })
+  private updateContainer(): void {
+    this.observer?.disconnect()
+
+    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+    if (websiteFilter?.containerProperties) {
+      this.container = getElementWithPath(websiteFilter.containerProperties)
+      if (!this.container) {
+        if (this.failedAttempts >= 3) {
+          throw new Error('[20260112.0036]')
+        }
+        this.failedAttempts++
+        console.log('failed to get container, reattempting ...')
+        setTimeout(() => {
+          this.updateContainer()
+        }, 1000)
+        return
+      }
+      if (
+        this.container.children[0] instanceof HTMLElement &&
+        this.container.children[0].style.display != 'none'
+      ) {
+        this.defaultJobDisplayMode = this.container.children[0].style.display
+      }
+      this.observer = new MutationObserver(() => {
+        this.runFilter()
+      })
+      this.observer.observe(this.container, {
+        childList: true,
+      })
+      this.runFilter()
+    } else {
+      if (this.container) {
+        this.clearFilter()
+        this.container = undefined
+      }
+    }
+  }
+
+  private runFilter(): void {
+    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+    if (!websiteFilter) return this.clearFilter()
+
+    const profileId = websiteFilter.selectedFilterId
+    if (!profileId) return this.clearFilter()
+
+    const currentProfile = state.filterProfileSettings.profiles[profileId]
+    if (!currentProfile) return this.clearFilter()
+
+    const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
+
+    for (let i = 0; i < this.container!.children.length; i++) {
+      const jobElement = this.container!.children[i] as HTMLElement
+      const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
+        const element = getElementWithPath(elementPath, jobElement)
+        if (!element) return
+        const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
+        return currentProfile[fieldName]?.blacklistKeywords
+          .split(' ')
+          .some((keyword) => elementWords.includes(keyword.toLowerCase()))
+      })
+
+      jobElement.style.display = isMatch ? 'none' : this.defaultJobDisplayMode
+    }
+  }
+
+  private clearFilter(): void {
+    for (let i = 0; i < this.container!.children.length; i++) {
+      const jobElement = this.container!.children[i] as HTMLElement
+      jobElement.style.display = this.defaultJobDisplayMode
+    }
+  }
+
+  private highlightFieldsByName(fieldName: string) {
+    if (!this.container) {
+      throw new Error('[20260113.1634]')
     }
 
-    private updateContainer(): void {
-        this.observer?.disconnect()
-
-        const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-        if (websiteFilter?.containerProperties) {
-            this.container = getElementWithPath(websiteFilter.containerProperties)
-            if (!this.container) {
-                if (this.failedAttempts >= 3) {
-                    throw new Error('[20260112.0036]')
-                }
-                this.failedAttempts++
-                console.log('failed to get container, reattempting ...')
-                setTimeout(() => {
-                    this.updateContainer()
-                }, 1000)
-                return
-            }
-            if (
-                this.container.children[0] instanceof HTMLElement
-                && this.container.children[0].style.display != 'none'
-            ) {
-                this.defaultJobDisplayMode = this.container.children[0].style.display
-            }
-            this.observer = new MutationObserver(() => {
-                this.runFilter()
-            })
-            this.observer.observe(this.container, {
-                childList: true,
-            })
-            this.runFilter()
-        } else {
-            if (this.container) {
-                this.clearFilter()
-                this.container = undefined
-            }
-        }
+    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+    if (!websiteFilter) {
+      throw new Error('[20260113.1636]')
     }
 
-    private runFilter(): void {
-        const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-        if (!websiteFilter) return this.clearFilter()
+    const elementPath = websiteFilter.fieldProperties[fieldName]
+    if (!elementPath) throw new Error('[20260113.1756]')
+    for (let i = 0; i < this.container!.children.length; i++) {
+      const jobElement = this.container!.children[i] as HTMLElement
+      const element = getElementWithPath(elementPath, jobElement)
+      if (!element) continue
+      if (!element.className.includes(' ijf-highlight')) {
+        element.classList.add('ijf-highlight')
+      }
+    }
+  }
 
-        const profileId = websiteFilter.selectedFilterId
-        if (!profileId) return this.clearFilter()
-
-        const currentProfile = state.filterProfileSettings.profiles[profileId]
-        if (!currentProfile) return this.clearFilter()
-
-        const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
-
-        for (let i = 0; i < this.container!.children.length; i++) {
-            const jobElement = this.container!.children[i] as HTMLElement
-            const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
-                const element = getElementWithPath(elementPath, jobElement)
-                if (!element) return;
-                const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
-                return currentProfile[fieldName]?.blacklistKeywords.split(' ')
-                    .some(keyword => elementWords.includes(keyword.toLowerCase()))
-            })
-
-            jobElement.style.display = isMatch
-                ? 'none' : this.defaultJobDisplayMode
-        }
+  private unhighlightFieldsByName(fieldName: string) {
+    if (!this.container) {
+      throw new Error('[20260113.1809]')
     }
 
-    private clearFilter(): void {
-        for (let i = 0; i < this.container!.children.length; i++) {
-            const jobElement = this.container!.children[i] as HTMLElement
-            jobElement.style.display = this.defaultJobDisplayMode
-        }
+    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+    if (!websiteFilter) {
+      throw new Error('[20260113.1810]')
     }
 
-    private highlightFieldsByName(fieldName: string) {
-        if (!this.container) {
-            throw new Error('[20260113.1634]')
-        }
-
-        const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-        if (!websiteFilter) {
-            throw new Error('[20260113.1636]')
-        }
-
-        console.log(websiteFilter)
-
-        for (let i = 0; i < this.container!.children.length; i++) {
-            const jobElement = this.container!.children[i] as HTMLElement
-            
-        }
+    const elementPath = websiteFilter.fieldProperties[fieldName]
+    if (!elementPath) throw new Error('[20260113.1756]')
+    for (let i = 0; i < this.container!.children.length; i++) {
+      const jobElement = this.container!.children[i] as HTMLElement
+      const element = getElementWithPath(elementPath, jobElement)
+      if (!element) continue
+      if (element.className.includes(' ijf-highlight')) {
+        element.classList.remove('ijf-highlight')
+      }
     }
+  }
 }

@@ -19,7 +19,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
-
 * Appearance
   * Make theme better
     * dark grey looks a bit drab?
@@ -31,7 +30,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Show error if user includes punctuation (, or /) in filter profile field
 
 * Website Config
-  * highlight elements on the page when mouseover website filter fields
   * Add container as a field
   * Confirmation upon trying to add any website filter field
   * Confirmation upon adding the title filter field 
