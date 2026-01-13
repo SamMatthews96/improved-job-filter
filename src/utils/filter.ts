@@ -1,6 +1,6 @@
 
 import { getElementWithPath, getWindowUrl } from './helpers'
-import { state } from '@/utils/state'
+import { state, highlightName } from '@/utils/state'
 import { watch } from 'vue'
 
 export default class Filter {
@@ -21,6 +21,12 @@ export default class Filter {
                 this.updateContainer()
             }, this.stateTimeoutDelay)
         })
+
+        watch(highlightName, () => {
+            if (highlightName.value){
+                this.highlightFieldsByName(highlightName.value)
+            }
+        })
     }
 
     private updateContainer(): void {
@@ -30,10 +36,10 @@ export default class Filter {
         if (websiteFilter?.containerProperties) {
             this.container = getElementWithPath(websiteFilter.containerProperties)
             if (!this.container) {
-                if (this.failedAttempts >= 3){
+                if (this.failedAttempts >= 3) {
                     throw new Error('[20260112.0036]')
                 }
-                this.failedAttempts ++
+                this.failedAttempts++
                 console.log('failed to get container, reattempting ...')
                 setTimeout(() => {
                     this.updateContainer()
@@ -61,7 +67,7 @@ export default class Filter {
         }
     }
 
-    public runFilter(): void {
+    private runFilter(): void {
         const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
         if (!websiteFilter) return this.clearFilter()
 
@@ -92,6 +98,24 @@ export default class Filter {
         for (let i = 0; i < this.container!.children.length; i++) {
             const jobElement = this.container!.children[i] as HTMLElement
             jobElement.style.display = this.defaultJobDisplayMode
+        }
+    }
+
+    private highlightFieldsByName(fieldName: string) {
+        if (!this.container) {
+            throw new Error('[20260113.1634]')
+        }
+
+        const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+        if (!websiteFilter) {
+            throw new Error('[20260113.1636]')
+        }
+
+        console.log(websiteFilter)
+
+        for (let i = 0; i < this.container!.children.length; i++) {
+            const jobElement = this.container!.children[i] as HTMLElement
+            
         }
     }
 }

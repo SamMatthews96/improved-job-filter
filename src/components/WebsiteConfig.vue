@@ -9,7 +9,7 @@ import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vu
 import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
-import '@/assets/style.scss'
+import '@/assets/app-styles.scss'
 
 const isShowing = ref(false)
 

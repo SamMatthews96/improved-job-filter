@@ -7,7 +7,7 @@ import NewFilterModel from "@/components/NewFilterModel.vue";
 import type { FilterProfile } from "@/utils/types";
 import FilterProfileEdit from "@/components/FilterProfileEdit.vue";
 
-import '@/assets/style.scss'
+import '@/assets/app-styles.scss'
 
 function addFilterClicked() {
   isNewFilterModal.value = !isNewFilterModal.value;

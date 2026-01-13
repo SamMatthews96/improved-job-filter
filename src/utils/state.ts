@@ -1,4 +1,4 @@
-import { reactive, watch, type Reactive } from "vue";
+import { reactive, watch, type Reactive, type Ref, ref } from "vue";
 import Runtime from "./runtime";
 import type { StoredData } from "./types";
 import defaultWebsiteFieldConfig from '@/utils/defaultWebsiteFieldConfig.json'
@@ -26,3 +26,6 @@ Runtime.get()
             Object.assign(state, newValue)
         })
     })
+
+
+export const highlightName: Ref<string | undefined> = ref(undefined)
