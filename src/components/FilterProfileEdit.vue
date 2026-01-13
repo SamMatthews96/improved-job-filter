@@ -46,12 +46,3 @@ function getFilterFieldList(): FilterFieldList {
 }
 
 </script>
-
-<style lang="scss" scoped>
-button,
-input,
-div {
-    font-size: 18px;
-
-}
-</style>

@@ -41,13 +41,11 @@ function onCancelClicked(){
     top: 0;
     bottom: 0;
     
-
     display: flex;
     border-radius: 8px;
     
     justify-content: center;
     align-items: center;
-
 
 }
 </style>

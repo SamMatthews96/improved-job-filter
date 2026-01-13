@@ -7,6 +7,7 @@ import NewFilterModel from "@/components/NewFilterModel.vue";
 import type { FilterProfile } from "@/utils/types";
 import FilterProfileEdit from "@/components/FilterProfileEdit.vue";
 
+import '@/assets/style.scss'
 
 function addFilterClicked() {
   isNewFilterModal.value = !isNewFilterModal.value;
@@ -14,7 +15,7 @@ function addFilterClicked() {
 
 async function enableCurrentPage() {
   const tab = await Runtime.getCurrentTab()
-  if (!tab?.id){
+  if (!tab?.id) {
     throw new Error('[20260111.2235]')
   }
   console.log('enabledCurrentPage clicked')
@@ -59,7 +60,7 @@ watch(state, () => {
 </script>
 
 <template>
-  <div class="improved-job-filter-root">
+  <div class="popup content-container">
     <NewFilterModel
       v-if="isNewFilterModal"
       @create="filterAdded"
@@ -90,31 +91,15 @@ watch(state, () => {
 </template>
 
 <style scoped>
-button {
-  font-size: 18px;
-  cursor: pointer;
-}
-
-select {
-  font-size: 18px;
-}
-
-.improved-job-filter-root {
+.popup {
   position: relative;
-  color: #bbb;
-  background: #444;
-  border: solid 2px black;
-  max-width: 500px;
-  min-width: 400px;
+  width: 400px;
   min-height: 200px;
-
-  &>div {
-    padding: 10px;
-  }
 }
 </style>
 
 <style>
+/* Keep this to remove white border in prod version */
 html,
 body {
   margin: 0;

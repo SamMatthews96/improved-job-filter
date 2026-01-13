@@ -9,6 +9,8 @@ import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vu
 import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
+import '@/assets/style.scss'
+
 const isShowing = ref(false)
 
 function addWebsiteFilter(
@@ -51,54 +53,62 @@ watch(state, () => {
 </script>
 
 <template>
-  <button
-    class="config-pane-button"
-    @click="isShowing = !isShowing"
-  >Open Config</button>
-  <div
-    class="config-pane"
-    v-if="isShowing"
-  >
+  <div class="script">
     <button
-      @click="isShowing = false"
-      class="overlay-close-button"
-    >Close</button>
-    <h2>Website Config Pane</h2>
-    <label for="profile">Profile: </label>
-    <select
-      name="profile"
-      v-model="state.websiteFilterSettings[match]!.selectedFilterId"
-      v-if="state.websiteFilterSettings[match]"
+      class="open-button"
+      @click="isShowing = !isShowing"
+    >Open Config</button>
+    <div
+      class="config-pane content-container"
+      v-if="isShowing"
     >
-      <option
-        v-for="filterProfile in filterProfileArray"
-        :value="filterProfile.name"
-      >{{ filterProfile.name }}</option>
-    </select>
-    <br></br>
-    <ConfigPaneSelectContainer
-      @foundContainer="addWebsiteFilter"
-      v-if="!(state.websiteFilterSettings[match])"
-    />
-    <template v-else>
-      <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
-      <AddWebsiteFilterField />
+      <button
+        @click="isShowing = false"
+        class="close-button"
+      >Close</button>
+      <h2>Website Config Pane</h2>
+      <label for="profile">Profile: </label>
+      <select
+        name="profile"
+        v-model="state.websiteFilterSettings[match]!.selectedFilterId"
+        v-if="state.websiteFilterSettings[match]"
+      >
+        <option
+          v-for="filterProfile in filterProfileArray"
+          :value="filterProfile.name"
+        >{{ filterProfile.name }}</option>
+      </select>
       <br></br>
-      <button @click="clearSiteData">Clear Site Data</button>
-    </template>
+      <ConfigPaneSelectContainer
+        @foundContainer="addWebsiteFilter"
+        v-if="!(state.websiteFilterSettings[match])"
+      />
+      <template v-else>
+        <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
+        <AddWebsiteFilterField />
+        <br></br>
+        <button @click="clearSiteData">Clear Site Data</button>
+      </template>
 
+    </div>
   </div>
+
 
 </template>
 
 
 <style scoped lang="scss">
-.overlay-close-button {
+.script {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.close-button {
   position: absolute;
   padding: 10px;
   right: 5px;
   top: 5px;
-  cursor: pointer;
 }
 
 h2 {
@@ -108,24 +118,19 @@ h2 {
 .config-pane {
   display: inline-block;
   position: fixed;
-  background-color: #444;
-  color: #bbb;
   right: 10px;
   top: 10px;
-  padding: 10px;
   border-radius: 10px;
-  border: 2px black solid;
   pointer-events: all;
   min-width: 400px;
   z-index: 10000;
 }
 
-.config-pane-button {
+.open-button {
   right: 12px;
   top: 12px;
   padding: 10px;
   display: inline-block;
   position: fixed;
-  cursor: pointer;
 }
 </style>

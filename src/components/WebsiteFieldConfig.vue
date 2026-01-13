@@ -34,13 +34,8 @@ watch(props.filter.fieldProperties, () => {
     border: 1px red solid;
     padding: 3px;
     margin: 2px;
-    text-align: center;
     display: flex;
     justify-content: space-between;
     cursor: default;
-
-    button {
-        cursor: pointer;
-    }
 }
 </style>
