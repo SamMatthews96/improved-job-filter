@@ -1,38 +1,28 @@
 <template>
     <div
         class="website-field-config"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseExit"
+        @mouseenter="emit('mouseenter')"
+        @mouseleave="emit('mouseleave')"
     >
         <span>{{ fieldName }}</span>
         <button
             v-if="fieldName != 'title'"
-            @click="onDeleteClicked"
+            @click="emit('delete')"
         >Delete</button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { highlightName } from '@/utils/state';
 
-function onMouseEnter() {
-    highlightName.value = props.fieldName
-}
-
-function onMouseExit() {
-    highlightName.value = undefined
-}
-
-function onDeleteClicked(){
-  emit('delete')
-}
 
 const props = defineProps<{
     fieldName: string
 }>()
 
 const emit = defineEmits<{
-  (e: 'delete'): void
+  (e: 'delete'): void,
+  (e: 'mouseenter'): void,
+  (e: 'mouseleave'): void,
 }>()
 
 </script>
