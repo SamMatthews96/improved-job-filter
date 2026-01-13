@@ -19,6 +19,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
+* When deleting a Website filter field, ensure that the highlight is removed
+
 * Appearance
   * Make theme better
     * dark grey looks a bit drab?

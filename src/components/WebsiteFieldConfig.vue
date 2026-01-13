@@ -1,37 +1,26 @@
 <template>
     Website Config
-    <div
+    <WebsiteFilterField
         v-for="fieldName in fieldNames"
-        class="website-field-config"
-        @mouseenter="() => onMouseEnter(fieldName)"
-        @mouseleave="() => onMouseExit()"
+        :fieldName="fieldName"
+        @delete="() => onDeleteClicked(fieldName)"
     >
-        <span>{{ fieldName }}</span>
-        <button
-            v-if="fieldName != 'title'"
-            @click="() => {
-                delete props.filter.fieldProperties[fieldName]
-            }"
-        >Delete</button>
-    </div>
+
+    </WebsiteFilterField>
 </template>
 
 <script setup lang="ts">
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
-import { highlightName } from '@/utils/state';
-
-function onMouseEnter(fieldName: string) {
-    highlightName.value = fieldName
-}
-
-function onMouseExit() {
-    highlightName.value = undefined
-}
+import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
 
 const props = defineProps<{
     filter: WebsiteFilter
 }>()
+
+function onDeleteClicked(fieldName: string){
+  delete props.filter.fieldProperties[fieldName]
+}
 
 const fieldNames = ref<string[]>(Object.keys(props.filter.fieldProperties))
 watch(props.filter.fieldProperties, () => {
@@ -39,14 +28,3 @@ watch(props.filter.fieldProperties, () => {
 })
 
 </script>
-
-<style scoped lang="scss">
-.website-field-config {
-    border: 1px red solid;
-    padding: 3px;
-    margin: 2px;
-    display: flex;
-    justify-content: space-between;
-    cursor: default;
-}
-</style>
