@@ -102,6 +102,7 @@ watch(state, () => {
   position: fixed;
   top: 10px;
   right: 10px;
+  z-index: 10000;
 }
 
 .close-button {
@@ -109,6 +110,14 @@ watch(state, () => {
   padding: 10px;
   right: 5px;
   top: 5px;
+}
+
+.open-button {
+  right: 12px;
+  top: 12px;
+  padding: 10px;
+  display: inline-block;
+  position: fixed;
 }
 
 h2 {
@@ -123,14 +132,5 @@ h2 {
   border-radius: 10px;
   pointer-events: all;
   min-width: 400px;
-  z-index: 10000;
-}
-
-.open-button {
-  right: 12px;
-  top: 12px;
-  padding: 10px;
-  display: inline-block;
-  position: fixed;
 }
 </style>

@@ -3,6 +3,8 @@
     <div
         v-for="fieldName in fieldNames"
         class="website-field-config"
+        @mouseenter="() => onMouseEnter(fieldName)"
+        @mouseleave="() => onMouseExit(fieldName)"
     >
         <span>{{ fieldName }}</span>
         <button
@@ -17,6 +19,14 @@
 <script setup lang="ts">
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
+
+function onMouseEnter(fieldName: string){
+    console.log(fieldName)
+}
+
+function onMouseExit(fieldName: string){
+    
+}
 
 const props = defineProps<{
     filter: WebsiteFilter
