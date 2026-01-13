@@ -20,9 +20,9 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'delete'): void,
-  (e: 'mouseenter'): void,
-  (e: 'mouseleave'): void,
+    (e: 'delete'): void,
+    (e: 'mouseenter'): void,
+    (e: 'mouseleave'): void,
 }>()
 
 </script>

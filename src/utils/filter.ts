@@ -11,6 +11,10 @@ export default class Filter {
   private observer?: MutationObserver
   private failedAttempts: number = 0
 
+  private highlightedElements: {
+    [fieldName: string]: HTMLElement[]
+  } = {}
+
   constructor() {
     this.updateContainer()
 
@@ -115,35 +119,23 @@ export default class Filter {
 
     const elementPath = websiteFilter.fieldProperties[fieldName]
     if (!elementPath) throw new Error('[20260113.1756]')
+
+    this.highlightedElements[fieldName] = []
     for (let i = 0; i < this.container!.children.length; i++) {
       const jobElement = this.container!.children[i] as HTMLElement
       const element = getElementWithPath(elementPath, jobElement)
       if (!element) continue
       if (!element.className.includes(' ijf-highlight')) {
         element.classList.add('ijf-highlight')
+        this.highlightedElements[fieldName].push(element)
       }
     }
   }
 
   private unhighlightFieldsByName(fieldName: string) {
-    if (!this.container) {
-      throw new Error('[20260113.1809]')
-    }
-
-    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (!websiteFilter) {
-      throw new Error('[20260113.1810]')
-    }
-
-    const elementPath = websiteFilter.fieldProperties[fieldName]
-    if (!elementPath) throw new Error('[20260113.1756]')
-    for (let i = 0; i < this.container!.children.length; i++) {
-      const jobElement = this.container!.children[i] as HTMLElement
-      const element = getElementWithPath(elementPath, jobElement)
-      if (!element) continue
-      if (element.className.includes(' ijf-highlight')) {
-        element.classList.remove('ijf-highlight')
-      }
-    }
+    this.highlightedElements[fieldName]!.forEach(element => {
+      element.classList.remove('ijf-highlight')
+    });
+    delete this.highlightedElements[fieldName]
   }
 }
