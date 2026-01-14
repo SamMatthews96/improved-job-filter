@@ -1,19 +1,61 @@
 <template>
     <div
         class="website-field-config"
-        @mouseenter="emit('mouseenter')"
-        @mouseleave="emit('mouseleave')"
+        @mouseenter="!isEditMode && emit('highlight-on')"
+        @mouseleave="emit('highlight-off')"
     >
 
         <span>{{ fieldName }}</span>
-        <button @click="emit('delete')">
-            {{ fieldName == 'container' ? 'Reset Site Data' : 'Delete' }}
-        </button>
+        <span v-if="fieldName == 'container'">
+            <button @click="emit('delete')">
+                Reset Site Data
+            </button>
+        </span>
+        <span
+            v-else
+            class="field-button-container"
+        >
+            <span
+                v-if="isEditMode"
+                class="edit-mode"
+            >
+                <input v-model="textValue">
+                <span>
+                    <button @click="onAccept()">Ok</button>
+                    <button @click="isEditMode = false; textValue = ''">Cancel</button>
+                </span>
+            </span>
+            <template v-else>
+                <button @click="isEditMode = true; emit('highlight-off')">Edit</button>
+            </template>
+            <span>
+                <button @click="emit('delete')">
+                    Delete
+                </button>
+            </span>
+
+        </span>
+
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
+import { state } from '@/utils/state';
+import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
+import emitter from '@/utils/emitter';
 
+function onAccept() {
+    isEditMode.value = false;
+    textValue.value = ''
+    const elementPath = identifyFieldChildPath(
+        state.websiteFilterSettings[match]!.containerProperties!,
+        textValue.value
+    )
+    if (!elementPath) return
+    state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath
+
+}
 
 const props = defineProps<{
     fieldName: string
@@ -21,9 +63,19 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     (e: 'delete'): void,
-    (e: 'mouseenter'): void,
-    (e: 'mouseleave'): void,
+    (e: 'highlight-on'): void,
+    (e: 'highlight-off'): void,
 }>()
+
+const isEditMode = ref(false)
+const textValue = ref('')
+
+
+const match = getWindowUrl()
+
+watch(textValue, () => {
+    emitter.emit('filter-edit-field-updated', textValue.value)
+})
 
 </script>
 
@@ -35,5 +87,19 @@ const emit = defineEmits<{
     display: flex;
     justify-content: space-between;
     cursor: default;
+}
+
+input {
+    width: 200px;
+}
+
+.field-button-container {
+    display: flex;
+}
+
+.edit-mode {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 </style>

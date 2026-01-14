@@ -1,7 +1,8 @@
-import { getElementWithPath, getWindowUrl } from './helpers'
+import { getElementWithPath, getWindowUrl, identifyFieldChildPath } from './helpers'
 import { state, highlightName, isHighlightingContainer } from '@/utils/state'
 import { watch } from 'vue'
 import type { WebsiteFilter } from './types'
+import emitter from '@/utils/emitter';
 
 const filterClass = 'ijf-highlight'
 
@@ -13,11 +14,12 @@ export default class Filter {
   private stateTimeoutDelay = 300
   private observer?: MutationObserver
   private failedAttempts: number = 0
-  private websiteFilter: WebsiteFilter | undefined 
+  private websiteFilter: WebsiteFilter | undefined
 
   private highlightedElements: {
     [fieldName: string]: HTMLElement[]
   } = {}
+  private editHighlightElements: HTMLElement[] = []
 
   constructor() {
     this.updateContainer()
@@ -43,6 +45,33 @@ export default class Filter {
         this.container!.classList.add(filterClass)
       } else {
         this.container!.classList.remove(filterClass)
+      }
+    })
+
+    emitter.on('filter-edit-field-updated', (fieldName) => {
+      if (!this.websiteFilter) throw new Error('[20260114.2130]')
+      if (!this.container) throw new Error('[20260114.2132]')
+
+      const elementPath = identifyFieldChildPath(
+        this.websiteFilter.containerProperties!, fieldName
+      )
+      if (!elementPath) {
+        this.editHighlightElements.forEach(element => {
+          element.classList.remove(filterClass)
+        });
+        this.editHighlightElements = []
+        return
+      }
+
+      for (let i = 0; i < this.container.children.length; i++) {
+        const jobElement = this.container.children[i] as HTMLElement
+        const element = getElementWithPath(elementPath, jobElement)
+        if (!element) continue
+        
+        if (!element.className.includes(filterClass)) {
+          element.classList.add(filterClass)
+          this.editHighlightElements.push(element)
+        }
       }
     })
   }
@@ -96,11 +125,12 @@ export default class Filter {
     if (!currentProfile) return this.clearFilter()
 
     const fieldPropertyArray = Object.entries(this.websiteFilter.fieldProperties)
+      .filter(([key, value]) => value)
 
     for (let i = 0; i < this.container!.children.length; i++) {
       const jobElement = this.container!.children[i] as HTMLElement
       const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
-        const element = getElementWithPath(elementPath, jobElement)
+        const element = getElementWithPath(elementPath!, jobElement)
         if (!element) return
         const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
         return currentProfile[fieldName]?.blacklistKeywords
@@ -129,11 +159,11 @@ export default class Filter {
     }
 
     const elementPath = this.websiteFilter.fieldProperties[fieldName]
-    if (!elementPath) throw new Error('[20260113.1756]')
+    if (!elementPath) return
 
     this.highlightedElements[fieldName] = []
-    for (let i = 0; i < this.container!.children.length; i++) {
-      const jobElement = this.container!.children[i] as HTMLElement
+    for (let i = 0; i < this.container.children.length; i++) {
+      const jobElement = this.container.children[i] as HTMLElement
       const element = getElementWithPath(elementPath, jobElement)
       if (!element) continue
       if (!element.className.includes(filterClass)) {
@@ -144,12 +174,13 @@ export default class Filter {
   }
 
   private unhighlightFieldsByName(fieldName: string) {
-    this.highlightedElements[fieldName]!.forEach(element => {
+
+    this.highlightedElements[fieldName]?.forEach(element => {
       element.classList.remove(filterClass)
     });
     delete this.highlightedElements[fieldName]
   }
 
-  
+
 
 }

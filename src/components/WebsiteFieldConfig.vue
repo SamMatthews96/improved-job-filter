@@ -1,16 +1,16 @@
 <template>
     <WebsiteFilterField
         fieldName="container"
-        @mouseenter="isHighlightingContainer = true"
-        @mouseleave="isHighlightingContainer = false"
+        @highlight-on="isHighlightingContainer = true"
+        @highlight-off="isHighlightingContainer = false"
         @delete="isHighlightingContainer = false; emit('delete-container')"
     />
     <WebsiteFilterField
         v-for="fieldName in fieldNames"
         :fieldName="fieldName"
         @delete="() => onDeleteClicked(fieldName)"
-        @mouseenter="highlightName = fieldName"
-        @mouseleave="highlightName = undefined"
+        @highlight-on="highlightName = fieldName"
+        @highlight-off="highlightName = undefined"
     />
 
 </template>

@@ -1,7 +1,3 @@
-export interface StoredData {
-  filterProfileSettings: FilterProfileSettings
-  websiteFilterSettings: WebsiteFilterSettings
-}
 
 export interface RuntimeAPI {
   set(items: Partial<StoredData>): Promise<void>
@@ -15,11 +11,26 @@ export interface RuntimeAPI {
   addPageLoadListener(callback: (...args: any) => void): void
 }
 
-export type PageSelectors = {
-  container: string
-  title: string
-  company: string
+export interface StoredData {
+  filterProfileSettings: FilterProfileSettings
+  websiteFilterSettings: WebsiteFilterSettings
 }
+
+// #region WebsiteFilterSettings
+
+export type WebsiteFilterSettings = {
+  [url: string]: WebsiteFilter
+}
+
+export type WebsiteFilter = {
+  selectedFilterId?: string
+  containerProperties?: ElementPath,
+  fieldProperties: {
+    [fieldName: string]: ElementPath | null
+  }
+}
+
+export type ElementPath = ElementProperties[]
 
 export type ElementProperties = {
   elementType: string
@@ -27,19 +38,26 @@ export type ElementProperties = {
   attributes: { [key: string]: string }
 }
 
-export type ElementPath = ElementProperties[]
+// #endregion
 
-export type WebsiteFilter = {
-  selectedFilterId?: string
-  containerProperties?: ElementPath,
-  fieldProperties: {
-    [fieldName: string]: ElementPath
+// #region FilterProfileSettings
+
+export type FilterProfileSettings = {
+  selectedFilterId: string | undefined,
+  profiles: {
+    [name: string]: FilterProfile
   }
+}
+
+export type FilterProfile = {
+  [name: string]: FilterField
 }
 
 export type FilterField = {
   blacklistKeywords: string
 }
+
+// #endregion
 
 export type FilterFieldList = {
   name: string
@@ -50,18 +68,3 @@ export type FilterProfileList = {
   name: string,
   filterProfile: FilterProfile
 }[]
-
-export type FilterProfile = {
-  [name: string]: FilterField
-}
-
-export type FilterProfileSettings = {
-  selectedFilterId: string | undefined,
-  profiles: {
-    [name: string]: FilterProfile
-  }
-}
-
-export type WebsiteFilterSettings = {
-  [url: string]: WebsiteFilter
-}

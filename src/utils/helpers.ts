@@ -22,7 +22,11 @@ function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | 
 }
 
 function getElementWithText(text: string): HTMLElement | null {
-  let xpath = `//*[text()='${text}']`
+  const lower = text.toLowerCase()
+  const xpath = `//*[translate(text(),
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'abcdefghijklmnopqrstuvwxyz'
+  )='${lower}']`
   const match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue as HTMLElement | null
   return match
@@ -168,11 +172,12 @@ function identifyContainerAndTitlePaths(textValues: string[]): {
   }
 }
 
-function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string): ElementPath {
+function identifyFieldChildPath(
+  containerPath: ElementPath, fieldValue: string): ElementPath | undefined {
+  if (fieldValue == '') return
   const fieldElement = getElementWithText(fieldValue)
-  if (!fieldElement) {
-    throw new Error('[20251210.1401]')
-  }
+  if (!fieldElement) return
+
   const container = getElementWithPath(containerPath)
   if (!container) {
     throw new Error('[20260110.2309]')

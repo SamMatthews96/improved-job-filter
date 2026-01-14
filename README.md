@@ -20,15 +20,13 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 -- current phase --
 
 * Website Config
-  * Confirmation + highlight before adding any website filter field
   * Confirmation + highlight before setting container
   * Confirmation before deleting filter field / container
   * Indication (and resolve option) if the filter cannot find the container or any child fields
 
   * Partial match for website filter field
   * Add all the default page selectors
-  * edit button to update website filter fields
-    * If a filter in profile is missing from website, show message (and button?) in website
+  * If a filter in profile is missing from website, show message (and button?) in website
 
 * Appearance
   * Make theme better
