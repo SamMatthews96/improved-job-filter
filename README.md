@@ -26,9 +26,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * svg icons for buttons, add, delete, close
   * animated slide in/out button
 
-* Filter Profile
-  * If a filter in website is missing from profile, show message (and button?) in profile
-
 * Website Config
   * Confirmation before deleting filter field / container
   * Confirmation + highlight before setting container

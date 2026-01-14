@@ -93,7 +93,7 @@ watch(state, () => {
 <style scoped>
 .popup {
   position: relative;
-  width: 400px;
+  width: 450px;
   min-height: 200px;
 }
 </style>
