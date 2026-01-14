@@ -20,13 +20,10 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 -- current phase --
 
 * Website Config
-  * Confirmation + highlight before setting container
-  * Confirmation before deleting filter field / container
-  * Indication (and resolve option) if the filter cannot find the container or any child fields
-
-  * Partial match for website filter field
-  * Add all the default page selectors
   * If a filter in profile is missing from website, show message (and button?) in website
+  * Indicate by border color if the filter cannot find the container or any child fields
+  * Add all the default page selectors
+  * Confirmation + highlight before setting container
 
 * Appearance
   * Make theme better
@@ -34,7 +31,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * General ease of use, presentation, word choice
   * svg icons for buttons, add, delete, close
   * animated slide in/out button
-
 
 * trying to add multiple website filters of the same name triggers an error
 

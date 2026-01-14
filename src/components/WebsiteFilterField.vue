@@ -7,8 +7,12 @@
 
         <span>{{ fieldName }}</span>
         <span v-if="fieldName == 'container'">
-            <button @click="emit('delete')">
-                Reset Site Data
+            <button
+                @click="onDeleteClicked()"
+                @focusout="isConfirmDelete = false"
+                @mouseleave="isConfirmDelete = false"
+            >
+                {{ isConfirmDelete ? 'Confirm?' : 'Reset Site Data' }}
             </button>
         </span>
         <span
@@ -29,8 +33,12 @@
                 <button @click="isEditMode = true; emit('highlight-off')">Edit</button>
             </template>
             <span>
-                <button @click="emit('delete')">
-                    Delete
+                <button
+                    @click="onDeleteClicked()"
+                    @focusout="isConfirmDelete = false"
+                    @mouseleave="isConfirmDelete = false"
+                >
+                    {{ isConfirmDelete ? 'Confirm?' : 'Delete' }}
                 </button>
             </span>
 
@@ -57,6 +65,14 @@ function onAccept() {
 
 }
 
+function onDeleteClicked() {
+    if (isConfirmDelete.value) {
+        emit('delete')
+    } else {
+        isConfirmDelete.value = true
+    }
+}
+
 const props = defineProps<{
     fieldName: string
 }>()
@@ -68,7 +84,9 @@ const emit = defineEmits<{
 }>()
 
 const isEditMode = ref(false)
+const isConfirmDelete = ref(false)
 const textValue = ref('')
+
 
 
 const match = getWindowUrl()
