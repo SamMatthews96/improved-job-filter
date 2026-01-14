@@ -20,7 +20,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 -- current phase --
 
 * Website Config
-  * If a filter in profile is missing from website, show message (and button?) in website
   * Indicate by border color if the filter cannot find the container or any child fields
   * Add all the default page selectors
   * Confirmation + highlight before setting container

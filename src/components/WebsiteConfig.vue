@@ -10,6 +10,7 @@ import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import WebsiteFieldConfig from './WebsiteFieldConfig.vue';
 
 import '@/assets/app-styles.scss'
+import AddFieldsToWebsiteFilter from './AddFieldsToWebsiteFilter.vue';
 
 const isShowing = ref(false)
 
@@ -84,6 +85,7 @@ watch(state, () => {
           :filter="state.websiteFilterSettings[match]!"
           @delete-container="delete state.websiteFilterSettings[match]"
         />
+        <AddFieldsToWebsiteFilter />
         <AddWebsiteFilterField />
       </template>
 

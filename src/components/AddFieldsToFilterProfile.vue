@@ -1,6 +1,6 @@
 <template>
     <div>
-        Missing Fields
+        <span v-if="props.missingFilterFields.length">Missing Fields</span>
         <div v-for="field in props.missingFilterFields">
             <span>
                 {{ field }}

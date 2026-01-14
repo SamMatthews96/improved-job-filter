@@ -25,7 +25,6 @@ export default class Filter {
     this.updateContainer()
 
     watch(state, () => {
-      console.log(state)
       clearTimeout(this.stateChangedTimeoutId)
       this.stateChangedTimeoutId = window.setTimeout(() => {
         this.updateContainer()
