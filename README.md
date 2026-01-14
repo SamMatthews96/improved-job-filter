@@ -24,20 +24,21 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
     * dark grey looks a bit drab?
   * General ease of use, presentation, word choice
   * svg icons for buttons, add, delete, close
+  * animated slide in/out button
 
 * Filter Profile
   * If a filter in website is missing from profile, show message (and button?) in profile
   * Show error if user includes punctuation (, or /) in filter profile field
 
 * Website Config
-  * Confirmation upon trying to add any website filter field
-  * Confirmation upon adding the title filter field 
-  * Confirmation before clear site data
+  * Confirmation before deleting filter field / container
+  * Confirmation + highlight before setting container
+  * Confirmation + highlight before adding any website filter field
+  * Warning (and resolve option) if the filter cannot find the container or any child fields
   * Partial match for website filter field
   * Add all the default page selectors
   * edit button to update website filter fields
   * If a filter in profile is missing from website, show message (and button?) in website
-  * Warning (and resolve option) if the filter cannot find the container or any child fields
 
 * trying to add multiple website filters of the same name triggers an error
 
@@ -47,5 +48,3 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 -- backlog --
 
 * Better filter options: Whitelist, AND, OR, Groups of AND/OR.
-* Uncaught SyntaxError: Identifier 'lr' has already been declared
-* A "how-to" guide

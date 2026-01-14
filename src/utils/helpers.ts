@@ -136,6 +136,7 @@ function createSelector(path: ElementPath): string {
       } else {
         Object.entries(properties.attributes).forEach(([key, value]) => {
           if (key == 'style') return
+          if (key == 'class' && value == '') return
           selectorFragment += `[${key}="${value}"]`
         })
       }

@@ -23,9 +23,7 @@ import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
 import { highlightName, isHighlightingContainer } from '@/utils/state';
 
 const props = defineProps<{ filter: WebsiteFilter }>()
-const emit = defineEmits<{
-    (e: 'delete-container'): void
-}>()
+const emit = defineEmits<{ (e: 'delete-container'): void }>()
 
 function onDeleteClicked(fieldName: string) {
     highlightName.value = undefined

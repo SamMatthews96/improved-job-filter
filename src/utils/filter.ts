@@ -38,9 +38,9 @@ export default class Filter {
 
     watch(isHighlightingContainer, () => {
       if (isHighlightingContainer.value) {
-        this.container?.classList.add(filterClass)
+        this.container!.classList.add(filterClass)
       } else {
-        this.container?.classList.remove(filterClass)
+        this.container!.classList.remove(filterClass)
       }
     })
   }
@@ -62,6 +62,7 @@ export default class Filter {
         }, 1000)
         return
       }
+
       if (
         this.container.children[0] instanceof HTMLElement &&
         this.container.children[0].style.display != 'none'
