@@ -63,7 +63,7 @@ watch(state, () => {
         class="close-button"
       >Close</button>
       <h2>Website Config Pane</h2>
-      <label for="profile">Profile: </label>
+      <label for="profile">Selected Profile: </label>
       <select
         name="profile"
         v-model="state.websiteFilterSettings[match]!.selectedFilterId"

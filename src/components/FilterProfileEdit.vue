@@ -4,12 +4,19 @@
         <br></br>
         <input
             placeholder="Field Name"
+            name="new-field-name"
             v-model="newFieldName"
         ></input>
         <button @click="addField">Add Field</button>
         <template v-for="filterField in filterFieldList">
             <div>{{ filterField.name }}</div>
-            <input v-model="filterField.field.blacklistKeywords"></input>
+            <input
+                :name="filterField.name"
+                v-model="filterField.field.blacklistKeywords"
+                :class="{
+                    red: filterField.field.blacklistKeywords.match(/[,/]/)
+                }"
+            ></input>
             <button @click="() => {
                 delete state.filterProfileSettings.profiles[props.selectedProfileId]![filterField.name]
             }">Delete Field</button>
@@ -46,3 +53,9 @@ function getFilterFieldList(): FilterFieldList {
 }
 
 </script>
+
+<style lang="scss" scoped>
+.red {
+    color: red;
+}
+</style>

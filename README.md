@@ -28,7 +28,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 * Filter Profile
   * If a filter in website is missing from profile, show message (and button?) in profile
-  * Show error if user includes punctuation (, or /) in filter profile field
 
 * Website Config
   * Confirmation before deleting filter field / container
