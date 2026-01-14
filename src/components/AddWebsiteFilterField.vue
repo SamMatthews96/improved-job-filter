@@ -7,8 +7,12 @@
     <input
         v-model="fieldValue"
         placeholder="Field Value"
+        @input="console.log(3)"
     ></input>
-    <button @click="addFilterField">Add</button>
+    <button @click="addFilterField"
+        @mouseenter="console.log(1)"
+        @focus="console.log(2)"
+    >Add</button>
 </template>
 
 <script setup lang="ts">
@@ -16,17 +20,18 @@ import { ref } from 'vue';
 import { identifyFieldChildPath, getWindowUrl } from '@/utils/helpers';
 import { state } from '@/utils/state';
 
-const match = getWindowUrl()
 
 function addFilterField() {
     const elementPath = identifyFieldChildPath(
-        state.websiteFilterSettings[match]!.containerProperties,
+        state.websiteFilterSettings[match]!.containerProperties!,
         fieldValue.value
     )
     state.websiteFilterSettings[match]!
         .fieldProperties[nameField.value] = elementPath
-
 }
+
+const match = getWindowUrl()
+
 
 const nameField = ref('')
 const fieldValue = ref('')

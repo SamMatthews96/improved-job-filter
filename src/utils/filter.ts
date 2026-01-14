@@ -1,6 +1,7 @@
 import { getElementWithPath, getWindowUrl } from './helpers'
 import { state, highlightName, isHighlightingContainer } from '@/utils/state'
 import { watch } from 'vue'
+import type { WebsiteFilter } from './types'
 
 const filterClass = 'ijf-highlight'
 
@@ -12,6 +13,7 @@ export default class Filter {
   private stateTimeoutDelay = 300
   private observer?: MutationObserver
   private failedAttempts: number = 0
+  private websiteFilter: WebsiteFilter | undefined 
 
   private highlightedElements: {
     [fieldName: string]: HTMLElement[]
@@ -48,9 +50,9 @@ export default class Filter {
   private updateContainer(): void {
     this.observer?.disconnect()
 
-    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (websiteFilter?.containerProperties) {
-      this.container = getElementWithPath(websiteFilter.containerProperties)
+    this.websiteFilter = state.websiteFilterSettings[getWindowUrl()]
+    if (this.websiteFilter?.containerProperties) {
+      this.container = getElementWithPath(this.websiteFilter.containerProperties)
       if (!this.container) {
         if (this.failedAttempts >= 3) {
           throw new Error('[20260112.0036]')
@@ -85,16 +87,15 @@ export default class Filter {
   }
 
   private runFilter(): void {
-    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (!websiteFilter) return this.clearFilter()
+    if (!this.websiteFilter) throw new Error('[20260114.1805]')
 
-    const profileId = websiteFilter.selectedFilterId
+    const profileId = this.websiteFilter.selectedFilterId
     if (!profileId) return this.clearFilter()
 
     const currentProfile = state.filterProfileSettings.profiles[profileId]
     if (!currentProfile) return this.clearFilter()
 
-    const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
+    const fieldPropertyArray = Object.entries(this.websiteFilter.fieldProperties)
 
     for (let i = 0; i < this.container!.children.length; i++) {
       const jobElement = this.container!.children[i] as HTMLElement
@@ -123,12 +124,11 @@ export default class Filter {
       throw new Error('[20260113.1634]')
     }
 
-    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (!websiteFilter) {
+    if (!this.websiteFilter) {
       throw new Error('[20260113.1636]')
     }
 
-    const elementPath = websiteFilter.fieldProperties[fieldName]
+    const elementPath = this.websiteFilter.fieldProperties[fieldName]
     if (!elementPath) throw new Error('[20260113.1756]')
 
     this.highlightedElements[fieldName] = []
@@ -149,5 +149,7 @@ export default class Filter {
     });
     delete this.highlightedElements[fieldName]
   }
+
+  
 
 }

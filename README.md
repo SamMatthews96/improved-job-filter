@@ -19,6 +19,17 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
+* Website Config
+  * Confirmation + highlight before adding any website filter field
+  * Confirmation + highlight before setting container
+  * Confirmation before deleting filter field / container
+  * Indication (and resolve option) if the filter cannot find the container or any child fields
+
+  * Partial match for website filter field
+  * Add all the default page selectors
+  * edit button to update website filter fields
+    * If a filter in profile is missing from website, show message (and button?) in website
+
 * Appearance
   * Make theme better
     * dark grey looks a bit drab?
@@ -26,18 +37,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * svg icons for buttons, add, delete, close
   * animated slide in/out button
 
-* Website Config
-  * Confirmation before deleting filter field / container
-  * Confirmation + highlight before setting container
-  * Confirmation + highlight before adding any website filter field
-  * Warning (and resolve option) if the filter cannot find the container or any child fields
-  * Partial match for website filter field
-  * Add all the default page selectors
-  * edit button to update website filter fields
-  * If a filter in profile is missing from website, show message (and button?) in website
 
 * trying to add multiple website filters of the same name triggers an error
-
 
 * Publish the extension on the marketplace.
 
