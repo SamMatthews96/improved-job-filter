@@ -46,13 +46,13 @@ import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
 import emitter from '@/utils/emitter';
 
 function onAccept() {
-    isEditMode.value = false;
-    textValue.value = ''
     const elementPath = identifyFieldChildPath(
         state.websiteFilterSettings[match]!.containerProperties!,
         textValue.value
     )
     if (!elementPath) return
+    isEditMode.value = false;
+    textValue.value = ''
     state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath
 
 }

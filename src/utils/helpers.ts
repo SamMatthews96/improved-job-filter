@@ -27,8 +27,19 @@ function getElementWithText(text: string): HTMLElement | null {
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     'abcdefghijklmnopqrstuvwxyz'
   )='${lower}']`
-  const match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+  let match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue as HTMLElement | null
+  if (!match) {
+    const xpathContains = `//*[contains(
+      translate(text(),
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        'abcdefghijklmnopqrstuvwxyz'
+      ),
+      '${lower}'
+    )]`
+    match = document.evaluate(xpathContains, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+      .singleNodeValue as HTMLElement | null
+  }
   return match
 }
 
@@ -189,7 +200,7 @@ function identifyFieldChildPath(
 function getUniqueRelativeElementPath(
   fieldElement: HTMLElement,
   container: HTMLElement,
-): ElementPath {
+): ElementPath | undefined {
   let currentElement = fieldElement
   const attributeList: ElementPath = []
 
@@ -197,7 +208,7 @@ function getUniqueRelativeElementPath(
     const attributes = getElementProperties(currentElement)
     attributeList.push(attributes)
     currentElement = currentElement.parentElement as HTMLElement
-    if (!currentElement) throw new Error('[20251208.0041]')
+    if (!currentElement) return
   }
 
   const isValid = currentElement == container
@@ -228,7 +239,6 @@ function getWindowUrl(): string {
 }
 
 export {
-  getUniqueRelativeElementPaths,
   identifyContainerAndTitlePaths,
   identifyFieldChildPath,
   getWindowUrl,
