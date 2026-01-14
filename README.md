@@ -19,8 +19,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
-* When deleting a Website filter field, ensure that the highlight is removed
-
 * Appearance
   * Make theme better
     * dark grey looks a bit drab?
@@ -32,7 +30,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * Show error if user includes punctuation (, or /) in filter profile field
 
 * Website Config
-  * Add container as a field
   * Confirmation upon trying to add any website filter field
   * Confirmation upon adding the title filter field 
   * Confirmation before clear site data
@@ -41,6 +38,8 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
   * edit button to update website filter fields
   * If a filter in profile is missing from website, show message (and button?) in website
   * Warning (and resolve option) if the filter cannot find the container or any child fields
+
+* trying to add multiple website filters of the same name triggers an error
 
 
 * Publish the extension on the marketplace.

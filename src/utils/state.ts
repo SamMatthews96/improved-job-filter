@@ -29,3 +29,5 @@ Runtime.get()
 
 
 export const highlightName: Ref<string | undefined> = ref(undefined)
+
+export const isHighlightingContainer: Ref<boolean> = ref(false)

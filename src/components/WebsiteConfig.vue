@@ -30,10 +30,6 @@ function addWebsiteFilter(
   }
 }
 
-function clearSiteData() {
-  delete state.websiteFilterSettings[match]
-}
-
 function getFilterProfileList(): FilterProfileList {
   return Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
     return {
@@ -84,10 +80,11 @@ watch(state, () => {
         v-if="!(state.websiteFilterSettings[match])"
       />
       <template v-else>
-        <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
+        <WebsiteFieldConfig 
+          :filter="state.websiteFilterSettings[match]!"
+          @delete-container="delete state.websiteFilterSettings[match]"
+        />
         <AddWebsiteFilterField />
-        <br></br>
-        <button @click="clearSiteData">Clear Site Data</button>
       </template>
 
     </div>

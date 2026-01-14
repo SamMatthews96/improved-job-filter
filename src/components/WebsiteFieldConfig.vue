@@ -1,5 +1,10 @@
 <template>
-
+    <WebsiteFilterField
+        fieldName="container"
+        @mouseenter="isHighlightingContainer = true"
+        @mouseleave="isHighlightingContainer = false"
+        @delete="isHighlightingContainer = false; emit('delete-container')"
+    />
     <WebsiteFilterField
         v-for="fieldName in fieldNames"
         :fieldName="fieldName"
@@ -11,13 +16,15 @@
 </template>
 
 <script setup lang="ts">
+
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
 import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
-import { highlightName } from '@/utils/state';
+import { highlightName, isHighlightingContainer } from '@/utils/state';
 
-const props = defineProps<{
-    filter: WebsiteFilter
+const props = defineProps<{ filter: WebsiteFilter }>()
+const emit = defineEmits<{
+    (e: 'delete-container'): void
 }>()
 
 function onDeleteClicked(fieldName: string) {

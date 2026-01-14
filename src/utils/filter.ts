@@ -1,6 +1,8 @@
 import { getElementWithPath, getWindowUrl } from './helpers'
-import { state, highlightName } from '@/utils/state'
+import { state, highlightName, isHighlightingContainer } from '@/utils/state'
 import { watch } from 'vue'
+
+const filterClass = 'ijf-highlight'
 
 export default class Filter {
   private defaultJobDisplayMode: string = 'none'
@@ -31,6 +33,14 @@ export default class Filter {
       }
       if (oldValue) {
         this.unhighlightFieldsByName(oldValue)
+      }
+    })
+
+    watch(isHighlightingContainer, () => {
+      if (isHighlightingContainer.value) {
+        this.container?.classList.add(filterClass)
+      } else {
+        this.container?.classList.remove(filterClass)
       }
     })
   }
@@ -125,8 +135,8 @@ export default class Filter {
       const jobElement = this.container!.children[i] as HTMLElement
       const element = getElementWithPath(elementPath, jobElement)
       if (!element) continue
-      if (!element.className.includes(' ijf-highlight')) {
-        element.classList.add('ijf-highlight')
+      if (!element.className.includes(filterClass)) {
+        element.classList.add(filterClass)
         this.highlightedElements[fieldName].push(element)
       }
     }
@@ -134,8 +144,9 @@ export default class Filter {
 
   private unhighlightFieldsByName(fieldName: string) {
     this.highlightedElements[fieldName]!.forEach(element => {
-      element.classList.remove('ijf-highlight')
+      element.classList.remove(filterClass)
     });
     delete this.highlightedElements[fieldName]
   }
+
 }

@@ -4,11 +4,11 @@
         @mouseenter="emit('mouseenter')"
         @mouseleave="emit('mouseleave')"
     >
+
         <span>{{ fieldName }}</span>
-        <button
-            v-if="fieldName != 'title'"
-            @click="emit('delete')"
-        >Delete</button>
+        <button @click="emit('delete')">
+            {{ fieldName == 'container' ? 'Reset Site Data' : 'Delete' }}
+        </button>
     </div>
 </template>
 
