@@ -24,10 +24,15 @@
 }
 
 .ijf-highlight {
-  animation: highlight-pulse 0.5s infinite alternate;
+    animation: highlight-pulse 0.5s infinite alternate;
 }
 
 @keyframes highlight-pulse {
-  from {background-color: #ff000000;}
-  to {background-color: #40ff4080;}
+    from {
+        background-color: #40ff4000;
+    }
+
+    to {
+        background-color: #40ff4080;
+    }
 }
