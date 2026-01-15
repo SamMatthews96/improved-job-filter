@@ -1,8 +1,9 @@
 <template>
     <div
         :class="['website-field-config', matchStatus]"
-        @mouseenter="!isEditMode && emit('highlight-on')"
-        @mouseleave="emit('highlight-off')"
+        @mouseenter="highlightContainerPath =
+            state.websiteFilterSettings[getWindowUrl()]?.containerProperties"
+        @mouseleave="highlightContainerPath = undefined"
     >
         <span>Container</span>
         <span>
@@ -21,11 +22,12 @@
 import { ref, watch } from 'vue';
 import emitter from '@/utils/emitter';
 import { getElementWithPath, getWindowUrl } from '@/utils/helpers';
-import { state } from '@/utils/state';
+import { state, highlightContainerPath } from '@/utils/state';
 
 function onDeleteClicked() {
     if (isConfirmDelete.value) {
-        emit('delete')
+        highlightContainerPath.value = undefined
+        delete state.websiteFilterSettings[getWindowUrl()]
     } else {
         isConfirmDelete.value = true
     }
@@ -42,14 +44,8 @@ function checkMatchStatus() {
     }
 }
 
-const isEditMode = ref(false)
 const isConfirmDelete = ref(false)
 const textValue = ref('')
-const emit = defineEmits<{
-    (e: 'delete'): void,
-    (e: 'highlight-on'): void,
-    (e: 'highlight-off'): void,
-}>()
 const matchStatus = ref(checkMatchStatus())
 
 watch(textValue, () => {

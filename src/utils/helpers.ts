@@ -66,6 +66,7 @@ function getUniqueElementPath(element: HTMLElement): ElementPath {
 
 // probably use during getUniqueRelativeSelector
 function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
+  console.log(fieldElements)
   const firstElement = fieldElements[0] as HTMLElement
   const commonProperties: ElementProperties = getElementProperties(firstElement)
   // iterate over the equivalent elements
@@ -164,18 +165,19 @@ function createSelector(path: ElementPath): string {
     .join(' > ')
 }
 
+
 function identifyContainerAndTitlePaths(textValues: string[]): {
   containerPath: ElementPath
   titlePath: ElementPath
-} {
+} | undefined {
   const matches = textValues.map(getElementWithText)
-  if (matches.some((match) => !match)) throw new Error('[20251208.1802]')
+  if (matches.some((match) => !match)) return
   matches as HTMLElement[]
-  if (!matches[0] || !matches[1]) throw new Error('[20251208.1804]')
+  if (!matches[0] || !matches[1]) return
 
   const commonParent = getCommonParent(matches[0], matches[1])
-  if (!commonParent) throw new Error('[20251208.1804]')
-
+  if (!commonParent) return
+  if (commonParent.tagName == 'HTML') return
   const containerPath = getUniqueElementPath(commonParent)
   const titlePath = getUniqueRelativeElementPaths(matches as HTMLElement[], commonParent)
 

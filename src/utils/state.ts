@@ -1,6 +1,6 @@
 import { reactive, watch, type Reactive, type Ref, ref } from "vue";
 import Runtime from "./runtime";
-import type { StoredData } from "./types";
+import type { ElementPath, StoredData } from "./types";
 import defaultWebsiteFieldConfig from '@/utils/defaultWebsiteFieldConfig.json'
 
 export const state: Reactive<StoredData> = reactive({
@@ -30,4 +30,4 @@ Runtime.get()
 
 export const highlightName: Ref<string | undefined> = ref(undefined)
 
-export const isHighlightingContainer: Ref<boolean> = ref(false)
+export const highlightContainerPath: Ref<ElementPath | undefined> = ref(undefined)

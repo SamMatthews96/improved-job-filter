@@ -22,7 +22,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 https://uk.indeed.com/?from=gnav-app-tracker vs https://uk.indeed.com/
 
 * Website Config
-  * Confirmation + highlight before setting container
   * Add all the default page selectors
 
 * Appearance

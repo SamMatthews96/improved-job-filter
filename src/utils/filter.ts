@@ -1,5 +1,5 @@
 import { getElementWithPath, getWindowUrl, identifyFieldChildPath } from './helpers'
-import { state, highlightName, isHighlightingContainer } from '@/utils/state'
+import { state, highlightName, highlightContainerPath } from '@/utils/state'
 import { watch } from 'vue'
 import type { WebsiteFilter } from './types'
 import emitter from '@/utils/emitter';
@@ -19,7 +19,7 @@ class Filter {
     [fieldName: string]: HTMLElement[]
   } = {}
   private editHighlightElements: HTMLElement[] = []
-  private containerOverlay: HTMLElement | undefined 
+  private containerOverlay: HTMLElement | undefined
 
   constructor() {
     this.updateContainer()
@@ -39,10 +39,12 @@ class Filter {
       }
     })
 
-    watch(isHighlightingContainer, () => {
-      if (!this.container) return
-      if (isHighlightingContainer.value) {
-        const rect = this.container.getBoundingClientRect();
+    watch(highlightContainerPath, () => {
+      this.containerOverlay?.remove()
+      if (highlightContainerPath.value) {
+        const container = getElementWithPath(highlightContainerPath.value)
+        if (!container) throw new Error('[20260115.1554]')
+        const rect = container.getBoundingClientRect();
         this.containerOverlay = document.createElement("div");
         this.containerOverlay.id = 'container-highlight'
         this.containerOverlay.className = filterClass
@@ -53,13 +55,11 @@ class Filter {
           left: `${rect.left}px`,
           width: `${rect.width}px`,
           height: `${rect.height}px`,
-          zIndex: 2147483646, 
-          pointerEvents: "none", 
+          zIndex: 2147483646,
+          pointerEvents: "none",
         });
 
         document.body.appendChild(this.containerOverlay);
-      } else {
-        this.containerOverlay?.remove()
       }
     })
 

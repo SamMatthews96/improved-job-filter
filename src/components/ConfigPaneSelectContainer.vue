@@ -26,8 +26,9 @@
 
 <script setup lang="ts">
 import { identifyContainerAndTitlePaths } from '@/utils/helpers';
+import { highlightContainerPath } from '@/utils/state';
 import type { ElementPath } from '@/utils/types';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const displayMode = ref('start')
 const websitePrefix = ref(window.location.href)
@@ -46,17 +47,27 @@ const emit = defineEmits<{
 }>()
 
 function onSubmit() {
-  const { containerPath, titlePath } = identifyContainerAndTitlePaths(
+  const paths = identifyContainerAndTitlePaths(
     [firstSearchName.value, secondSearchName.value]
   )
-  // @todo, to confirm that we have the correct fields selected
-  // we could highlight the identified fields
-  // something for search container, and title field
-  // if the checks are met, then submit
+  if (!paths) return
+  const { containerPath, titlePath } = paths
 
+  highlightContainerPath.value = undefined
   emit('foundContainer', containerPath, titlePath, websitePrefix.value)
 }
 
+watch([firstSearchName, secondSearchName], () => {
+  const paths = identifyContainerAndTitlePaths(
+    [firstSearchName.value, secondSearchName.value]
+  )
+  if (!paths) {
+    highlightContainerPath.value = undefined
+    return
+  }
+  const { containerPath } = paths
+  highlightContainerPath.value = containerPath
+})
 
 </script>
 
