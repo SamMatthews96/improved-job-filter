@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import WebsiteConfig from '@/components/WebsiteConfig.vue'
+import Script from '@/components/Script.vue'
 import Filter from '@/utils/filter'
 
 const id = 'ijf-script-root'
@@ -11,11 +11,11 @@ function createOverlay(): void {
     host.id = id
     host.className = "improved-job-filter"
     document.body.appendChild(host)
-    createApp(WebsiteConfig).mount(host)
+    createApp(Script).mount(host)
 }
 
 console.log('improved-job-filter loading')
 
 createOverlay()
 
-new Filter()
+Filter

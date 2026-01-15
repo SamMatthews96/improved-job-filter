@@ -6,7 +6,7 @@ import emitter from '@/utils/emitter';
 
 const filterClass = 'ijf-highlight'
 
-export default class Filter {
+class Filter {
   private defaultJobDisplayMode: string = 'none'
   private container?: HTMLElement
 
@@ -67,13 +67,15 @@ export default class Filter {
         const jobElement = this.container.children[i] as HTMLElement
         const element = getElementWithPath(elementPath, jobElement)
         if (!element) continue
-        
+
         if (!element.className.includes(filterClass)) {
           element.classList.add(filterClass)
           this.editHighlightElements.push(element)
         }
       }
     })
+
+
   }
 
   private updateContainer(): void {
@@ -181,6 +183,21 @@ export default class Filter {
     delete this.highlightedElements[fieldName]
   }
 
-
+  public getFieldsByName(fieldName: string): HTMLElement[] {
+    console.log('here', fieldName)
+    console.log(state)
+    const elementPath = this.websiteFilter?.fieldProperties[fieldName]
+    if (!elementPath) return []
+    const elements = []
+    for (let i = 0; i < this.container!.children.length; i++) {
+      const jobElement = this.container!.children[i] as HTMLElement
+      const element = getElementWithPath(elementPath, jobElement)
+      if (!element) continue
+      elements.push(element)
+    }
+    return elements
+  }
 
 }
+
+export default new Filter()

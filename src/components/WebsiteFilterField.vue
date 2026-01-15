@@ -1,10 +1,9 @@
 <template>
     <div
-        class="website-field-config"
+        :class="['website-field-config', matchStatus]"
         @mouseenter="!isEditMode && emit('highlight-on')"
         @mouseleave="emit('highlight-off')"
     >
-
         <span>{{ fieldName }}</span>
         <span v-if="fieldName == 'container'">
             <button
@@ -52,6 +51,7 @@ import { ref, watch } from 'vue';
 import { state } from '@/utils/state';
 import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
 import emitter from '@/utils/emitter';
+import filter from '@/utils/filter';
 
 function onAccept() {
     const elementPath = identifyFieldChildPath(
@@ -63,6 +63,7 @@ function onAccept() {
     textValue.value = ''
     state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath
 
+    matchStatus.value = checkMatchStatus()
 }
 
 function onDeleteClicked() {
@@ -73,23 +74,26 @@ function onDeleteClicked() {
     }
 }
 
-const props = defineProps<{
-    fieldName: string
-}>()
+function checkMatchStatus() {
+    const fieldCount = filter.getFieldsByName(props.fieldName).length
+    if (fieldCount) {
+        return 'valid'
+    } else {
+        return 'invalid'
+    }
+}
 
+const isEditMode = ref(false)
+const isConfirmDelete = ref(false)
+const textValue = ref('')
+const match = getWindowUrl()
+const props = defineProps<{ fieldName: string }>()
 const emit = defineEmits<{
     (e: 'delete'): void,
     (e: 'highlight-on'): void,
     (e: 'highlight-off'): void,
 }>()
-
-const isEditMode = ref(false)
-const isConfirmDelete = ref(false)
-const textValue = ref('')
-
-
-
-const match = getWindowUrl()
+const matchStatus = ref(checkMatchStatus())
 
 watch(textValue, () => {
     emitter.emit('filter-edit-field-updated', textValue.value)
@@ -99,12 +103,20 @@ watch(textValue, () => {
 
 <style scoped lang="scss">
 .website-field-config {
-    border: 1px red solid;
+    border: 2px solid;
     padding: 3px;
     margin: 2px;
     display: flex;
     justify-content: space-between;
     cursor: default;
+}
+
+.valid {
+    border-color: green;
+}
+
+.invalid {
+    border-color: orangered;
 }
 
 input {
