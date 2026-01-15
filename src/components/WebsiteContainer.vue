@@ -35,7 +35,6 @@ function checkMatchStatus() {
     const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
     if (!websiteFilter?.containerProperties) throw new Error('[20260115.0153]')
     const container = getElementWithPath(websiteFilter.containerProperties)
-    console.log(websiteFilter.containerProperties)
     if (container) {
         return 'valid'
     } else {
@@ -55,6 +54,10 @@ const matchStatus = ref(checkMatchStatus())
 
 watch(textValue, () => {
     emitter.emit('filter-edit-field-updated', textValue.value)
+})
+
+watch(state, () => {
+    matchStatus.value = checkMatchStatus()
 })
 
 </script>

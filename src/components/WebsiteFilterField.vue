@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { state } from '@/utils/state';
 import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
 import emitter from '@/utils/emitter';

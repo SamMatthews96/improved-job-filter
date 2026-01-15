@@ -19,7 +19,7 @@
 import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
 import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
-import { highlightName, isHighlightingContainer } from '@/utils/state';
+import { highlightName, isHighlightingContainer, state } from '@/utils/state';
 import WebsiteContainer from './WebsiteContainer.vue';
 
 const props = defineProps<{ filter: WebsiteFilter }>()
@@ -31,7 +31,8 @@ function onDeleteClicked(fieldName: string) {
 }
 
 const fieldNames = ref<string[]>(Object.keys(props.filter.fieldProperties))
-watch(props.filter.fieldProperties, () => {
+watch(state, () => {
+    console.log('watch', props.filter.fieldProperties)
     fieldNames.value = Object.keys(props.filter.fieldProperties)
 })
 

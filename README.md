@@ -19,10 +19,14 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 
 -- current phase --
 
+background highlight should show on top of contains
+partial match does not work on indeed
+
+https://uk.indeed.com/?from=gnav-app-tracker vs https://uk.indeed.com/
+
 * Website Config
-  * Indicate by border color if the filter cannot find the container or any child fields
-  * Add all the default page selectors
   * Confirmation + highlight before setting container
+  * Add all the default page selectors
 
 * Appearance
   * Make theme better

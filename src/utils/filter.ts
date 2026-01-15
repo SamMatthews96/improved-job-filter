@@ -11,7 +11,6 @@ class Filter {
   private container?: HTMLElement
 
   private stateChangedTimeoutId: number = 0
-  private stateTimeoutDelay = 300
   private observer?: MutationObserver
   private failedAttempts: number = 0
   private websiteFilter: WebsiteFilter | undefined
@@ -25,10 +24,9 @@ class Filter {
     this.updateContainer()
 
     watch(state, () => {
+      console.log('state', state)
       clearTimeout(this.stateChangedTimeoutId)
-      // this.stateChangedTimeoutId = window.setTimeout(() => {
       this.updateContainer()
-      // }, this.stateTimeoutDelay)
     })
 
     watch(highlightName, (newValue, oldValue) => {
