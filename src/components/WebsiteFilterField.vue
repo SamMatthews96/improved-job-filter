@@ -12,7 +12,9 @@
             >
                 <input v-model="textValue">
                 <span>
-                    <button @click="onAccept()">Ok</button>
+                    <button @click="onAccept()"
+                        :disabled="!elementPath"
+                    >Ok</button>
                     <button @click="isEditMode = false; textValue = ''">Cancel</button>
                 </span>
             </span>
@@ -35,21 +37,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 import { state } from '@/utils/state';
 import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
 import emitter from '@/utils/emitter';
 import filter from '@/utils/filter';
+import type { ElementPath } from '@/utils/types';
 
 function onAccept() {
-    const elementPath = identifyFieldChildPath(
-        state.websiteFilterSettings[match]!.containerProperties!,
-        textValue.value
-    )
-    if (!elementPath) return
+    if (!elementPath.value) return
     isEditMode.value = false;
     textValue.value = ''
-    state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath
+    state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath.value
 
     matchStatus.value = checkMatchStatus()
 }
@@ -82,8 +81,12 @@ const emit = defineEmits<{
     (e: 'highlight-off'): void,
 }>()
 const matchStatus = ref(checkMatchStatus())
+const elementPath: Ref<ElementPath | undefined> = ref(undefined)
 
 watch(textValue, () => {
+    elementPath.value = identifyFieldChildPath(
+        state.websiteFilterSettings[match]!.containerProperties!,
+        textValue.value)
     emitter.emit('filter-edit-field-updated', textValue.value)
 })
 
