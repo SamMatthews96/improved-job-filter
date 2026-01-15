@@ -19,6 +19,7 @@ class Filter {
     [fieldName: string]: HTMLElement[]
   } = {}
   private editHighlightElements: HTMLElement[] = []
+  private containerOverlay: HTMLElement | undefined 
 
   constructor() {
     this.updateContainer()
@@ -41,9 +42,24 @@ class Filter {
     watch(isHighlightingContainer, () => {
       if (!this.container) return
       if (isHighlightingContainer.value) {
-        this.container.classList.add(filterClass)
+        const rect = this.container.getBoundingClientRect();
+        this.containerOverlay = document.createElement("div");
+        this.containerOverlay.id = 'container-highlight'
+        this.containerOverlay.className = filterClass
+
+        Object.assign(this.containerOverlay.style, {
+          position: "fixed",
+          top: `${rect.top}px`,
+          left: `${rect.left}px`,
+          width: `${rect.width}px`,
+          height: `${rect.height}px`,
+          zIndex: 2147483646, 
+          pointerEvents: "none", 
+        });
+
+        document.body.appendChild(this.containerOverlay);
       } else {
-        this.container.classList.remove(filterClass)
+        this.containerOverlay?.remove()
       }
     })
 

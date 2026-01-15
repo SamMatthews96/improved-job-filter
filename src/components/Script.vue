@@ -26,7 +26,7 @@ const isShowing = ref(false)
   position: fixed;
   top: 10px;
   right: 10px;
-  z-index: 10000;
+  z-index: 2147483647;
 }
 
 .open-button {
