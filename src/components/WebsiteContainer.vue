@@ -84,4 +84,8 @@ watch(state, () => {
 .field-button-container {
     display: flex;
 }
+
+button {
+    min-width: 142px;
+}
 </style>

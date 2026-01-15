@@ -20,7 +20,6 @@ While this is a work in progress, it is a MVP that delivers on the basic idea. F
 -- current phase --
 
 background highlight should show on top of contains
-The Reset Site Data Button acts strangely as the mouseleave can be triggered when the button resizes
 
 https://uk.indeed.com/?from=gnav-app-tracker vs https://uk.indeed.com/
 
