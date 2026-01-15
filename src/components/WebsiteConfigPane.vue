@@ -79,7 +79,6 @@ watch(state, () => {
             </select>
             <WebsiteFieldConfig
                 :filter="state.websiteFilterSettings[match]!"
-                @delete-container="delete state.websiteFilterSettings[match]"
             />
             <AddFieldsToWebsiteFilter />
             <AddWebsiteFilterField />

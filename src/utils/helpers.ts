@@ -1,6 +1,5 @@
 import type { ElementProperties, ElementPath } from './types'
 
-//@todo should commonparent be able to get common parent of many
 function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | null {
   // Determine which API is available on the node
   const method: 'contains' | 'compareDocumentPosition' =
@@ -58,15 +57,10 @@ function getUniqueElementPath(element: HTMLElement): ElementPath {
     current = current.parentElement
   }
   return attributes
-
-  //@todo may need a function to verify that this is unique
-  // although, it should be unique regardless:
-  // it searches until it gets
 }
 
 // probably use during getUniqueRelativeSelector
 function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
-  console.log(fieldElements)
   const firstElement = fieldElements[0] as HTMLElement
   const commonProperties: ElementProperties = getElementProperties(firstElement)
   // iterate over the equivalent elements
