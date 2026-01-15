@@ -23,14 +23,16 @@ function getCommonParent(node1: HTMLElement, node2: HTMLElement): HTMLElement | 
 
 function getElementWithText(text: string): HTMLElement | null {
   const lower = text.toLowerCase()
-  const xpath = `//*[translate(text(),
+  const xpath = `//*[not(self::script or self::style)
+      and translate(text(),
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     'abcdefghijklmnopqrstuvwxyz'
   )='${lower}']`
   let match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue as HTMLElement | null
   if (!match) {
-    const xpathContains = `//*[contains(
+    const xpathContains = `//*[not(self::script or self::style)
+      and contains(
       translate(text(),
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         'abcdefghijklmnopqrstuvwxyz'

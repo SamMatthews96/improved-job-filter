@@ -4,21 +4,6 @@
         <button @click="length++">Add</button>
         <button @click="length--">Remove</button>
 
-        <div id="mytest">
-            <p>
-
-            </p>
-            <div>
-
-            </div>
-            <ul>
-
-            </ul>
-            <div>
-
-            </div>
-        </div>
-
         <div id="test-job-container">
             <div
                 class="test-job"
@@ -62,9 +47,17 @@ const length = ref(8)
     margin: 20px;
 }
 
+#test-job-container::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+}
+
 .test-job {
     height: 100px;
     border: 1px solid white;
     margin: 5px;
+    background-color: rgb(62, 62, 51);
 }
 </style>
