@@ -1,6 +1,5 @@
 <template>
-    <WebsiteFilterField
-        fieldName="container"
+    <WebsiteContainer
         @highlight-on="isHighlightingContainer = true"
         @highlight-off="isHighlightingContainer = false"
         @delete="isHighlightingContainer = false; emit('delete-container')"
@@ -21,6 +20,7 @@ import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
 import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
 import { highlightName, isHighlightingContainer } from '@/utils/state';
+import WebsiteContainer from './WebsiteContainer.vue';
 
 const props = defineProps<{ filter: WebsiteFilter }>()
 const emit = defineEmits<{ (e: 'delete-container'): void }>()

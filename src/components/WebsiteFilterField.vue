@@ -5,19 +5,7 @@
         @mouseleave="emit('highlight-off')"
     >
         <span>{{ fieldName }}</span>
-        <span v-if="fieldName == 'container'">
-            <button
-                @click="onDeleteClicked()"
-                @focusout="isConfirmDelete = false"
-                @mouseleave="isConfirmDelete = false"
-            >
-                {{ isConfirmDelete ? 'Confirm?' : 'Reset Site Data' }}
-            </button>
-        </span>
-        <span
-            v-else
-            class="field-button-container"
-        >
+        <span class="field-button-container">
             <span
                 v-if="isEditMode"
                 class="edit-mode"
@@ -47,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { state } from '@/utils/state';
 import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
 import emitter from '@/utils/emitter';

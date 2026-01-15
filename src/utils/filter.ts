@@ -26,9 +26,9 @@ class Filter {
 
     watch(state, () => {
       clearTimeout(this.stateChangedTimeoutId)
-      this.stateChangedTimeoutId = window.setTimeout(() => {
-        this.updateContainer()
-      }, this.stateTimeoutDelay)
+      // this.stateChangedTimeoutId = window.setTimeout(() => {
+      this.updateContainer()
+      // }, this.stateTimeoutDelay)
     })
 
     watch(highlightName, (newValue, oldValue) => {
@@ -41,10 +41,11 @@ class Filter {
     })
 
     watch(isHighlightingContainer, () => {
+      if (!this.container) return
       if (isHighlightingContainer.value) {
-        this.container!.classList.add(filterClass)
+        this.container.classList.add(filterClass)
       } else {
-        this.container!.classList.remove(filterClass)
+        this.container.classList.remove(filterClass)
       }
     })
 
@@ -74,8 +75,6 @@ class Filter {
         }
       }
     })
-
-
   }
 
   private updateContainer(): void {
@@ -86,7 +85,8 @@ class Filter {
       this.container = getElementWithPath(this.websiteFilter.containerProperties)
       if (!this.container) {
         if (this.failedAttempts >= 3) {
-          throw new Error('[20260112.0036]')
+          // @todo notify when we can't get the container
+          return
         }
         this.failedAttempts++
         console.log('failed to get container, reattempting ...')
@@ -152,9 +152,8 @@ class Filter {
   }
 
   private highlightFieldsByName(fieldName: string) {
-    if (!this.container) {
-      throw new Error('[20260113.1634]')
-    }
+    if (!this.container) return
+
 
     if (!this.websiteFilter) {
       throw new Error('[20260113.1636]')
@@ -184,13 +183,13 @@ class Filter {
   }
 
   public getFieldsByName(fieldName: string): HTMLElement[] {
-    console.log('here', fieldName)
-    console.log(state)
     const elementPath = this.websiteFilter?.fieldProperties[fieldName]
     if (!elementPath) return []
+    if (!this.container) return []
+
     const elements = []
-    for (let i = 0; i < this.container!.children.length; i++) {
-      const jobElement = this.container!.children[i] as HTMLElement
+    for (let i = 0; i < this.container.children.length; i++) {
+      const jobElement = this.container.children[i] as HTMLElement
       const element = getElementWithPath(elementPath, jobElement)
       if (!element) continue
       elements.push(element)
