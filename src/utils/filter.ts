@@ -15,7 +15,7 @@ class Filter {
   private failedAttempts: number = 0
   private websiteFilter: WebsiteFilter | undefined
 
-  private highlightedElements: {
+  private fieldHighlights: {
     [fieldName: string]: HTMLElement[]
   } = {}
   private editHighlightElements: HTMLElement[] = []
@@ -44,22 +44,8 @@ class Filter {
       if (highlightContainerPath.value) {
         const container = getElementWithPath(highlightContainerPath.value)
         if (!container) throw new Error('[20260115.1554]')
-        const rect = container.getBoundingClientRect();
-        this.containerOverlay = document.createElement("div");
-        this.containerOverlay.id = 'container-highlight'
-        this.containerOverlay.className = filterClass
 
-        Object.assign(this.containerOverlay.style, {
-          position: "fixed",
-          top: `${rect.top}px`,
-          left: `${rect.left}px`,
-          width: `${rect.width}px`,
-          height: `${rect.height}px`,
-          zIndex: 2147483646,
-          pointerEvents: "none",
-        });
-
-        document.body.appendChild(this.containerOverlay);
+        this.containerOverlay = this.createOverlayHighlight(container)
       }
     })
 
@@ -89,6 +75,26 @@ class Filter {
         }
       }
     })
+  }
+
+  private createOverlayHighlight(element: HTMLElement): HTMLElement {
+    const rect = element.getBoundingClientRect();
+
+    const overlay = document.createElement("div");
+    overlay.className = filterClass
+
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      zIndex: 2147483646,
+      pointerEvents: "none",
+    });
+
+    document.body.appendChild(overlay);
+    return overlay
   }
 
   private updateContainer(): void {
@@ -176,24 +182,23 @@ class Filter {
     const elementPath = this.websiteFilter.fieldProperties[fieldName]
     if (!elementPath) return
 
-    this.highlightedElements[fieldName] = []
+    this.fieldHighlights[fieldName] = []
     for (let i = 0; i < this.container.children.length; i++) {
       const jobElement = this.container.children[i] as HTMLElement
       const element = getElementWithPath(elementPath, jobElement)
       if (!element) continue
       if (!element.className.includes(filterClass)) {
-        element.classList.add(filterClass)
-        this.highlightedElements[fieldName].push(element)
+        const newElement = this.createOverlayHighlight(element)
+        this.fieldHighlights[fieldName].push(newElement)
       }
     }
   }
 
   private unhighlightFieldsByName(fieldName: string) {
-
-    this.highlightedElements[fieldName]?.forEach(element => {
-      element.classList.remove(filterClass)
+    this.fieldHighlights[fieldName]?.forEach(element => {
+      element.remove()
     });
-    delete this.highlightedElements[fieldName]
+    delete this.fieldHighlights[fieldName]
   }
 
   public getFieldsByName(fieldName: string): HTMLElement[] {

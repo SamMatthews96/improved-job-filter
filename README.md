@@ -6,14 +6,47 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
+1:
+2:
+3: 
+
+* Refactor
+  * Helpers file is largely related to getting elements and ElementProperties
+  * How often do I use the same state.filterXXX[match].etc... 
+    * perhaps I could use computed instead
+  * instead of using watch(state, ...) for everything, is it worth using signals
+  * Filter is about to get a whole lot larger, and could potentially be broken up
+    * It doesn't just filter anymore, it's more related to modifying the page appearance
+
 * The component names are not easy to understand
 * Is it straightforward to disable the extension on a webpage
 * trying to add multiple website filters of the same name should give error feedback
 
-* Better filter options: Whitelist, AND, OR, Groups of AND/OR.
+* Better filter options: 
+  * Collections: All of, any of, nested all/any of
+  * Field dropdown
+  * Comparisons:
+    * Not()
+    * Contains word
+    * Contains string
+  * text field
+  * e.g
+    All
+      title - contains word -  'javascript'
+      title - !contains word - 'java'
+      Any
+        location - contains word - 'London'
+        location - contains word - 'Redhill'
+
+* Is it possible to do pay filters
+
 * Add all the default page selectors
 
-* Website Config
+* on reed, the title field lights the entire job item, as it contains a button with invisible text
+  * The solution may lie in using xpath to get multiple results, then choosing based on criteria
+    * Is it within the container
+    * Weight based on size
+
   * https://uk.indeed.com/?from=gnav-app-tracker vs https://uk.indeed.com/
     When setting the container it should default to the base url
 
@@ -38,7 +71,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
   * WebsiteConfigPane
     * Title should be the name of the extension
       * maybe have a sub title for the panel's purpose
-      * Selected Profile could be centered, and named "Select filer profile: "
+      * Selected Profile could be centered, and named "Select filter profile: "
   * AddWebsiteFilterField
     * Button should id disable if empty or duplicate
     * Should give user feedback, perhaps via button mouseover
@@ -61,7 +94,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
         * could have disable option
           * would need to have confirmation
     * Add Filter Profile
-      * Consider its locate
+      * Consider its location
       * Duplicate profile option
     * FilterProfileEdit 
       * Delete Profile
@@ -73,10 +106,12 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
     * I don't like it, not 100% sure why yet
     * At the least, it should focus the text box on open
 
-
 * Publish the extension on the marketplace.
 
 -- backlog --
 
 * Some websites may have multiple layouts that warrant checking for multiple containers
 * light / dark theme toggle
+* Ideas
+  * show excluded count
+  * way of viewing the excluded ones

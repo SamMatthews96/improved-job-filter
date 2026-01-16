@@ -27,8 +27,13 @@ function getElementWithText(text: string): HTMLElement | null {
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     'abcdefghijklmnopqrstuvwxyz'
   )='${lower}']`
-  let match = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue as HTMLElement | null
+  let match = document.evaluate(
+    xpath,
+    document,
+    null,
+    XPathResult.FIRST_ORDERED_NODE_TYPE,
+    null
+  ).singleNodeValue as HTMLElement | null
   if (!match) {
     const xpathContains = `//*[not(self::script or self::style)
       and contains(
@@ -38,13 +43,17 @@ function getElementWithText(text: string): HTMLElement | null {
       ),
       '${lower}'
     )]`
-    match = document.evaluate(xpathContains, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-      .singleNodeValue as HTMLElement | null
+    match = document.evaluate(
+      xpathContains,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue as HTMLElement | null
   }
   return match
 }
 
-// use for getting search-results container
 function getUniqueElementPath(element: HTMLElement): ElementPath {
   const attributes: ElementProperties[] = []
   let current: HTMLElement | null = element
@@ -59,7 +68,6 @@ function getUniqueElementPath(element: HTMLElement): ElementPath {
   return attributes
 }
 
-// probably use during getUniqueRelativeSelector
 function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
   const firstElement = fieldElements[0] as HTMLElement
   const commonProperties: ElementProperties = getElementProperties(firstElement)
@@ -87,7 +95,6 @@ function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
   return commonProperties
 }
 
-// gets the css selectors of an element in isolation
 function getElementProperties(element: HTMLElement): ElementProperties {
   const elementType = element.nodeName.toLowerCase()
   const nthChild = element.parentElement
@@ -116,13 +123,14 @@ function getElementProperties(element: HTMLElement): ElementProperties {
   return elementProperties
 }
 
-// used to identify "packed" selector path to get field of a search item
 function getUniqueRelativeElementPaths(
   fieldElements: HTMLElement[],
   container: HTMLElement,
 ): ElementPath {
   let currentElements = fieldElements
   const attributeList: ElementPath = []
+
+
 
   while (currentElements[0] != container) {
     const attributes = getCommonProperties(currentElements)
@@ -159,7 +167,6 @@ function createSelector(path: ElementPath): string {
     .join(' > ')
 }
 
-
 function identifyContainerAndTitlePaths(textValues: string[]): {
   containerPath: ElementPath
   titlePath: ElementPath
@@ -173,6 +180,7 @@ function identifyContainerAndTitlePaths(textValues: string[]): {
   if (!commonParent) return
   if (commonParent.tagName == 'HTML') return
   const containerPath = getUniqueElementPath(commonParent)
+  console.log(matches)
   const titlePath = getUniqueRelativeElementPaths(matches as HTMLElement[], commonParent)
 
   return {
@@ -241,5 +249,4 @@ export {
   identifyFieldChildPath,
   getWindowUrl,
   getElementWithPath,
-  getCommonProperties
 }

@@ -35,7 +35,9 @@ function onDeleteClicked() {
 
 function checkMatchStatus() {
     const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (!websiteFilter?.containerProperties) throw new Error('[20260115.0153]')
+    if (!websiteFilter?.containerProperties) {
+        return 'invalid'
+    }
     const container = getElementWithPath(websiteFilter.containerProperties)
     if (container) {
         return 'valid'
