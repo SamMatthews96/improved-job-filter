@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { state } from '@/utils/state';
-import { getWindowUrl } from '@/utils/helpers';
+import { getWindowUrl } from '@/utils/elementFunctions';
 import { ref, watch } from 'vue';
 import AddFieldsToFilterProfile from './AddFieldsToFilterProfile.vue';
 

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3'
 import type { RuntimeAPI, StoredData } from './types'
-import { getWindowUrl } from './helpers';
+import { getWindowUrl } from './elementFunctions';
 
 export default class MockRuntime implements RuntimeAPI {
   private storageListeners: Array<(...args: any) => void> = []

@@ -1,4 +1,4 @@
-import { getElementWithPath, getWindowUrl, identifyFieldChildPath } from './helpers'
+import { getElementWithPath, getWindowUrl, identifyFieldChildPath } from './elementFunctions'
 import { state, highlightName, highlightContainerPath } from '@/utils/state'
 import { watch } from 'vue'
 import type { WebsiteFilter } from './types'

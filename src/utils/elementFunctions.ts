@@ -123,10 +123,8 @@ function getElementProperties(element: HTMLElement): ElementProperties {
   return elementProperties
 }
 
-function getUniqueRelativeElementPaths(
-  fieldElements: HTMLElement[],
-  container: HTMLElement,
-): ElementPath {
+function getUniqueRelativeElementPaths(fieldElements: HTMLElement[], container: HTMLElement)
+  : ElementPath {
   let currentElements = fieldElements
   const attributeList: ElementPath = []
 
@@ -167,10 +165,8 @@ function createSelector(path: ElementPath): string {
     .join(' > ')
 }
 
-function identifyContainerAndTitlePaths(textValues: string[]): {
-  containerPath: ElementPath
-  titlePath: ElementPath
-} | undefined {
+function identifyContainerAndTitlePaths(textValues: string[])
+  : { containerPath: ElementPath, titlePath: ElementPath } | undefined {
   const matches = textValues.map(getElementWithText)
   if (matches.some((match) => !match)) return
   matches as HTMLElement[]
@@ -189,8 +185,8 @@ function identifyContainerAndTitlePaths(textValues: string[]): {
   }
 }
 
-function identifyFieldChildPath(
-  containerPath: ElementPath, fieldValue: string): ElementPath | undefined {
+function identifyFieldChildPath(containerPath: ElementPath, fieldValue: string):
+  ElementPath | undefined {
   if (fieldValue == '') return
   const fieldElement = getElementWithText(fieldValue)
   if (!fieldElement) return
@@ -203,10 +199,8 @@ function identifyFieldChildPath(
   return getUniqueRelativeElementPath(fieldElement, container)
 }
 
-function getUniqueRelativeElementPath(
-  fieldElement: HTMLElement,
-  container: HTMLElement,
-): ElementPath | undefined {
+function getUniqueRelativeElementPath(fieldElement: HTMLElement, container: HTMLElement):
+  ElementPath | undefined {
   let currentElement = fieldElement
   const attributeList: ElementPath = []
 

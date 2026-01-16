@@ -3,7 +3,7 @@
 import { ref, watch, type Ref } from 'vue';
 import type { ElementPath, FilterProfileList } from '@/utils/types';
 import { state } from '@/utils/state'
-import { getWindowUrl } from '@/utils/helpers';
+import { getWindowUrl } from '@/utils/elementFunctions';
 import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
 import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
 import WebsiteFieldConfig from '@/components/WebsiteFieldConfig.vue';
@@ -77,9 +77,7 @@ watch(state, () => {
                     :value="filterProfile.name"
                 >{{ filterProfile.name }}</option>
             </select>
-            <WebsiteFieldConfig
-                :filter="state.websiteFilterSettings[match]!"
-            />
+            <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
             <AddFieldsToWebsiteFilter />
             <AddWebsiteFilterField />
         </template>

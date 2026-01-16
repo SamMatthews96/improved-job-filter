@@ -12,7 +12,8 @@
             >
                 <input v-model="textValue">
                 <span>
-                    <button @click="onAccept()"
+                    <button
+                        @click="onAccept()"
                         :disabled="!elementPath"
                     >Ok</button>
                     <button @click="isEditMode = false; textValue = ''">Cancel</button>
@@ -39,7 +40,7 @@
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue';
 import { state } from '@/utils/state';
-import { getWindowUrl, identifyFieldChildPath } from '@/utils/helpers';
+import { getWindowUrl, identifyFieldChildPath } from '@/utils/elementFunctions';
 import emitter from '@/utils/emitter';
 import filter from '@/utils/filter';
 import type { ElementPath } from '@/utils/types';

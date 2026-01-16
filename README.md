@@ -17,8 +17,8 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
   * instead of using watch(state, ...) for everything, is it worth using signals
   * Filter is about to get a whole lot larger, and could potentially be broken up
     * It doesn't just filter anymore, it's more related to modifying the page appearance
+  * The component names are not easy to understand
 
-* The component names are not easy to understand
 * Is it straightforward to disable the extension on a webpage
 * trying to add multiple website filters of the same name should give error feedback
 

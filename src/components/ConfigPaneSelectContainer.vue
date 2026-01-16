@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { identifyContainerAndTitlePaths } from '@/utils/helpers';
+import { identifyContainerAndTitlePaths } from '@/utils/elementFunctions';
 import { highlightContainerPath } from '@/utils/state';
 import type { ElementPath } from '@/utils/types';
 import { ref, watch } from 'vue';

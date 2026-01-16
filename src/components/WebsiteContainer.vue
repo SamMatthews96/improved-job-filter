@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import emitter from '@/utils/emitter';
-import { getElementWithPath, getWindowUrl } from '@/utils/helpers';
+import { getElementWithPath, getWindowUrl } from '@/utils/elementFunctions';
 import { state, highlightContainerPath } from '@/utils/state';
 
 function onDeleteClicked() {

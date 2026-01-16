@@ -6,9 +6,7 @@
                 v-model="nameField"
                 placeholder="Field Name"
             ></input>
-            <button
-                @click="addFilterField"
-            >Add</button>
+            <button @click="addFilterField">Add</button>
         </span>
     </div>
 
@@ -17,7 +15,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-import { getWindowUrl } from '@/utils/helpers';
+import { getWindowUrl } from '@/utils/elementFunctions';
 import { state } from '@/utils/state';
 
 function addFilterField() {

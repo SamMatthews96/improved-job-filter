@@ -1,4 +1,4 @@
-import { reactive, watch, type Reactive, type Ref, ref } from "vue";
+import { reactive, watch, type Reactive, type Ref, ref, computed } from "vue";
 import Runtime from "./runtime";
 import type { ElementPath, StoredData } from "./types";
 import defaultWebsiteFieldConfig from '@/utils/defaultWebsiteFieldConfig.json'
@@ -31,3 +31,7 @@ Runtime.get()
 export const highlightName: Ref<string | undefined> = ref(undefined)
 
 export const highlightContainerPath: Ref<ElementPath | undefined> = ref(undefined)
+
+export const currentWebsiteSettings = computed(() => {
+    
+})
