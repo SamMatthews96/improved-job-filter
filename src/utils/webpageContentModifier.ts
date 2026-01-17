@@ -2,6 +2,7 @@ import { getElementWithPath, identifyFieldChildPath } from '@/utils/elementFunct
 import { highlightName, highlightContainerPath, currentWebsiteSettings, websiteFilterProfile } from '@/utils/state'
 import { watch } from 'vue'
 import emitter from '@/utils/emitter';
+import { doesElementMatchFilter } from './filter';
 
 const filterClass = 'ijf-highlight'
 
@@ -139,21 +140,16 @@ class WebpageContentModifier {
     if (!currentWebsiteSettings.value) return
     if (!websiteFilterProfile.value) return
 
-    const fieldPropertyArray = Object.entries(currentWebsiteSettings.value.fieldProperties)
-      .filter(([key, value]) => value)
-
     for (let i = 0; i < this.container!.children.length; i++) {
       const jobElement = this.container!.children[i] as HTMLElement
-      const isMatch = fieldPropertyArray.some(([fieldName, elementPath]) => {
-        const element = getElementWithPath(elementPath!, jobElement)
-        if (!element) return
-        const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
-        return websiteFilterProfile.value![fieldName]?.blacklistKeywords
-          .split(' ')
-          .some((keyword) => elementWords.includes(keyword.toLowerCase()))
-      })
 
-      jobElement.style.display = isMatch ? 'none' : this.defaultJobDisplayMode
+      const isMatch = doesElementMatchFilter(
+        jobElement,
+        currentWebsiteSettings.value,
+        websiteFilterProfile.value
+      )
+
+      jobElement.style.display = isMatch ? this.defaultJobDisplayMode : 'none'
     }
   }
 
