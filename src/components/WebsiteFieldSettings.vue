@@ -7,28 +7,25 @@
         @highlight-on="highlightName = fieldName"
         @highlight-off="highlightName = undefined"
     />
-
 </template>
 
 <script setup lang="ts">
 
-import { ref, watch } from 'vue';
-import type { WebsiteFilter } from '@/utils/types';
+import { computed } from 'vue';
 import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
-import { highlightName, state } from '@/utils/state';
+import { currentWebsiteSettings, highlightName } from '@/utils/state';
 import WebsiteContainer from '@/components/WebsiteContainer.vue';
-
-const props = defineProps<{ filter: WebsiteFilter }>()
 
 function onDeleteClicked(fieldName: string) {
     highlightName.value = undefined
-    delete props.filter.fieldProperties[fieldName]
+    if (!currentWebsiteSettings.value) return
+    delete currentWebsiteSettings.value.fieldProperties[fieldName]
 }
 
-const fieldNames = ref<string[]>(Object.keys(props.filter.fieldProperties))
-watch(state, () => {
-    console.log('watch', props.filter.fieldProperties)
-    fieldNames.value = Object.keys(props.filter.fieldProperties)
+const fieldNames = computed(() => {
+    if (!currentWebsiteSettings.value) return []
+    return Object.keys(currentWebsiteSettings.value.fieldProperties)
 })
+
 
 </script>

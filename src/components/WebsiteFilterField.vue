@@ -39,8 +39,8 @@
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue';
-import { currentWebsiteSettings, state } from '@/utils/state';
-import { getWindowUrl, identifyFieldChildPath } from '@/utils/elementFunctions';
+import { currentWebsiteSettings } from '@/utils/state';
+import { identifyFieldChildPath } from '@/utils/elementFunctions';
 import emitter from '@/utils/emitter';
 import filter from '@/utils/filter';
 import type { ElementPath } from '@/utils/types';
@@ -74,7 +74,6 @@ function checkMatchStatus() {
 const isEditMode = ref(false)
 const isConfirmDelete = ref(false)
 const textValue = ref('')
-const match = getWindowUrl()
 const props = defineProps<{ fieldName: string }>()
 const emit = defineEmits<{
     (e: 'delete'): void,
