@@ -36,7 +36,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
         location - contains word - 'London'
         location - contains word - 'Redhill'
 
-* Is it possible to do pay filters
+* Is it possible to do filters for salary
 
 * Add all the default page selectors
 

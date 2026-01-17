@@ -89,3 +89,11 @@ export const filterProfileArray = computed(() => {
         }
     })
 })
+
+export const websiteFilterProfile = computed(() => {
+    if (!currentWebsiteSettings.value) return
+    const profileId = currentWebsiteSettings.value.selectedFilterId
+    if (!profileId) return
+    const ans = state.filterProfileSettings.profiles[profileId]
+    return ans
+})

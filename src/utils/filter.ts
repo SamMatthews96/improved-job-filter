@@ -1,5 +1,5 @@
 import { getElementWithPath, identifyFieldChildPath } from '@/utils/elementFunctions'
-import { state, highlightName, highlightContainerPath, currentWebsiteSettings } from '@/utils/state'
+import { state, highlightName, highlightContainerPath, currentWebsiteSettings, websiteFilterProfile } from '@/utils/state'
 import { watch } from 'vue'
 import emitter from '@/utils/emitter';
 
@@ -12,9 +12,7 @@ class Filter {
   private observer?: MutationObserver
   private failedAttempts: number = 0
 
-  private fieldHighlights: {
-    [fieldName: string]: HTMLElement[]
-  } = {}
+  private fieldHighlights: { [fieldName: string]: HTMLElement[] } = {}
   private editHighlightElements: HTMLElement[] = []
   private containerOverlay: HTMLElement | undefined
 
@@ -25,10 +23,9 @@ class Filter {
       this.updateContainer()
     })
 
-    watch(state, () => {
-      if (!currentWebsiteSettings.value) return
+    watch(websiteFilterProfile, () => {
       this.runFilter()
-    })
+    }, { deep: true })
 
     watch(highlightName, (newValue, oldValue) => {
       if (newValue) {
@@ -139,13 +136,8 @@ class Filter {
 
   private runFilter(): void {
     console.log('run filter')
-    if (!currentWebsiteSettings.value) throw new Error('[20260114.1805]')
-
-    const profileId = currentWebsiteSettings.value.selectedFilterId
-    if (!profileId) return this.clearFilter()
-
-    const currentProfile = state.filterProfileSettings.profiles[profileId]
-    if (!currentProfile) return this.clearFilter()
+    if (!currentWebsiteSettings.value) return
+    if (!websiteFilterProfile.value) return
 
     const fieldPropertyArray = Object.entries(currentWebsiteSettings.value.fieldProperties)
       .filter(([key, value]) => value)
@@ -156,7 +148,7 @@ class Filter {
         const element = getElementWithPath(elementPath!, jobElement)
         if (!element) return
         const elementWords = element.innerText.toLowerCase().split(/[ ,/]+/)
-        return currentProfile[fieldName]?.blacklistKeywords
+        return websiteFilterProfile.value![fieldName]?.blacklistKeywords
           .split(' ')
           .some((keyword) => elementWords.includes(keyword.toLowerCase()))
       })
