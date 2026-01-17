@@ -46,12 +46,7 @@ function checkMatchStatus() {
 }
 
 const isConfirmDelete = ref(false)
-const textValue = ref('')
 const matchStatus = ref(checkMatchStatus())
-
-watch(textValue, () => {
-    emitter.emit('filter-edit-field-updated', textValue.value)
-})
 
 watch(state, () => {
     matchStatus.value = checkMatchStatus()

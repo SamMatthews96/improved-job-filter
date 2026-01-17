@@ -194,21 +194,6 @@ class Filter {
     delete this.fieldHighlights[fieldName]
   }
 
-  public getFieldsByName(fieldName: string): HTMLElement[] {
-    const elementPath = currentWebsiteSettings.value?.fieldProperties[fieldName]
-    if (!elementPath) return []
-    if (!this.container) return []
-
-    const elements = []
-    for (let i = 0; i < this.container.children.length; i++) {
-      const jobElement = this.container.children[i] as HTMLElement
-      const element = getElementWithPath(elementPath, jobElement)
-      if (!element) continue
-      elements.push(element)
-    }
-    return elements
-  }
-
 }
 
 export default new Filter()

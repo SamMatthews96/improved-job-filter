@@ -31,18 +31,15 @@
                     {{ isConfirmDelete ? 'Confirm?' : 'Delete' }}
                 </button>
             </span>
-
         </span>
-
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue';
 import { currentWebsiteSettings } from '@/utils/state';
-import { identifyFieldChildPath } from '@/utils/elementFunctions';
+import { getElementWithPath, identifyFieldChildPath } from '@/utils/elementFunctions';
 import emitter from '@/utils/emitter';
-import filter from '@/utils/filter';
 import type { ElementPath } from '@/utils/types';
 
 function onAccept() {
@@ -63,8 +60,20 @@ function onDeleteClicked() {
 }
 
 function checkMatchStatus() {
-    const fieldCount = filter.getFieldsByName(props.fieldName).length
-    if (fieldCount) {
+    const elementPath = currentWebsiteSettings.value?.fieldProperties[props.fieldName]
+    if (!elementPath) return 'invalid'
+    const container = getElementWithPath(currentWebsiteSettings.value!.containerProperties!)
+    if (!container) return 'invalid'
+
+    const elements = []
+    for (let i = 0; i < container.children.length; i++) {
+        const jobElement = container.children[i] as HTMLElement
+        const element = getElementWithPath(elementPath, jobElement)
+        if (!element) continue
+        elements.push(element)
+    }
+
+    if (elements.length) {
         return 'valid'
     } else {
         return 'invalid'

@@ -12,7 +12,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 * Refactor
   * Helpers file is largely related to getting elements and ElementProperties
-  * instead of using watch(state, ...) for everything, is it worth using signals
   * Filter is about to get a whole lot larger, and could potentially be broken up
     * It doesn't just filter anymore, it's more related to modifying the page appearance
 
