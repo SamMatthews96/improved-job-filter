@@ -2,9 +2,7 @@
     <div>
         <span v-if="props.missingFilterFields.length">Missing Fields</span>
         <div v-for="field in props.missingFilterFields">
-            <span>
-                {{ field }}
-            </span>
+            <span> {{ field }} </span>
             <button @click="emit('add-field', field)">Add</button>
         </div>
     </div>

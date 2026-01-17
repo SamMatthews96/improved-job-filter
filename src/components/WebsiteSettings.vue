@@ -1,13 +1,12 @@
 <script setup lang="ts">
 
-import { ref, watch, type Ref } from 'vue';
-import type { ElementPath, FilterProfileList } from '@/utils/types';
-import { state } from '@/utils/state'
-import { getWindowUrl } from '@/utils/elementFunctions';
-import ConfigPaneSelectContainer from '@/components/ConfigPaneSelectContainer.vue';
-import AddWebsiteFilterField from '@/components/AddWebsiteFilterField.vue';
-import WebsiteFieldConfig from '@/components/WebsiteFieldConfig.vue';
-import AddFieldsToWebsiteFilter from '@/components/AddFieldsToWebsiteFilter.vue';
+import { ref } from 'vue';
+import type { ElementPath } from '@/utils/types';
+import { currentWebsiteSettings, state, filterProfileArray } from '@/utils/state'
+import WebsiteSelectContainer from '@/components/WebsiteSelectContainer.vue';
+import WebsiteAddFilterField from '@/components/WebsiteAddFilterField.vue';
+import WebsiteFieldSettings from '@/components/WebsiteFieldSettings.vue';
+import WebsiteAddMissingFilterFields from '@/components/WebsiteAddMissingFilterFields.vue';
 
 function addWebsiteFilter(
     containerPath: ElementPath,
@@ -26,27 +25,13 @@ function addWebsiteFilter(
     }
 }
 
-function getFilterProfileList(): FilterProfileList {
-    return Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
-        return {
-            name, filterProfile
-        }
-    })
-}
-
 const showSelectContainer = ref(false)
-const match = getWindowUrl()
 const props = defineProps<{
     isShowing: boolean
 }>()
 const emit = defineEmits<{
     (e: "close"): void
 }>()
-
-const filterProfileArray: Ref<FilterProfileList> = ref(getFilterProfileList())
-watch(state, () => {
-    filterProfileArray.value = getFilterProfileList()
-})
 
 </script>
 
@@ -61,25 +46,24 @@ watch(state, () => {
         >Close</button>
         <h2>Website Config Pane</h2>
 
-        <ConfigPaneSelectContainer
+        <WebsiteSelectContainer
             @foundContainer="addWebsiteFilter"
-            v-if="!(state.websiteFilterSettings[match])"
+            v-if="!(currentWebsiteSettings)"
         />
         <template v-else>
             <label for="profile">Selected Profile: </label>
             <select
                 name="profile"
-                v-model="state.websiteFilterSettings[match]!.selectedFilterId"
-                v-if="state.websiteFilterSettings[match]"
+                v-model="currentWebsiteSettings.selectedFilterId"
             >
                 <option
                     v-for="filterProfile in filterProfileArray"
                     :value="filterProfile.name"
                 >{{ filterProfile.name }}</option>
             </select>
-            <WebsiteFieldConfig :filter="state.websiteFilterSettings[match]!" />
-            <AddFieldsToWebsiteFilter />
-            <AddWebsiteFilterField />
+            <WebsiteFieldSettings :filter="currentWebsiteSettings" />
+            <WebsiteAddMissingFilterFields />
+            <WebsiteAddFilterField />
         </template>
 
     </div>

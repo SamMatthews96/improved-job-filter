@@ -1,7 +1,6 @@
-import { getElementWithPath, getWindowUrl, identifyFieldChildPath } from './elementFunctions'
-import { state, highlightName, highlightContainerPath } from '@/utils/state'
+import { getElementWithPath, identifyFieldChildPath } from '@/utils/elementFunctions'
+import { state, highlightName, highlightContainerPath, currentWebsiteSettings } from '@/utils/state'
 import { watch } from 'vue'
-import type { WebsiteFilter } from './types'
 import emitter from '@/utils/emitter';
 
 const filterClass = 'ijf-highlight'
@@ -10,10 +9,8 @@ class Filter {
   private defaultJobDisplayMode: string = 'none'
   private container?: HTMLElement
 
-  private stateChangedTimeoutId: number = 0
   private observer?: MutationObserver
   private failedAttempts: number = 0
-  private websiteFilter: WebsiteFilter | undefined
 
   private fieldHighlights: {
     [fieldName: string]: HTMLElement[]
@@ -24,10 +21,13 @@ class Filter {
   constructor() {
     this.updateContainer()
 
-    watch(state, () => {
-      console.log('state', state)
-      clearTimeout(this.stateChangedTimeoutId)
+    watch(currentWebsiteSettings, () => {
       this.updateContainer()
+    })
+
+    watch(state, () => {
+      if (!currentWebsiteSettings.value) return
+      this.runFilter()
     })
 
     watch(highlightName, (newValue, oldValue) => {
@@ -50,11 +50,11 @@ class Filter {
     })
 
     emitter.on('filter-edit-field-updated', (fieldName) => {
-      if (!this.websiteFilter) throw new Error('[20260114.2130]')
+      if (!currentWebsiteSettings.value) throw new Error('[20260114.2130]')
       if (!this.container) throw new Error('[20260114.2132]')
 
       const elementPath = identifyFieldChildPath(
-        this.websiteFilter.containerProperties!, fieldName
+        currentWebsiteSettings.value.containerProperties!, fieldName
       )
       if (!elementPath) {
         this.editHighlightElements.forEach(element => {
@@ -98,11 +98,11 @@ class Filter {
   }
 
   private updateContainer(): void {
+    console.log('update container')
     this.observer?.disconnect()
 
-    this.websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (this.websiteFilter?.containerProperties) {
-      this.container = getElementWithPath(this.websiteFilter.containerProperties)
+    if (currentWebsiteSettings.value?.containerProperties) {
+      this.container = getElementWithPath(currentWebsiteSettings.value.containerProperties)
       if (!this.container) {
         if (this.failedAttempts >= 3) {
           // @todo notify when we can't get the container
@@ -138,15 +138,16 @@ class Filter {
   }
 
   private runFilter(): void {
-    if (!this.websiteFilter) throw new Error('[20260114.1805]')
+    console.log('run filter')
+    if (!currentWebsiteSettings.value) throw new Error('[20260114.1805]')
 
-    const profileId = this.websiteFilter.selectedFilterId
+    const profileId = currentWebsiteSettings.value.selectedFilterId
     if (!profileId) return this.clearFilter()
 
     const currentProfile = state.filterProfileSettings.profiles[profileId]
     if (!currentProfile) return this.clearFilter()
 
-    const fieldPropertyArray = Object.entries(this.websiteFilter.fieldProperties)
+    const fieldPropertyArray = Object.entries(currentWebsiteSettings.value.fieldProperties)
       .filter(([key, value]) => value)
 
     for (let i = 0; i < this.container!.children.length; i++) {
@@ -175,11 +176,11 @@ class Filter {
     if (!this.container) return
 
 
-    if (!this.websiteFilter) {
+    if (!currentWebsiteSettings.value) {
       throw new Error('[20260113.1636]')
     }
 
-    const elementPath = this.websiteFilter.fieldProperties[fieldName]
+    const elementPath = currentWebsiteSettings.value.fieldProperties[fieldName]
     if (!elementPath) return
 
     this.fieldHighlights[fieldName] = []
@@ -202,7 +203,7 @@ class Filter {
   }
 
   public getFieldsByName(fieldName: string): HTMLElement[] {
-    const elementPath = this.websiteFilter?.fieldProperties[fieldName]
+    const elementPath = currentWebsiteSettings.value?.fieldProperties[fieldName]
     if (!elementPath) return []
     if (!this.container) return []
 

@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue';
-import { state } from '@/utils/state';
+import { currentWebsiteSettings, state } from '@/utils/state';
 import { getWindowUrl, identifyFieldChildPath } from '@/utils/elementFunctions';
 import emitter from '@/utils/emitter';
 import filter from '@/utils/filter';
@@ -49,7 +49,7 @@ function onAccept() {
     if (!elementPath.value) return
     isEditMode.value = false;
     textValue.value = ''
-    state.websiteFilterSettings[match]!.fieldProperties[props.fieldName] = elementPath.value
+    currentWebsiteSettings.value!.fieldProperties[props.fieldName] = elementPath.value
 
     matchStatus.value = checkMatchStatus()
 }
@@ -86,7 +86,7 @@ const elementPath: Ref<ElementPath | undefined> = ref(undefined)
 
 watch(textValue, () => {
     elementPath.value = identifyFieldChildPath(
-        state.websiteFilterSettings[match]!.containerProperties!,
+        currentWebsiteSettings.value!.containerProperties!,
         textValue.value)
     emitter.emit('filter-edit-field-updated', textValue.value)
 })

@@ -1,5 +1,5 @@
 <template>
-  <template v-if="displayMode == 'start'">
+  <template>
     <p>Improved Job Filter is unconfigured for this page</p>
     <input
       name="websitePrefix"
@@ -17,26 +17,18 @@
     ></input>
     <button @click="onSubmit">Submit</button>
   </template>
-  <p v-if="showError">Sorry, I couldn't identify the container.
-    Please double check your spelling and try again.
-  </p>
-
 
 </template>
 
 <script setup lang="ts">
-import { identifyContainerAndTitlePaths } from '@/utils/elementFunctions';
+import { getWindowUrl, identifyContainerAndTitlePaths } from '@/utils/elementFunctions';
 import { highlightContainerPath } from '@/utils/state';
 import type { ElementPath } from '@/utils/types';
 import { ref, watch } from 'vue';
 
-const displayMode = ref('start')
-const websitePrefix = ref(window.location.href)
+const websitePrefix = ref(getWindowUrl())
 const firstSearchName = ref('')
 const secondSearchName = ref('')
-
-const showError = ref(false)
-
 
 const emit = defineEmits<{
   (e: "foundContainer",

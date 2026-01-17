@@ -12,13 +12,12 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 * Refactor
   * Helpers file is largely related to getting elements and ElementProperties
-  * How often do I use the same state.filterXXX[match].etc... 
-    * perhaps I could use computed instead
   * instead of using watch(state, ...) for everything, is it worth using signals
   * Filter is about to get a whole lot larger, and could potentially be broken up
     * It doesn't just filter anymore, it's more related to modifying the page appearance
   * The component names are not easy to understand
 
+* adding a number field then deleting can cause other fields to wrongly display as valid
 * Is it straightforward to disable the extension on a webpage
 * trying to add multiple website filters of the same name should give error feedback
 
@@ -46,9 +45,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container
     * Weight based on size
-
-  * https://uk.indeed.com/?from=gnav-app-tracker vs https://uk.indeed.com/
-    When setting the container it should default to the base url
 
 * UI / UX
   * General

@@ -1,7 +1,5 @@
 <template>
-    <WebsiteContainer
-
-    />
+    <WebsiteContainer />
     <WebsiteFilterField
         v-for="fieldName in fieldNames"
         :fieldName="fieldName"
@@ -14,11 +12,11 @@
 
 <script setup lang="ts">
 
-import type { WebsiteFilter } from '@/utils/types';
 import { ref, watch } from 'vue';
+import type { WebsiteFilter } from '@/utils/types';
 import WebsiteFilterField from '@/components/WebsiteFilterField.vue'
 import { highlightName, state } from '@/utils/state';
-import WebsiteContainer from './WebsiteContainer.vue';
+import WebsiteContainer from '@/components/WebsiteContainer.vue';
 
 const props = defineProps<{ filter: WebsiteFilter }>()
 

@@ -2,7 +2,7 @@
     <div
         :class="['website-field-config', matchStatus]"
         @mouseenter="highlightContainerPath =
-            state.websiteFilterSettings[getWindowUrl()]?.containerProperties"
+            currentWebsiteSettings?.containerProperties"
         @mouseleave="highlightContainerPath = undefined"
     >
         <span>Container</span>
@@ -22,7 +22,7 @@
 import { ref, watch } from 'vue';
 import emitter from '@/utils/emitter';
 import { getElementWithPath, getWindowUrl } from '@/utils/elementFunctions';
-import { state, highlightContainerPath } from '@/utils/state';
+import { state, highlightContainerPath, currentWebsiteSettings } from '@/utils/state';
 
 function onDeleteClicked() {
     if (isConfirmDelete.value) {
@@ -34,11 +34,10 @@ function onDeleteClicked() {
 }
 
 function checkMatchStatus() {
-    const websiteFilter = state.websiteFilterSettings[getWindowUrl()]
-    if (!websiteFilter?.containerProperties) {
+    if (!currentWebsiteSettings.value?.containerProperties) {
         return 'invalid'
     }
-    const container = getElementWithPath(websiteFilter.containerProperties)
+    const container = getElementWithPath(currentWebsiteSettings.value.containerProperties)
     if (container) {
         return 'valid'
     } else {

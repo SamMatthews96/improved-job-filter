@@ -3,11 +3,11 @@ import { state } from '@/utils/state';
 
 Runtime.addEventListener('enableCurrentPage', ({ tab }) => {
   if (!tab.url) throw new Error('[20260111.2319]')
-  if (state.websiteFilterSettings[tab.url]) return;
+  const url = tab.url.match(/^https?:\/\/[^\/]+\//)![0]
+  if (state.websiteFilterSettings[url]) return;
 
   Runtime.injectScript(tab.id)
 
-  const url = tab.url.match(/^https?:\/\/[^\/]+\//)![0]
   state.websiteFilterSettings[url] = {
     fieldProperties: {}
   }

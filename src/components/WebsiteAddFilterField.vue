@@ -15,23 +15,17 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-import { getWindowUrl } from '@/utils/elementFunctions';
-import { state } from '@/utils/state';
+import { currentWebsiteSettings } from '@/utils/state';
 
 function addFilterField() {
-    if (nameField.value == 'container' ||
-        state.websiteFilterSettings[match]!.fieldProperties[nameField.value] !== undefined
-    ) {
+    if (currentWebsiteSettings.value!.fieldProperties[nameField.value] !== undefined) {
         // @todo give user feedback in interface
         console.warn('duplicate')
         return
     }
 
-    state.websiteFilterSettings[match]!
-        .fieldProperties[nameField.value] = null
+    currentWebsiteSettings.value!.fieldProperties[nameField.value] = null
 }
-
-const match = getWindowUrl()
 
 const nameField = ref('')
 </script>

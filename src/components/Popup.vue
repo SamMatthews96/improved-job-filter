@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
-import { ref, watch, type Ref } from "vue";
+import { ref } from "vue";
 import Runtime from "@/utils/runtime";
-import { state } from "@/utils/state.ts";
+import { selectedFilterProfile, state, filterProfileArray, selectedFilterProfileId } from "@/utils/state.ts";
 import NewFilterModel from "@/components/NewFilterModel.vue";
-import type { FilterProfile } from "@/utils/types";
 import FilterProfileEdit from "@/components/FilterProfileEdit.vue";
 
 import '@/assets/app-styles.scss'
@@ -18,7 +17,6 @@ async function enableCurrentPage() {
   if (!tab?.id) {
     throw new Error('[20260111.2235]')
   }
-  console.log('enabledCurrentPage clicked')
   Runtime.sendMessageToService('enableCurrentPage', {
     tab
   })
@@ -27,9 +25,7 @@ async function enableCurrentPage() {
 function filterAdded(name: string) {
   state.filterProfileSettings.profiles[name] = {}
   isNewFilterModal.value = false;
-  if (state.filterProfileSettings.selectedFilterId == undefined) {
-    state.filterProfileSettings.selectedFilterId = name
-  }
+  state.filterProfileSettings.selectedFilterId = name
 }
 
 function filterCancel() {
@@ -37,8 +33,7 @@ function filterCancel() {
 }
 
 function onDeleteClicked() {
-  const selectedFilterId = state.filterProfileSettings.selectedFilterId
-  delete state.filterProfileSettings.profiles[selectedFilterId!]
+  delete state.filterProfileSettings.profiles[selectedFilterProfileId.value!]
   const firstKey = Object.keys(state.filterProfileSettings.profiles)[0]
   if (firstKey) {
     state.filterProfileSettings.selectedFilterId = firstKey;
@@ -46,16 +41,6 @@ function onDeleteClicked() {
 }
 
 const isNewFilterModal = ref(false)
-const filterProfileArray: Ref<{ name: string, filterProfile: FilterProfile }[]> = ref([])
-
-watch(state, () => {
-  filterProfileArray.value =
-    Object.entries(state.filterProfileSettings.profiles).map(([name, filterProfile]) => {
-      return {
-        name, filterProfile
-      }
-    })
-})
 
 </script>
 
@@ -80,9 +65,7 @@ watch(state, () => {
       </select>
 
       <FilterProfileEdit
-        v-if="state.filterProfileSettings.selectedFilterId != undefined &&
-          state.filterProfileSettings.profiles[state.filterProfileSettings.selectedFilterId]"
-        :selectedProfileId="state.filterProfileSettings.selectedFilterId"
+        v-if="selectedFilterProfile"
         @delete="onDeleteClicked"
       />
     </div>
