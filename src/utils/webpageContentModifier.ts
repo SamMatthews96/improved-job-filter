@@ -1,11 +1,11 @@
 import { getElementWithPath, identifyFieldChildPath } from '@/utils/elementFunctions'
-import { state, highlightName, highlightContainerPath, currentWebsiteSettings, websiteFilterProfile } from '@/utils/state'
+import { highlightName, highlightContainerPath, currentWebsiteSettings, websiteFilterProfile } from '@/utils/state'
 import { watch } from 'vue'
 import emitter from '@/utils/emitter';
 
 const filterClass = 'ijf-highlight'
 
-class Filter {
+class WebpageContentModifier {
   private defaultJobDisplayMode: string = 'none'
   private container?: HTMLElement
 
@@ -24,7 +24,7 @@ class Filter {
     })
 
     watch(websiteFilterProfile, () => {
-      this.runFilter()
+      this.applyFilter()
     }, { deep: true })
 
     watch(highlightName, (newValue, oldValue) => {
@@ -120,12 +120,12 @@ class Filter {
         this.defaultJobDisplayMode = this.container.children[0].style.display
       }
       this.observer = new MutationObserver(() => {
-        this.runFilter()
+        this.applyFilter()
       })
       this.observer.observe(this.container, {
         childList: true,
       })
-      this.runFilter()
+      this.applyFilter()
     } else {
       if (this.container) {
         this.clearFilter()
@@ -134,7 +134,7 @@ class Filter {
     }
   }
 
-  private runFilter(): void {
+  private applyFilter(): void {
     console.log('run filter')
     if (!currentWebsiteSettings.value) return
     if (!websiteFilterProfile.value) return
@@ -196,4 +196,4 @@ class Filter {
 
 }
 
-export default new Filter()
+export default new WebpageContentModifier()

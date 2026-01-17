@@ -10,12 +10,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 2:
 3: 
 
-* Refactor
-  * Helpers file is largely related to getting elements and ElementProperties
-  * Filter is about to get a whole lot larger, and could potentially be broken up
-    * It doesn't just filter anymore, it's more related to modifying the page appearance
-
-* adding a number field then deleting can cause other fields to wrongly display as valid
+* The webside filter fields should probably be an ordered array
 * Is it straightforward to disable the extension on a webpage
 * trying to add multiple website filters of the same name should give error feedback
 
@@ -34,8 +29,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
       Any
         location - contains word - 'London'
         location - contains word - 'Redhill'
-
-* Is it possible to do filters for salary
+  * Is it possible to do filters for salary
 
 * Add all the default page selectors
 
