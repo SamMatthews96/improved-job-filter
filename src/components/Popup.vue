@@ -4,7 +4,7 @@ import { ref } from "vue";
 import Runtime from "@/utils/runtime";
 import { selectedFilterProfile, state, filterProfileArray, selectedFilterProfileId } from "@/utils/state.ts";
 import NewFilterModel from "@/components/NewFilterModel.vue";
-import FilterProfileEdit from "@/components/FilterProfileEdit.vue";
+import PopupEditProfile from "@/components/PopupEditProfile.vue";
 
 import '@/assets/app-styles.scss'
 
@@ -64,7 +64,7 @@ const isNewFilterModal = ref(false)
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
       </select>
 
-      <FilterProfileEdit
+      <PopupEditProfile
         v-if="selectedFilterProfile"
         @delete="onDeleteClicked"
       />

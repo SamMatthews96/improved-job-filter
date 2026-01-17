@@ -15,7 +15,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
   * instead of using watch(state, ...) for everything, is it worth using signals
   * Filter is about to get a whole lot larger, and could potentially be broken up
     * It doesn't just filter anymore, it's more related to modifying the page appearance
-  * The component names are not easy to understand
 
 * adding a number field then deleting can cause other fields to wrongly display as valid
 * Is it straightforward to disable the extension on a webpage

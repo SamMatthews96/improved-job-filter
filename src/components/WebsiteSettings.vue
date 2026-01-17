@@ -2,11 +2,17 @@
 
 import { ref } from 'vue';
 import type { ElementPath } from '@/utils/types';
-import { currentWebsiteSettings, state, filterProfileArray } from '@/utils/state'
+import {
+    currentWebsiteSettings,
+    state,
+    filterProfileArray,
+    currentWebsiteMissingFields
+} from '@/utils/state'
 import WebsiteSelectContainer from '@/components/WebsiteSelectContainer.vue';
 import WebsiteAddFilterField from '@/components/WebsiteAddFilterField.vue';
 import WebsiteFieldSettings from '@/components/WebsiteFieldSettings.vue';
-import WebsiteAddMissingFilterFields from '@/components/WebsiteAddMissingFilterFields.vue';
+import AddMissingFields from './AddMissingFields.vue';
+
 
 function addWebsiteFilter(
     containerPath: ElementPath,
@@ -23,6 +29,17 @@ function addWebsiteFilter(
             }
         }
     }
+}
+
+function addField(fieldName: string) {
+    if (fieldName == 'container' ||
+        currentWebsiteSettings.value!.fieldProperties[fieldName] !== undefined
+    ) {
+        console.warn('duplicate')
+        return
+    }
+
+    currentWebsiteSettings.value!.fieldProperties[fieldName] = null
 }
 
 const showSelectContainer = ref(false)
@@ -62,7 +79,10 @@ const emit = defineEmits<{
                 >{{ filterProfile.name }}</option>
             </select>
             <WebsiteFieldSettings :filter="currentWebsiteSettings" />
-            <WebsiteAddMissingFilterFields />
+            <AddMissingFields
+                :missingFilterFields="currentWebsiteMissingFields"
+                @add-field="fieldName => addField(fieldName)"
+            />
             <WebsiteAddFilterField />
         </template>
 

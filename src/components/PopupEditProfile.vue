@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <AddFieldsToFilterProfile
+        <AddMissingFields
             v-if="currentFilterProfileMissingFields.length"
             :missingFilterFields="currentFilterProfileMissingFields"
             @add-field="fieldName => addField(fieldName)"
@@ -39,7 +39,7 @@ import {
     selectedFilterProfile,
 } from '@/utils/state';
 import { ref } from 'vue';
-import AddFieldsToFilterProfile from './AddFieldsToFilterProfile.vue';
+import AddMissingFields from './AddMissingFields.vue';
 
 const emit = defineEmits<{
     (e: 'delete'): void
