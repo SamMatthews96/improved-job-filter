@@ -4,7 +4,7 @@ import { ref } from "vue";
 import Runtime from "@/utils/runtime";
 import { selectedFilterProfile, state, filterProfileArray, selectedFilterProfileId } from "@/utils/state.ts";
 import NewFilterModel from "@/components/NewFilterModel.vue";
-import PopupEditProfile from "@/components/PopupEditProfile.vue";
+import PopupEditFilter from "@/components/PopupEditFilter.vue";
 
 import '@/assets/app-styles.scss'
 
@@ -23,7 +23,11 @@ async function enableCurrentPage() {
 }
 
 function filterAdded(name: string) {
-  state.filterProfileSettings.profiles[name] = {}
+  state.filterProfileSettings.profiles[name] = {
+    filterType: 'collection',
+    collectionType: 'all',
+    subFilters: []
+  }
   isNewFilterModal.value = false;
   state.filterProfileSettings.selectedFilterId = name
 }
@@ -32,7 +36,7 @@ function filterCancel() {
   isNewFilterModal.value = false;
 }
 
-function onDeleteClicked() {
+function deleteSelectedFilter() {
   delete state.filterProfileSettings.profiles[selectedFilterProfileId.value!]
   const firstKey = Object.keys(state.filterProfileSettings.profiles)[0]
   if (firstKey) {
@@ -57,16 +61,17 @@ const isNewFilterModal = ref(false)
       <br></br>
 
       <select
-        name="cars"
-        id="cars"
+        name="filter-profile"
+        id="filter-profile"
         v-model="state.filterProfileSettings.selectedFilterId"
       >
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
       </select>
 
-      <PopupEditProfile
+      <PopupEditFilter
         v-if="selectedFilterProfile"
-        @delete="onDeleteClicked"
+        :filter="selectedFilterProfile"
+        @delete="deleteSelectedFilter()"
       />
     </div>
 

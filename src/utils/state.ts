@@ -97,3 +97,7 @@ export const websiteFilterProfile = computed(() => {
     const ans = state.filterProfileSettings.profiles[profileId]
     return ans
 })
+
+watch(state, () => {
+    console.log('state', state)
+})

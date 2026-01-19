@@ -15,7 +15,7 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 * trying to add multiple website filters of the same name should give error feedback
 
 * Better filter options: 
-  * Collections: All of, any of, nested all/any of
+  * Collections: All of, any of
   * Field dropdown
   * Comparisons:
     * Not()

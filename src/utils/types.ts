@@ -45,26 +45,27 @@ export type ElementProperties = {
 export type FilterProfileSettings = {
   selectedFilterId: string | undefined,
   profiles: {
-    [name: string]: FilterProfile
+    [name: string]: FilterCollection
   }
 }
 
-export type FilterProfile = {
-  [name: string]: FilterField
+export type Filter = SingleFilter | FilterCollection
+
+export type SingleFilter = {
+  filterType: 'single'
+  fieldName: string
+  comparisonType: ComparisonType
+  fieldValue: string
 }
 
-export type FilterField = {
-  blacklistKeywords: string
+export type FilterCollection = {
+  filterType: 'collection'
+  collectionType: FilterCollectionType
+  subFilters: Filter[]
 }
+
+export type FilterCollectionType = 'all' | 'any'
+
+export type ComparisonType = 'contains' | '!contains' | ''
 
 // #endregion
-
-export type FilterFieldList = {
-  name: string
-  field: FilterField
-}[]
-
-export type FilterProfileList = {
-  name: string,
-  filterProfile: FilterProfile
-}[]
