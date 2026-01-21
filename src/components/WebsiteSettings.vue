@@ -79,10 +79,10 @@ const emit = defineEmits<{
                 >{{ filterProfile.name }}</option>
             </select>
             <WebsiteFieldSettings/>
-            <AddMissingFields
+            <!-- <AddMissingFields
                 :missingFilterFields="currentWebsiteMissingFields"
                 @add-field="fieldName => addField(fieldName)"
-            />
+            /> -->
             <WebsiteAddFilterField />
         </template>
 

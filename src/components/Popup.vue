@@ -81,7 +81,7 @@ const isNewFilterModal = ref(false)
 <style scoped>
 .popup {
   position: relative;
-  width: 450px;
+  width: 550px;
   min-height: 200px;
 }
 </style>

@@ -1,14 +1,23 @@
 <template>
-    <input v-model="props.filter.fieldName"></input>
-    <select
-        name="comparison-type"
-        id="comparison-type"
-        v-model="props.filter.comparisonType"
-    >
-        <option v-for="collectionType in ['contains', '!contains', '']">{{ collectionType }}</option>
-    </select>
-    <input v-model="props.filter.fieldValue"></input>
-    <button @click="emit('delete')">Delete</button>
+    <div class="single-filter">
+        <input v-model="props.filter.fieldName"></input>
+        <select
+            name="comparison-type"
+            id="comparison-type"
+            v-model="props.filter.comparisonType"
+        >
+            <option v-for="collectionType in [
+                'contains keyword',
+                'doesn\'t contain keyword',
+                'contains string',
+                'doesn\'t contain string',
+                ''
+            ]">{{ collectionType }}</option>
+        </select>
+        <input v-model="props.filter.fieldValue"></input>
+        <button @click="emit('delete')">Delete</button>
+    </div>
+
 </template>
 
 <script setup lang="ts">
@@ -23,8 +32,12 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-    input {
-        min-width: 10px;
-        max-width: 20%;
-    }
+input {
+    min-width: 10px;
+    max-width: 20%;
+}
+
+.single-filter {
+    padding: 2px;
+} 
 </style>

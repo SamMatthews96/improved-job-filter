@@ -46,7 +46,6 @@ function deleteSubFilter(index: number) {
     props.filter.subFilters = props.filter.subFilters.filter((e, i) => {
         return i != index
     })
-
 }
 
 const props = defineProps<{ filter: FilterCollection }>()

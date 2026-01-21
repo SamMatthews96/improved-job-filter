@@ -6,37 +6,22 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
-1:
-2:
-3: 
-
-* The webside filter fields should probably be an ordered array
-* Is it straightforward to disable the extension on a webpage
-* trying to add multiple website filters of the same name should give error feedback
-
-* Better filter options: 
-  * Collections: All of, any of
-  * Field dropdown
-  * Comparisons:
-    * Not()
-    * Contains word
-    * Contains string
-  * text field
-  * e.g
-    All
-      title - contains word -  'javascript'
-      title - !contains word - 'java'
-      Any
-        location - contains word - 'London'
-        location - contains word - 'Redhill'
-  * Is it possible to do filters for salary
-
-* Add all the default page selectors
-
-* on reed, the title field lights the entire job item, as it contains a button with invisible text
+1: Implement new filter functionality
+2: on reed, the title field lights the entire job item, as it contains a button with invisible text
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container
-    * Weight based on size
+    * Weight based on size related to container?
+3: The way it handles the website URLs should be reconsidered
+  Possibly related, but it doesn't save properly in production
+
+* Either
+  * The website filter fields should probably be an ordered array
+  * trying to add multiple website filters of the same name should give error feedback
+* Consider if the having to match to popup fieldNames requires that the fieldName in the website config be unique 
+
+* Is it straightforward to disable the extension on a webpage
+
+* Add all the default page selectors
 
 * UI / UX
   * General
@@ -74,7 +59,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
       * Could use icons, i.e. tick vs cross/error symbol
       * If an element is invalid, there should be feedback, perhaps when mouseing over icon
   * Popup
-    * When adding a new profile, it should navigate to that profile
     * Enable current page
       * improve wording
       * if current page is enabled
@@ -101,5 +85,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 * Some websites may have multiple layouts that warrant checking for multiple containers
 * light / dark theme toggle
 * Ideas
+  * Do filters for salary
   * show excluded count
   * way of viewing the excluded ones

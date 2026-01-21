@@ -66,6 +66,11 @@ export type FilterCollection = {
 
 export type FilterCollectionType = 'all' | 'any'
 
-export type ComparisonType = 'contains' | '!contains' | ''
+export type ComparisonType =
+  'contains keyword' |
+  'doesn\'t contain keyword' |
+  'contains string' |
+  'doesn\'t contain string' |
+  ''
 
 // #endregion
