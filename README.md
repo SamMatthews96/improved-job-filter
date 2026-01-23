@@ -6,7 +6,10 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
-1: Implement new filter functionality
+1: Update new filter
+  * Add filter names to popup as a list
+  * make fieldName in filter a select
+  * replace contains with a check for invert and check for keyword
 2: on reed, the title field lights the entire job item, as it contains a button with invisible text
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container

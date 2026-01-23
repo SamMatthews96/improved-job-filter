@@ -7,6 +7,7 @@ import NewFilterModel from "@/components/NewFilterModel.vue";
 import PopupEditFilter from "@/components/PopupEditFilter.vue";
 
 import '@/assets/app-styles.scss'
+import PopupEditFilterProfile from "./PopupEditFilterProfile.vue";
 
 function addFilterClicked() {
   isNewFilterModal.value = !isNewFilterModal.value;
@@ -24,9 +25,12 @@ async function enableCurrentPage() {
 
 function filterAdded(name: string) {
   state.filterProfileSettings.profiles[name] = {
-    filterType: 'collection',
-    collectionType: 'all',
-    subFilters: []
+    fieldNames: [],
+    filter: {
+      filterType: 'collection',
+      collectionType: 'all',
+      subFilters: []
+    }
   }
   isNewFilterModal.value = false;
   state.filterProfileSettings.selectedFilterId = name
@@ -68,9 +72,10 @@ const isNewFilterModal = ref(false)
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
       </select>
 
-      <PopupEditFilter
+
+      <PopupEditFilterProfile
         v-if="selectedFilterProfile"
-        :filter="selectedFilterProfile"
+        :filterProfile="selectedFilterProfile"
         @delete="deleteSelectedFilter()"
       />
     </div>

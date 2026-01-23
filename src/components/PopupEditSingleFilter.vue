@@ -38,6 +38,8 @@ input {
 }
 
 .single-filter {
-    padding: 2px;
+    margin: 4px;
+    padding: 5px;
+    border-top: solid 1px white;
 } 
 </style>

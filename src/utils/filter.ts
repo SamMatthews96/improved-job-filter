@@ -1,12 +1,12 @@
 import { toRaw } from "vue";
 import { getElementWithPath } from "./elementFunctions";
-import type { Filter, FilterCollection, SingleFilter, WebsiteFilter } from "./types";
+import type { Filter, FilterCollection, FilterProfile, SingleFilter, WebsiteFilter } from "./types";
 
 // true means show, false means hide
 export function doesElementMatchFilter(
     element: HTMLElement,
     websiteFilter: WebsiteFilter,
-    filterProfile: FilterCollection
+    filterProfile: FilterProfile
 ): boolean {
     const fieldPropertyArray = Object.entries(websiteFilter.fieldProperties)
         .filter(([_, value]) => value)
@@ -17,9 +17,9 @@ export function doesElementMatchFilter(
         fieldValues[fieldName] = fieldElement.innerText
     })
 
-    console.log('filter test')
-    console.log(toRaw(fieldValues))
-    return checkCollectionFilter(fieldValues, filterProfile)
+    // console.log('filter test')
+    // console.log(toRaw(fieldValues))
+    return checkCollectionFilter(fieldValues, filterProfile.filter)
 }
 
 function checkFilter(

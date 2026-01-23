@@ -45,8 +45,13 @@ export type ElementProperties = {
 export type FilterProfileSettings = {
   selectedFilterId: string | undefined,
   profiles: {
-    [name: string]: FilterCollection
+    [name: string]: FilterProfile
   }
+}
+
+export type FilterProfile = {
+  fieldNames: string[]
+  filter: FilterCollection
 }
 
 export type Filter = SingleFilter | FilterCollection
