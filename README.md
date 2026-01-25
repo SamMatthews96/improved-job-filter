@@ -11,16 +11,25 @@ Requires internet
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container
     * Weight based on size related to container?
+
 * The way it handles the website URLs should be reconsidered
   Possibly related, but it doesn't save properly in production
+
+examples that should be supported
+https://localhost:5731/*
+https://localhost:5731/job-search/*
+https://localhost:5731/job-search/?queryParam=value
+
+ignore queryParams for now
+
+
+
 
 Doesn't require internet
 
 * Would the UX be better if the profile could be editted in the script menu
-* Add "AddMissingFields" back to Popup
 * Trying to add multiple website filters of the same name should give error feedback
 * Should the website filter fields be an ordered array
-* Consider if the having to match to popup fieldNames requires that the fieldName in the website config be unique 
 * Make it straightforward to disable the extension on a webpage
 * Add all the default page selectors
 

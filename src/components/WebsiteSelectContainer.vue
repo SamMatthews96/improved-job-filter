@@ -1,22 +1,11 @@
 <template>
-  <template>
-    <p>Improved Job Filter is unconfigured for this page</p>
-    <input
-      name="websitePrefix"
-      v-model="websitePrefix"
-    ></input>
-    <p>Please enter the title of the first and second search results:</p>
+  <p>Improved Job Filter is unconfigured for this page</p>
+  <input name="websitePrefix" v-model="websitePrefix"></input>
+  <p>Please enter the title of the first and second search results:</p>
 
-    <input
-      name="firstSearchName"
-      v-model="firstSearchName"
-    ></input>
-    <input
-      name="secondSearchName"
-      v-model="secondSearchName"
-    ></input>
-    <button @click="onSubmit">Submit</button>
-  </template>
+  <input name="firstSearchName" v-model="firstSearchName"></input>
+  <input name="secondSearchName" v-model="secondSearchName"></input>
+  <button @click="onSubmit">Submit</button>
 
 </template>
 
