@@ -31,7 +31,8 @@ function addFilterField() {
 
 const nameField = ref('')
 const isButtonDisabled = computed(() => {
-  return currentWebsiteFilterNames.value.includes(nameField.value)
+  const isDuplicate = currentWebsiteFilterNames.value.includes(nameField.value)
+  return isDuplicate || !nameField.value
 })
 </script>
 

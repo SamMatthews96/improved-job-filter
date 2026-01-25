@@ -55,8 +55,7 @@ Doesn't require internet
       * maybe have a sub title for the panel's purpose
       * Selected Profile could be centered, and named "Select filter profile: "
   * AddWebsiteFilterField
-    * Button should id disable if empty or duplicate
-    * Should give user feedback, perhaps via button mouseover
+    * Should give user feedback via mouseover
   * AddFieldsToWebsiteFilter
     * should use a warning icon
     * pad / center
@@ -81,8 +80,7 @@ Doesn't require internet
       * Delete Profile
         * Confirmation
         * should be an X in the corner of the current profle config
-        * Each field should be more visually part of one block, perhaps inside a subtle border, though this is due to be reworked under the better filter options task
-      * Add Field could use same component as in website
+        * It should be very clear as to what the displayed settings do, and to which container they belong
   * NewFilterModal
     * I don't like it, not 100% sure why yet
     * At the least, it should focus the text box on open

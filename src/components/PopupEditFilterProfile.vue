@@ -11,7 +11,12 @@
     <input v-model="addFieldValue" />
     <button @click="addField(addFieldValue)">Add Field</button>
   </div>
-  <PopupEditFilter :filter="props.filterProfile.filter" @delete="emit('delete')" />
+  <div>Show search results where:</div>
+  <PopupEditFilter
+    :filter="props.filterProfile.filter"
+    @delete="emit('delete')"
+    :filter-recursion-level="filterRecursionLevel"
+  />
 </template>
 
 <script setup lang="ts">
@@ -30,7 +35,7 @@ function addField(fieldName: string) {
 const props = defineProps<{ filterProfile: FilterProfile }>()
 const addFieldValue = ref('')
 
-console.log(props.filterProfile)
+const filterRecursionLevel = 0
 
 const emit = defineEmits<{
   (e: 'delete'): void

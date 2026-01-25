@@ -21,7 +21,10 @@
 import { selectedFilterProfile } from '@/utils/state';
 import type { SingleFilter } from '@/utils/types';
 
-const props = defineProps<{ filter: SingleFilter }>()
+const props = defineProps<{
+  filter: SingleFilter,
+  filterRecursionLevel: number
+}>()
 
 const emit = defineEmits<{
   (e: 'delete'): void
@@ -38,6 +41,6 @@ input {
 .single-filter {
   margin: 4px;
   padding: 5px;
-  border-top: solid 1px white;
 }
 </style>
+
