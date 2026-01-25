@@ -72,7 +72,6 @@ const isNewFilterModal = ref(false)
         <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
       </select>
 
-
       <PopupEditFilterProfile
         v-if="selectedFilterProfile"
         :filterProfile="selectedFilterProfile"
