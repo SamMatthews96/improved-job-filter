@@ -12,6 +12,9 @@ Requires internet
     * Is it within the container
     * Weight based on size related to container?
 
+
+* Make it straightforward to disable the extension on a webpage
+
 * The way it handles the website URLs should be reconsidered
   Possibly related, but it doesn't save properly in production
 examples that should be supported
@@ -22,18 +25,13 @@ ignore queryParams for now
 what if the user has config for localhost:xxxx/*,
 but wants to add something on localhost:xxxx/yyyy/
 Shelve this issue until there's an instance where this is needed.
-
-
+* Add website field button should have highlight message if disabled
+* Add all the default page selectors
 
 Doesn't require internet
 
 * Would the UX be better if the profile could be editted in the script menu
-* Trying to add multiple website filters of the same name should give error feedback
-  * disable button
-  * highlight message
-* Should the website filter fields be an ordered array
-* Make it straightforward to disable the extension on a webpage
-* Add all the default page selectors
+* the filter does not update if a website field container is updated
 
 * UI / UX
   * General
@@ -51,7 +49,6 @@ Doesn't require internet
       * should default to the base url, 
       * probably shouldn't be a text field
     * submit button
-      * should be disabled until a container is found
       * it should explain why it is disabled
   * WebsiteConfigPane
     * Title should be the name of the extension

@@ -5,7 +5,9 @@
 
   <input name="firstSearchName" v-model="firstSearchName"></input>
   <input name="secondSearchName" v-model="secondSearchName"></input>
-  <button @click="onSubmit">Submit</button>
+  <button @click="onSubmit"
+    :disabled="!highlightContainerPath"
+  >Submit</button>
 
 </template>
 
