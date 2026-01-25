@@ -37,7 +37,7 @@ export function checkCollectionFilter(
   filter: FilterCollection,
 ): boolean {
   switch (filter.collectionType) {
-    case 'all':
+    case 'every':
       return filter.subFilters.every((subFilter) => checkFilter(fieldValues, subFilter))
     case 'any':
       return filter.subFilters.some((subFilter) => checkFilter(fieldValues, subFilter))

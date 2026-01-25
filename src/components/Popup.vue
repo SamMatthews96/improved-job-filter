@@ -28,7 +28,7 @@ function filterAdded(name: string) {
     fieldNames: [],
     filter: {
       filterType: 'collection',
-      collectionType: 'all',
+      collectionType: 'every',
       subFilters: []
     }
   }

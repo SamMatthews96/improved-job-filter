@@ -70,7 +70,7 @@ export type FilterCollection = {
   subFilters: Filter[]
 }
 
-export type FilterCollectionType = 'all' | 'any'
+export type FilterCollectionType = 'every' | 'any'
 
 
 // #endregion

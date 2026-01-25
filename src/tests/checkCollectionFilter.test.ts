@@ -21,7 +21,7 @@ test('empty collection all', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [],
   }
   const result = checkCollectionFilter(fieldValues, filterProfile)
@@ -34,7 +34,7 @@ test('include keyword c#', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -55,7 +55,7 @@ test('exclude keyword c#', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -76,7 +76,7 @@ test('exclude keyword c#, split by /', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -97,7 +97,7 @@ test('exclude keyword c#, split by /', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -118,7 +118,7 @@ test("doesn't exclude javascript, keyword Java", () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -140,7 +140,7 @@ test('include all with two matches', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -169,7 +169,7 @@ test('exclude all with missing match', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -227,7 +227,7 @@ test('nested all match', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -238,7 +238,7 @@ test('nested all match', () => {
       },
       {
         filterType: 'collection',
-        collectionType: 'all',
+        collectionType: 'every',
         subFilters: [
           {
             filterType: 'single',
@@ -262,7 +262,7 @@ test('Select Java Job', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',
@@ -285,7 +285,7 @@ test('Select Java or JavaScript Job', () => {
   }
   const filterProfile: Filter = {
     filterType: 'collection',
-    collectionType: 'all',
+    collectionType: 'every',
     subFilters: [
       {
         filterType: 'single',

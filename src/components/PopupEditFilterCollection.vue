@@ -1,13 +1,15 @@
 <template>
     <div class="collection-container">
-        <label for="collection-type">Check for</label>
+        <label for="collection-type">Show items where </label>
         <select
             name="collection-type"
             id="collection-type"
             v-model="props.filter.collectionType"
         >
-            <option v-for="collectionType in ['all', 'any']">{{ collectionType }}</option>
+            <option v-for="collectionType in ['every', 'any']">{{ collectionType }}</option>
         </select>
+
+        <label for="collection-type"> field matches</label>
         <button @click="emit('delete')">Delete</button>
         <PopupEditFilter
             v-for="(subFilter, i) in props.filter.subFilters"
@@ -29,15 +31,16 @@ function addSingleSubFilter() {
     props.filter.subFilters.push({
         filterType: 'single',
         fieldName: 'test',
-        comparisonType: '',
-        fieldValue: ''
+        fieldValue: '',
+        isInverted: false,
+        isWholeWordOnly: false
     })
 }
 
 function addFilterCollection() {
     props.filter.subFilters.push({
         filterType: 'collection',
-        collectionType: 'all',
+        collectionType: 'every',
         subFilters: []
     })
 }
