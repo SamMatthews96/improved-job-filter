@@ -6,7 +6,9 @@
                 v-model="nameField"
                 placeholder="Field Name"
             ></input>
-            <button @click="addFilterField">Add</button>
+            <button @click="addFilterField"
+              :disabled="isButtonDisabled"
+            >Add</button>
         </span>
     </div>
 
@@ -14,8 +16,8 @@
 
 <script setup lang="ts">
 
-import { ref } from 'vue';
-import { currentWebsiteSettings } from '@/utils/state';
+import { computed, ref } from 'vue';
+import { currentWebsiteFilterNames, currentWebsiteSettings } from '@/utils/state';
 
 function addFilterField() {
     if (currentWebsiteSettings.value!.fieldProperties[nameField.value] !== undefined) {
@@ -28,6 +30,9 @@ function addFilterField() {
 }
 
 const nameField = ref('')
+const isButtonDisabled = computed(() => {
+  return currentWebsiteFilterNames.value.includes(nameField.value)
+})
 </script>
 
 <style lang="scss" scoped>

@@ -46,7 +46,6 @@ const emit = defineEmits<{
 
     <WebsiteSelectContainer @foundContainer="addWebsiteFilter" v-if="!(currentWebsiteSettings)" />
     <template v-else>
-      <div>PH</div>
       <label for="profile">Selected Profile: </label>
       <select name="profile" v-model="currentWebsiteSettings.selectedFilterId">
         <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
