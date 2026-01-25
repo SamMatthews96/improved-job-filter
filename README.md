@@ -6,24 +6,22 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
-1: Update new filter
-  * Add filter names to popup as a list
-  * make fieldName in filter a select
-  * replace contains with a check for invert and check for keyword
-2: on reed, the title field lights the entire job item, as it contains a button with invisible text
+Requires internet
+* on reed, the title field lights the entire job item, as it contains a button with invisible text
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container
     * Weight based on size related to container?
-3: The way it handles the website URLs should be reconsidered
+* The way it handles the website URLs should be reconsidered
   Possibly related, but it doesn't save properly in production
 
-* Either
-  * The website filter fields should probably be an ordered array
-  * trying to add multiple website filters of the same name should give error feedback
+Doesn't require internet
+
+* Would the UX be better if the profile could be editted in the script menu
+* Add "AddMissingFields" back to Popup
+* Trying to add multiple website filters of the same name should give error feedback
+* Should the website filter fields be an ordered array
 * Consider if the having to match to popup fieldNames requires that the fieldName in the website config be unique 
-
-* Is it straightforward to disable the extension on a webpage
-
+* Make it straightforward to disable the extension on a webpage
 * Add all the default page selectors
 
 * UI / UX

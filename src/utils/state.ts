@@ -48,15 +48,13 @@ export const selectedFilterProfile = computed(() => {
 
 export const currentFilterProfileMissingFields = computed(() => {
     if (!selectedFilterProfile.value) return []
-    const profileFilterFields = Object.keys(selectedFilterProfile.value!)
-    const ans = Object.values(state.websiteFilterSettings).filter(e =>
-        e.selectedFilterId == selectedFilterProfileId.value
-    ).map(e => e.fieldProperties)
-
-    const websiteFields = new Set(ans.map(e => Object.keys(e)).flat())
+    const profileFilterFieldNames = selectedFilterProfile.value.fieldNames
+    const websiteFieldProperties = currentWebsiteSettings.value?.fieldProperties
+    if (!websiteFieldProperties) return []
+    const websiteFields = Object.keys(websiteFieldProperties)
     const missingFields: string[] = []
     websiteFields.forEach(field => {
-        if (!profileFilterFields.includes(field)) {
+        if (!profileFilterFieldNames.includes(field)) {
             missingFields.push(field)
         }
     })
@@ -74,12 +72,6 @@ export const currentWebsiteMissingFields = computed(() => {
     return profileFieldNames.filter(field =>
         !filterFieldNames.includes(field)
     )
-})
-
-export const currentFilterProfileFields = computed(() => {
-    if (!selectedFilterProfileId.value) return []
-    return Object.entries(state.filterProfileSettings.profiles[selectedFilterProfileId.value]!)
-        .map(([name, field]) => ({ name, field }))
 })
 
 export const filterProfileArray = computed(() => {

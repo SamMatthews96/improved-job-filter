@@ -4,8 +4,12 @@
     <div>
       <span class="field-name" v-for="fieldName in props.filterProfile.fieldNames">{{ fieldName }}</span>
     </div>
+    <AddMissingFields
+      :missing-filter-fields="currentFilterProfileMissingFields"
+      @add-field="fieldName => addField(fieldName)"
+    />
     <input v-model="addFieldValue" />
-    <button @click="addField">Add Field</button>
+    <button @click="addField(addFieldValue)">Add Field</button>
   </div>
   <PopupEditFilter :filter="props.filterProfile.filter" @delete="emit('delete')" />
 </template>
@@ -15,10 +19,12 @@
 import type { FilterProfile } from '@/utils/types';
 import PopupEditFilter from './PopupEditFilter.vue';
 import { ref } from 'vue';
+import AddMissingFields from './AddMissingFields.vue';
+import { currentFilterProfileMissingFields } from '@/utils/state';
 
-function addField() {
-  if (!addFieldValue.value) return;
-  props.filterProfile.fieldNames.push(addFieldValue.value)
+function addField(fieldName: string) {
+  if (!fieldName) return;
+  props.filterProfile.fieldNames.push(fieldName)
 }
 
 const props = defineProps<{ filterProfile: FilterProfile }>()
