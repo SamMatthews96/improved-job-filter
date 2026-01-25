@@ -9,7 +9,7 @@
             <option v-for="collectionType in ['every', 'any']">{{ collectionType }}</option>
         </select>
 
-        <label for="collection-type"> field matches</label>
+        <label for="collection-type"> field matches the criteria: </label>
         <button @click="emit('delete')">Delete</button>
         <PopupEditFilter
             v-for="(subFilter, i) in props.filter.subFilters"

@@ -46,23 +46,19 @@ export function checkCollectionFilter(
 
 function checkSingleFilter(fieldValues: { [str: string]: string }, filter: SingleFilter) {
   const fieldValue = fieldValues[filter.fieldName]?.toLowerCase()
-  const filterValue = filter.fieldValue.toLowerCase()
+  const filterValue = filter.fieldValue?.toLowerCase()
+
+  if (!fieldValue || !filterValue) return true
 
   let match: boolean
   if (filter.isWholeWordOnly) {
-    match = doesFieldContainKeyword(filterValue, fieldValue)
+    match = fieldValue.split(/[ ,/]+/).includes(filterValue)
   } else {
-    match = fieldValue?.includes(filterValue) ?? false
+    match = fieldValue.includes(filterValue)
   }
 
   if (filter.isInverted) {
     match = !match
   }
   return match
-}
-
-function doesFieldContainKeyword(filterValue: string, fieldValue: string | undefined) {
-  if (!fieldValue) return false
-  const fieldWords = fieldValue.split(/[ ,/]+/)
-  return fieldWords.includes(filterValue)
 }
