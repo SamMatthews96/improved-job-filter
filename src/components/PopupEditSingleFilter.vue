@@ -3,16 +3,18 @@
     <select name="field-name" v-model="props.filter.fieldName">
       <option v-for="fieldName in selectedFilterProfile?.fieldNames">{{ fieldName }}</option>
     </select>
-
-    <select name="comparison-type" id="comparison-type" v-model="props.filter.comparisonType">
-      <option v-for="collectionType in [
-        'contains keyword',
-        'doesn\'t contain keyword',
-        'contains string',
-        'doesn\'t contain string',
-        ''
-      ]">{{ collectionType }}</option>
-    </select>
+    <label for="reverse">Invert</label>
+    <input
+      type="checkbox"
+      name="reverse"
+      v-model="props.filter.isInverted"
+    >
+    <label for="reverse">Whole word only</label>
+    <input
+      type="checkbox"
+      name="keyword-only"
+      v-model="props.filter.isWholeWordOnly"
+    >
     <input v-model="props.filter.fieldValue"></input>
     <button @click="emit('delete')">Delete</button>
   </div>

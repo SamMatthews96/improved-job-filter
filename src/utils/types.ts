@@ -59,7 +59,8 @@ export type Filter = SingleFilter | FilterCollection
 export type SingleFilter = {
   filterType: 'single'
   fieldName: string
-  comparisonType: ComparisonType
+  isInverted: boolean
+  isWholeWordOnly: boolean
   fieldValue: string
 }
 
@@ -71,11 +72,5 @@ export type FilterCollection = {
 
 export type FilterCollectionType = 'all' | 'any'
 
-export type ComparisonType =
-  'contains keyword' |
-  'doesn\'t contain keyword' |
-  'contains string' |
-  'doesn\'t contain string' |
-  ''
 
 // #endregion
