@@ -68,7 +68,7 @@ function getUniqueElementPath(element: HTMLElement): ElementPath {
   return attributes
 }
 
-function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
+function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties | undefined {
   const firstElement = fieldElements[0] as HTMLElement
   const commonProperties: ElementProperties = getElementProperties(firstElement)
   // iterate over the equivalent elements
@@ -76,7 +76,7 @@ function getCommonProperties(fieldElements: HTMLElement[]): ElementProperties {
     const element = fieldElements[i]!
     const elementProperties = getElementProperties(element)
     if (commonProperties.elementType != elementProperties.elementType) {
-      throw new Error('[20251208.1605]')
+      return undefined
     }
     if (commonProperties.nthChild != elementProperties.nthChild) {
       commonProperties.nthChild = ''
@@ -124,14 +124,13 @@ function getElementProperties(element: HTMLElement): ElementProperties {
 }
 
 function getUniqueRelativeElementPaths(fieldElements: HTMLElement[], container: HTMLElement)
-  : ElementPath {
+  : ElementPath | undefined {
   let currentElements = fieldElements
   const attributeList: ElementPath = []
 
-
-
   while (currentElements[0] != container) {
     const attributes = getCommonProperties(currentElements)
+    if (!attributes) return undefined
     attributeList.push(attributes)
     currentElements = currentElements.map((e) => e.parentElement) as HTMLElement[]
     if (!currentElements[0]) throw new Error('[20251208.0041]')
@@ -178,6 +177,7 @@ function identifyContainerAndTitlePaths(textValues: string[])
   const containerPath = getUniqueElementPath(commonParent)
   console.log(matches)
   const titlePath = getUniqueRelativeElementPaths(matches as HTMLElement[], commonParent)
+  if (!titlePath) return undefined
 
   return {
     containerPath,

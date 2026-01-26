@@ -1,18 +1,18 @@
 <template>
-    <div>
-        <PopupEditFilterCollection
-            v-if="props.filter.filterType == 'collection'"
-            :filter="props.filter"
-            @delete="emit('delete')"
-            :filter-recursion-level="filterRecursionLevel + 1"
-        />
-        <PopupEditSingleFilter
-            v-if="props.filter.filterType == 'single'"
-            :filter="props.filter"
-            @delete="emit('delete')"
-            :filter-recursion-level="filterRecursionLevel + 1"
-        />
-    </div>
+
+    <PopupEditFilterCollection
+        v-if="props.filter.filterType == 'collection'"
+        :filter="props.filter"
+        @delete="emit('delete')"
+        :filter-recursion-level="filterRecursionLevel"
+    />
+    <PopupEditSingleFilter
+        v-if="props.filter.filterType == 'single'"
+        :filter="props.filter"
+        @delete="emit('delete')"
+        :filter-recursion-level="filterRecursionLevel"
+    />
+
 </template>
 
 <script setup lang="ts">
@@ -22,8 +22,8 @@ import PopupEditFilterCollection from './PopupEditFilterCollection.vue';
 import PopupEditSingleFilter from './PopupEditSingleFilter.vue';
 
 const props = defineProps<{
-  filter: Filter,
-  filterRecursionLevel: number
+    filter: Filter,
+    filterRecursionLevel: number
 }>()
 
 console.log(props.filter)

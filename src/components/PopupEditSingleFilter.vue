@@ -1,18 +1,32 @@
 <template>
   <div class="single-filter">
     <span>The </span>
-    <select name="field-name" v-model="props.filter.fieldName">
+    <select
+      name="field-name"
+      v-model="props.filter.fieldName"
+    >
       <option v-for="fieldName in selectedFilterProfile?.fieldNames">{{ fieldName }}</option>
     </select>
     <span> field </span>
-    <input type="checkbox" name="reverse" v-model="props.filter.isInverted">
+    <input
+      type="checkbox"
+      name="reverse"
+      v-model="props.filter.isInverted"
+    >
     <span> {{ props.filter.isInverted ? 'doesn\'t contain: ' : 'contains: ' }} </span>
 
     <input v-model="props.filter.fieldValue"></input><br>
     <label for="reverse">Whole word only</label>
-    <input type="checkbox" name="keyword-only" v-model="props.filter.isWholeWordOnly">
+    <input
+      type="checkbox"
+      name="keyword-only"
+      v-model="props.filter.isWholeWordOnly"
+    >
 
-    <button @click="emit('delete')">Delete</button>
+    <button
+      class="delete-button"
+      @click="emit('delete')"
+    >D</button>
   </div>
 
 </template>
@@ -39,8 +53,12 @@ input {
 }
 
 .single-filter {
-  margin: 4px;
-  padding: 5px;
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
-

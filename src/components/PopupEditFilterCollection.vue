@@ -1,19 +1,37 @@
 <template>
   <div class="collection-container">
-    <label for="collection-type">The items where </label>
-    <select name="collection-type" id="collection-type" v-model="props.filter.collectionType">
-      <option v-for="collectionType in ['every', 'any']">{{ collectionType }}</option>
-    </select>
+    <button
+      class="delete-button"
+      @click="emit('delete')"
+    >D</button>
 
-    <label for="collection-type"> field matches the criteria: </label>
-    <button @click="emit('delete')">Delete</button>
-    <span class="filter-list">
-      <PopupEditFilter v-for="(subFilter, i) in props.filter.subFilters" :filter="subFilter"
-        @delete="deleteSubFilter(i)" :filter-recursion-level="filterRecursionLevel + 1" />
-    </span>
-    <div>
+    <div class="collection-settings">
+      <label for="collection-type">The items where </label>
+      <select
+        name="collection-type"
+        id="collection-type"
+        v-model="props.filter.collectionType"
+      >
+        <option v-for="collectionType in ['every', 'any']">{{ collectionType }}</option>
+      </select>
+
+      <label for="collection-type"> field matches the criteria: </label>
+    </div>
+
+    <div class="filter-list">
+      <PopupEditFilter
+        v-for="(subFilter, i) in props.filter.subFilters"
+        :filter="subFilter"
+        @delete="deleteSubFilter(i)"
+        :filter-recursion-level="filterRecursionLevel + 1"
+      />
+    </div>
+    <div class="button-container">
       <button @click="addSingleSubFilter">Add Sub-field</button>
-      <button @click="addFilterCollection">Add Sub-collection</button>
+      <button
+        v-if="filterRecursionLevel < 3"
+        @click="addFilterCollection"
+      >Add Sub-collection</button>
     </div>
   </div>
 </template>
@@ -21,7 +39,7 @@
 <script setup lang="ts">
 import type { FilterCollection } from '@/utils/types';
 import PopupEditFilter from './PopupEditFilter.vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
 
 function addSingleSubFilter() {
   props.filter.subFilters.push({
@@ -56,37 +74,62 @@ const emit = defineEmits<{
   (e: 'delete'): void
 }>()
 
-function calculateBackgroundColor() {
-  const c = 0.1
-  const l = Math.max(0, 1 - c * props.filterRecursionLevel)
-  const r = 200 * l
-  const g = 200 * l
-  const b = 250 * l
-  return (`rgba(${r},${g},${b},1)`)
-}
-
-const backgroundColor = calculateBackgroundColor()
+const backgroundColor = computed(() => {
+  switch (props.filter.collectionType) {
+    case 'any':
+      return [
+        'rgb(200,250,200)', 'rgb(170,250,170)', 'rgb(140,250,140)', 'rgb(110,250,110)',
+      ][props.filterRecursionLevel]
+    case 'every':
+      return [
+        'rgb(200,200,250)', 'rgb(170,170,250)', 'rgb(140,140,250)', 'rgb(110,110,250)',
+      ][props.filterRecursionLevel]
+  }
+})
 
 </script>
 
 <style lang="scss" scoped>
-
 .collection-container {
-  padding: 0px 0 0 5px;
-  margin: 0px 5px 0 5px;
+  position: relative;
+  padding: 5px;
+  margin: 0;
   background-color: v-bind(backgroundColor);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+}
+
+.collection-settings {
+  padding-bottom: 5px;
+}
+
+.delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
 
 <style lang="scss">
 .filter-list {
-  &>div:nth-child(2n)>.single-filter {
-    background-color: #ffffff80;
+  margin: 0 25px 0 25px;
+
+  .single-filter {
+    padding: 2px 2px 2px 5px;
+    margin: 0;
+
+    &:nth-child(2n) {
+      background-color: #ffffff80;
+    }
+
+    &:nth-child(2n + 1) {
+      background-color: #ffffff40;
+    }
   }
 
-  &>div:nth-child(2n + 1)>.single-filter {
-    background-color: #ffffff40;
-  }
 }
-
 </style>
