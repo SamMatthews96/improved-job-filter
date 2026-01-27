@@ -16,7 +16,8 @@ Runtime.addEventListener('enableCurrentPage', ({ tab }) => {
 Runtime.addPageLoadListener(async (tabId) => {
   const tab = await Runtime.getCurrentTab()
   if (!tab?.url) return;
-  if (!state.websiteFilterSettings[tab.url]) return;
+  const url = tab.url.match(/^https?:\/\/[^\/]+\//)![0]
+  if (!state.websiteFilterSettings[url]) return;
   Runtime.injectScript(tabId)
 })
 

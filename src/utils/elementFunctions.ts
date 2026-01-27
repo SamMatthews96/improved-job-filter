@@ -179,6 +179,8 @@ function identifyContainerAndTitlePaths(textValues: string[])
   const titlePath = getUniqueRelativeElementPaths(matches as HTMLElement[], commonParent)
   if (!titlePath) return undefined
 
+  console.log(titlePath)
+
   return {
     containerPath,
     titlePath,

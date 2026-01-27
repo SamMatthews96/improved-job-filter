@@ -31,7 +31,9 @@ export const highlightName: Ref<string | undefined> = ref(undefined)
 export const highlightContainerPath: Ref<ElementPath | undefined> = ref(undefined)
 
 export const currentWebsiteSettings = computed(() => {
-  const baseUrl = window.location.href.match(/^https?:\/\/[^\/]+\//)![0]
+  const matches = window.location.href.match(/^https?:\/\/[^\/]+\//)
+  if (!matches?.length) return undefined
+  const baseUrl = matches[0]
   return state.websiteFilterSettings[baseUrl]
 })
 

@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import Script from '@/components/Script.vue'
-import WebpageContentModifier from '@/utils/webpageContentModifier'
+import webpageContentModifier from './utils/webpageContentModifier'
 
 const id = 'ijf-script-root'
 
@@ -18,4 +18,4 @@ console.log('improved-job-filter loading')
 
 createOverlay()
 
-// WebpageContentModifier
+webpageContentModifier

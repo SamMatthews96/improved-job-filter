@@ -78,7 +78,7 @@ const backgroundColor = computed(() => {
   switch (props.filter.collectionType) {
     case 'any':
       return [
-        'rgb(200,250,200)', 'rgb(170,250,170)', 'rgb(140,250,140)', 'rgb(110,250,110)',
+        'rgb(250,250,200)', 'rgb(170,250,170)', 'rgb(250,250,140)', 'rgb(250,250,110)',
       ][props.filterRecursionLevel]
     case 'every':
       return [
