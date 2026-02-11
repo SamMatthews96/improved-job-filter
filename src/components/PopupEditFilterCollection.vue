@@ -84,7 +84,6 @@ const backgroundColor = computed(() => {
   padding: 5px;
   margin: 0;
   border: solid black 2px;
-
   background-color: v-bind(backgroundColor);
 }
 

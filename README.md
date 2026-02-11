@@ -6,23 +6,23 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
+* show missing fields in popup window
+
 * on reed, the title field lights the entire job item, as it contains a button with invisible text
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container
     * Weight based on size related to container?
 
 * Make it straightforward to disable the extension on a webpage
+  * Local Runtime does not adequately recreate the popup display logic. This will be easier to test if this is resolved.
 
 * The way it handles the website URLs should be reconsidered
   Possibly related, but it doesn't save properly in production
 examples that should be supported
 https://localhost:5731/*
 https://localhost:5731/job-search/*
-https://localhost:5731/job-search/?queryParam=value
-ignore queryParams for now
 what if the user has config for localhost:xxxx/*,
 but wants to add something on localhost:xxxx/yyyy/
-Shelve this issue until there's an instance where this is needed.
 
 * Add website field button should have highlight message if disabled
 
@@ -86,9 +86,9 @@ Shelve this issue until there's an instance where this is needed.
 
 -- backlog --
 
-* Some websites may have multiple layouts that warrant checking for multiple containers
 * light / dark theme toggle
 * Ideas
   * Do filters for salary
+  * filters for tags
   * show excluded count
   * way of viewing the excluded ones

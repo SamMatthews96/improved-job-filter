@@ -16,6 +16,8 @@ const emit = defineEmits<{
     (e: 'add-field', fieldName: string): void
 }>()
 
+console.log('addmissingFields', props.missingFilterFields)
+
 </script>
 
 <style scoped lang="scss">

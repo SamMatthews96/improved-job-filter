@@ -4,7 +4,6 @@ import { ref } from "vue";
 import Runtime from "@/utils/runtime";
 import { selectedFilterProfile, state, filterProfileArray, selectedFilterProfileId } from "@/utils/state.ts";
 import NewFilterModel from "@/components/NewFilterModel.vue";
-import PopupEditFilter from "@/components/PopupEditFilter.vue";
 
 import '@/assets/app-styles.scss'
 import PopupEditFilterProfile from "./PopupEditFilterProfile.vue";
