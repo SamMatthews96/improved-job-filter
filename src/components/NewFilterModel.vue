@@ -33,17 +33,17 @@ function onCancelClicked(){
 .new-filter-modal {
     margin: 0;
     padding: 0;
-    background: #88888888;
+    background: #000000aa;
     position: absolute;
-    
+    z-index: 1;
+
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    
+
     display: flex;
-    border-radius: 8px;
-    
+
     justify-content: center;
     align-items: center;
 
