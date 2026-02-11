@@ -24,6 +24,8 @@ what if the user has config for localhost:xxxx/*,
 but wants to add something on localhost:xxxx/yyyy/
 Shelve this issue until there's an instance where this is needed.
 
+* Add a 'none' option for collections
+
 * Add website field button should have highlight message if disabled
 
 * Add all the default page selectors

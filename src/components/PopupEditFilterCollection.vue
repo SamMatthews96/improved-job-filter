@@ -1,37 +1,23 @@
 <template>
   <div class="collection-container">
-    <button
-      class="delete-button"
-      @click="emit('delete')"
-    >D</button>
+    <button class="delete-button" @click="emit('delete')">D</button>
 
     <div class="collection-settings">
       <label for="collection-type">The items where </label>
-      <select
-        name="collection-type"
-        id="collection-type"
-        v-model="props.filter.collectionType"
-      >
-        <option v-for="collectionType in ['every', 'any']">{{ collectionType }}</option>
+      <select name="collection-type" id="collection-type" v-model="props.filter.collectionType">
+        <option v-for="collectionType in ['every', 'any', 'no']">{{ collectionType }}</option>
       </select>
 
       <label for="collection-type"> field matches the criteria: </label>
     </div>
 
     <div class="filter-list">
-      <PopupEditFilter
-        v-for="(subFilter, i) in props.filter.subFilters"
-        :filter="subFilter"
-        @delete="deleteSubFilter(i)"
-        :filter-recursion-level="filterRecursionLevel + 1"
-      />
+      <PopupEditFilter v-for="(subFilter, i) in props.filter.subFilters" :filter="subFilter"
+        @delete="deleteSubFilter(i)" :filter-recursion-level="filterRecursionLevel + 1" />
     </div>
     <div class="button-container">
       <button @click="addSingleSubFilter">Add Sub-field</button>
-      <button
-        v-if="filterRecursionLevel < 3"
-        @click="addFilterCollection"
-      >Add Sub-collection</button>
+      <button v-if="filterRecursionLevel < 3" @click="addFilterCollection">Add Sub-collection</button>
     </div>
   </div>
 </template>
@@ -74,17 +60,20 @@ const emit = defineEmits<{
   (e: 'delete'): void
 }>()
 
-const backgroundColor = computed(() => {
+const bgHue = computed(() => {
   switch (props.filter.collectionType) {
     case 'any':
-      return [
-        'rgb(250,250,200)', 'rgb(170,250,170)', 'rgb(250,250,140)', 'rgb(250,250,110)',
-      ][props.filterRecursionLevel]
+      return 180
     case 'every':
-      return [
-        'rgb(200,200,250)', 'rgb(170,170,250)', 'rgb(140,140,250)', 'rgb(110,110,250)',
-      ][props.filterRecursionLevel]
+      return 270
+    case 'no':
+      return 0
   }
+})
+
+const backgroundColor = computed(() => {
+  const bgLight = `${90 - props.filterRecursionLevel * 7}%`
+  return `hsl(${bgHue.value},100%, ${bgLight})`
 })
 
 </script>
@@ -94,6 +83,8 @@ const backgroundColor = computed(() => {
   position: relative;
   padding: 5px;
   margin: 0;
+  border: solid black 2px;
+
   background-color: v-bind(backgroundColor);
 }
 

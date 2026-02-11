@@ -41,7 +41,9 @@ export function checkCollectionFilter(
       return filter.subFilters.every((subFilter) => checkFilter(fieldValues, subFilter))
     case 'any':
       return filter.subFilters.some((subFilter) => checkFilter(fieldValues, subFilter))
-  }
+    case 'no':
+      return !filter.subFilters.some((subFilter) => checkFilter(fieldValues, subFilter))
+    }
 }
 
 function checkSingleFilter(fieldValues: { [str: string]: string }, filter: SingleFilter) {
