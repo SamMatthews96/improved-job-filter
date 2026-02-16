@@ -10,6 +10,7 @@ import {
 import WebsiteSelectContainer from '@/components/WebsiteSelectContainer.vue';
 import WebsiteAddFilterField from '@/components/WebsiteAddFilterField.vue';
 import WebsiteFieldSettings from '@/components/WebsiteFieldSettings.vue';
+import FilterProfiles from './FilterProfiles.vue';
 
 
 function addWebsiteFilter(
@@ -40,21 +41,24 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="config-pane content-container" v-if="isShowing">
+  <div class="config-pane" v-if="isShowing">
     <button @click="emit('close')" class="close-button">Close</button>
     <h2>Website Config Pane</h2>
 
-    <WebsiteSelectContainer @foundContainer="addWebsiteFilter" v-if="!(currentWebsiteSettings)" />
+    <WebsiteSelectContainer @foundContainer="addWebsiteFilter" v-if="!currentWebsiteSettings?.containerProperties" />
     <template v-else>
-      <label for="profile">Selected Profile: </label>
-      <select name="profile" v-model="currentWebsiteSettings.selectedFilterId">
-        <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
-        </option>
-      </select>
-      <WebsiteFieldSettings />
-      <WebsiteAddFilterField />
-    </template>
+      <div>
+        <label for="profile">Selected Profile: </label>
+        <select name="profile" v-model="currentWebsiteSettings.selectedFilterId">
+          <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
+          </option>
+        </select>
+        <WebsiteFieldSettings />
+        <WebsiteAddFilterField />
+      </div>
 
+      <FilterProfiles />
+    </template>
   </div>
 
 </template>
@@ -63,13 +67,18 @@ const emit = defineEmits<{
 <style scoped lang="scss">
 .close-button {
   position: absolute;
-  padding: 10px;
+  padding: 5px;
   right: 5px;
   top: 5px;
 }
 
 h2 {
-  margin-top: 5px;
+  margin: 0;
+  background-color: #d7fffd;
+  padding: 8px;
+  border-bottom: #bcbcbc 1px solid;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .config-pane {
@@ -80,5 +89,7 @@ h2 {
   border-radius: 10px;
   pointer-events: all;
   min-width: 400px;
+  background: #fff;
+  border: solid 2px black;
 }
 </style>

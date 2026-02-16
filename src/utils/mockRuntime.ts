@@ -46,7 +46,8 @@ export default class MockRuntime implements RuntimeAPI {
   }
 
   async injectScript(tabId: number): Promise<void> {
-    // So far, I haven't needed to mock the injectScript functionality
+    console.trace('inject')
+    import('../script')
   }
 
   async getCurrentTab(): Promise<chrome.tabs.Tab> {

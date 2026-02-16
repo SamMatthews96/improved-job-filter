@@ -6,8 +6,6 @@ A Chrome Extension Built in Vue, with the purpose of making people's (my) job se
 
 -- current phase --
 
-* show missing fields in popup window
-
 * on reed, the title field lights the entire job item, as it contains a button with invisible text
   * The solution may lie in using xpath to get multiple results, then choosing based on criteria
     * Is it within the container

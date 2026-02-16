@@ -1,21 +1,20 @@
 import { createApp } from 'vue'
 import Script from '@/components/Script.vue'
-import webpageContentModifier from './utils/webpageContentModifier'
+import WebpageContentModifier from './utils/webpageContentModifier'
 
 const id = 'ijf-script-root'
 
 function createOverlay(): void {
-    if (document.querySelector(`#${id}`)) return
+  console.log('improved-job-filter loading')
+  if (document.querySelector(`#${id}`)) return
 
-    const host = document.createElement('div')
-    host.id = id
-    host.className = "improved-job-filter"
-    document.body.appendChild(host)
-    createApp(Script).mount(host)
+  const host = document.createElement('div')
+  host.id = id
+  host.className = 'improved-job-filter'
+  document.body.appendChild(host)
+  createApp(Script).mount(host)
+  new WebpageContentModifier()
+  console.log('improved-job-filter loaded')
 }
 
-console.log('improved-job-filter loading')
-
 createOverlay()
-
-webpageContentModifier

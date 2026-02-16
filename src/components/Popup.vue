@@ -1,16 +1,6 @@
 <script setup lang="ts">
 
-import { ref } from "vue";
 import Runtime from "@/utils/runtime";
-import { selectedFilterProfile, state, filterProfileArray, selectedFilterProfileId } from "@/utils/state.ts";
-import NewFilterModel from "@/components/NewFilterModel.vue";
-
-import '@/assets/app-styles.scss'
-import PopupEditFilterProfile from "./PopupEditFilterProfile.vue";
-
-function addFilterClicked() {
-  isNewFilterModal.value = !isNewFilterModal.value;
-}
 
 async function enableCurrentPage() {
   const tab = await Runtime.getCurrentTab()
@@ -22,70 +12,20 @@ async function enableCurrentPage() {
   })
 }
 
-function filterAdded(name: string) {
-  state.filterProfileSettings.profiles[name] = {
-    fieldNames: [],
-    filter: {
-      filterType: 'collection',
-      collectionType: 'every',
-      subFilters: []
-    }
-  }
-  isNewFilterModal.value = false;
-  state.filterProfileSettings.selectedFilterId = name
-}
-
-function filterCancel() {
-  isNewFilterModal.value = false;
-}
-
-function deleteSelectedFilter() {
-  delete state.filterProfileSettings.profiles[selectedFilterProfileId.value!]
-  const firstKey = Object.keys(state.filterProfileSettings.profiles)[0]
-  if (firstKey) {
-    state.filterProfileSettings.selectedFilterId = firstKey;
-  }
-}
-
-const isNewFilterModal = ref(false)
-
 </script>
 
 <template>
-  <div class="popup content-container">
-    <NewFilterModel
-      v-if="isNewFilterModal"
-      @create="filterAdded"
-      @cancel="filterCancel"
-    />
-    <div>
-      <button @click="enableCurrentPage()">Enable current page</button>
-      <button @click="addFilterClicked">Add Filter Profile</button>
-      <br></br>
-
-      <select
-        name="filter-profile"
-        id="filter-profile"
-        v-model="state.filterProfileSettings.selectedFilterId"
-      >
-        <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
-      </select>
-
-      <PopupEditFilterProfile
-        v-if="selectedFilterProfile"
-        :filterProfile="selectedFilterProfile"
-        @delete="deleteSelectedFilter()"
-      />
-    </div>
-
+  <div class="popup">
+    <button @click="enableCurrentPage()">Enable Page Script</button>
   </div>
 </template>
 
 <style scoped>
 .popup {
   position: relative;
-  width: 550px;
-  min-height: 200px;
+  background-color: white;
+  max-width: 180px;
+  padding: 10px;
 }
 </style>
 

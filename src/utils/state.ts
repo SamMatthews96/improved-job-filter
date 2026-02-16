@@ -1,7 +1,7 @@
 import { reactive, watch, type Reactive, type Ref, ref, computed } from 'vue'
 import Runtime from './runtime'
 import type { ElementPath, StoredData } from './types'
-import defaultWebsiteFieldConfig from '@/utils/defaultWebsiteFieldConfig.json'
+// import defaultWebsiteFieldConfig from '@/utils/defaultWebsiteFieldConfig.json'
 
 export const state: Reactive<StoredData> = reactive({
   filterProfileSettings: {
@@ -12,9 +12,9 @@ export const state: Reactive<StoredData> = reactive({
 })
 
 Runtime.get().then((res) => {
-  if (res.websiteFilterSettings == undefined) {
-    Object.assign(state.websiteFilterSettings, defaultWebsiteFieldConfig)
-  }
+  // if (res.websiteFilterSettings == undefined) {
+  //   Object.assign(state.websiteFilterSettings, defaultWebsiteFieldConfig)
+  // }
   Object.assign(state, res)
 
   watch(state, (val) => {

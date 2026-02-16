@@ -6,7 +6,7 @@ import { doesElementMatchFilter } from './filter';
 
 const filterClass = 'ijf-highlight'
 
-class WebpageContentModifier {
+export default class WebpageContentModifier {
   private defaultJobDisplayMode: string = 'none'
   private container?: HTMLElement
 
@@ -191,5 +191,3 @@ class WebpageContentModifier {
   }
 
 }
-
-export default new WebpageContentModifier()
