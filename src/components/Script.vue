@@ -2,7 +2,7 @@
 
 import { ref } from 'vue';
 import '@/assets/app-styles.scss'
-import WebsiteSettings from '@/components/WebsiteSettings.vue';
+import WebsiteConfigPane from '@/components/WebsiteConfigPane.vue';
 
 const isShowing = ref(false)
 
@@ -14,7 +14,7 @@ const isShowing = ref(false)
       class="open-button"
       @click="isShowing = !isShowing"
     >Open Config</button>
-    <WebsiteSettings
+    <WebsiteConfigPane
       :isShowing="isShowing"
       @close="isShowing = false"
     />

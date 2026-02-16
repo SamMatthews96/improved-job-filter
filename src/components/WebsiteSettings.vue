@@ -1,95 +1,47 @@
 <script setup lang="ts">
-
-import { ref } from 'vue';
-import type { ElementPath } from '@/utils/types';
-import {
-  currentWebsiteSettings,
-  state,
-  filterProfileArray,
-} from '@/utils/state'
-import WebsiteSelectContainer from '@/components/WebsiteSelectContainer.vue';
 import WebsiteAddFilterField from '@/components/WebsiteAddFilterField.vue';
 import WebsiteFieldSettings from '@/components/WebsiteFieldSettings.vue';
-import FilterProfiles from './FilterProfiles.vue';
-
-
-function addWebsiteFilter(
-  containerPath: ElementPath,
-  titlePath: ElementPath,
-  websitePrefix: string
-) {
-  showSelectContainer.value = false
-  state.websiteFilterSettings = {
-    [websitePrefix]: {
-      selectedFilterId: undefined,
-      containerProperties: containerPath,
-      fieldProperties: {
-        title: titlePath
-      }
-    }
-  }
-}
-
-const showSelectContainer = ref(false)
-const props = defineProps<{
-  isShowing: boolean
-}>()
-const emit = defineEmits<{
-  (e: "close"): void
-}>()
-
+import {
+  currentWebsiteSettings,
+  filterProfileArray,
+} from '@/utils/state'
 </script>
 
 <template>
-  <div class="config-pane" v-if="isShowing">
-    <button @click="emit('close')" class="close-button">Close</button>
-    <h2>Website Config Pane</h2>
-
-    <WebsiteSelectContainer @foundContainer="addWebsiteFilter" v-if="!currentWebsiteSettings?.containerProperties" />
-    <template v-else>
-      <div>
-        <label for="profile">Selected Profile: </label>
-        <select name="profile" v-model="currentWebsiteSettings.selectedFilterId">
+  <div class="settings-container">
+    <WebsiteFieldSettings />
+    <WebsiteAddFilterField />
+    <div class="label-container">
+      <label for="profile">Selected Profile: </label>
+      <span>
+        <select name="profile" v-model="currentWebsiteSettings!.selectedFilterId">
           <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
           </option>
         </select>
-        <WebsiteFieldSettings />
-        <WebsiteAddFilterField />
-      </div>
-
-      <FilterProfiles />
-    </template>
+      </span>
+    </div>
   </div>
 
 </template>
 
 
 <style scoped lang="scss">
-.close-button {
-  position: absolute;
-  padding: 5px;
-  right: 5px;
-  top: 5px;
+.label-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+
+  label {
+    text-align: right;
+  }
+
+  select {
+    min-width: 100px;
+  }
 }
 
-h2 {
-  margin: 0;
-  background-color: #d7fffd;
-  padding: 8px;
-  border-bottom: #bcbcbc 1px solid;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.config-pane {
-  display: inline-block;
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  border-radius: 10px;
-  pointer-events: all;
-  min-width: 400px;
-  background: #fff;
-  border: solid 2px black;
+.settings-container {
+  padding: 2px;
+  background-color: #eee;
 }
 </style>

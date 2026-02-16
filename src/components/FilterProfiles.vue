@@ -43,24 +43,25 @@ const isNewFilterModal = ref(false)
 <template>
   <div class="container">
     <NewFilterModel v-if="isNewFilterModal" @create="filterAdded" @cancel="filterCancel" />
-    <div>
-      <button @click="addFilterClicked">Add Filter Profile</button>
-      <br></br>
 
-      <select name="filter-profile" id="filter-profile" v-model="state.filterProfileSettings.selectedFilterId">
-        <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
-      </select>
+    <button @click="addFilterClicked">Add Filter Profile</button>
+    <br></br>
 
-      <PopupEditFilterProfile v-if="selectedFilterProfile" :filterProfile="selectedFilterProfile"
-        @delete="deleteSelectedFilter()" />
-    </div>
+    <select name="filter-profile" id="filter-profile" v-model="state.filterProfileSettings.selectedFilterId">
+      <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
+    </select>
 
+    <PopupEditFilterProfile v-if="selectedFilterProfile" :filterProfile="selectedFilterProfile"
+      @delete="deleteSelectedFilter()" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .container {
-  border-top: solid 1px #eee;
-  padding: 2px;
+  border-top: solid 1px #bcbcbc;
+  padding: 2px 2px 5px 2px;
+  background-color: #d7fffd;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 </style>
