@@ -1,20 +1,15 @@
 <template>
-  <div>
-    <div>Fields:</div>
-    <div>
-      <span class="field-name" v-for="(fieldName, i) in props.filterProfile.fieldNames">{{ fieldName }}
-        <button @click="() => {
-          props.filterProfile.fieldNames = props.filterProfile.fieldNames.filter((_, index) => {
-            return i !== index
-          })
-        }">D</button>
-      </span>
-    </div>
-    <AddMissingFields :missing-filter-fields="currentFilterProfileMissingFields"
-      @add-field="fieldName => addField(fieldName)" />
-    <input v-model="addFieldValue" />
-    <button @click="addField(addFieldValue)">Add Field</button>
-  </div>
+  <div>Fields:</div>
+  <FieldName
+    v-for="(fieldName, i) in props.filterProfile.fieldNames"
+    :field-name="fieldName"
+    @delete-field="deleteField(i)"
+    @rename-field="name => renameField(name, i)"
+  />
+  <button @click="addField('New Field')">+</button>
+  <AddMissingFields :missing-filter-fields="currentFilterProfileMissingFields"
+    @add-field="fieldName => addField(fieldName)" />
+
   <div>Show search results where:</div>
   <PopupEditFilter :filter="props.filterProfile.filter" @delete="emit('delete')"
     :filter-recursion-level="filterRecursionLevel" />
@@ -24,17 +19,26 @@
 
 import type { FilterProfile } from '@/utils/types';
 import PopupEditFilter from './PopupEditFilter.vue';
-import { ref } from 'vue';
 import AddMissingFields from './AddMissingFields.vue';
 import { currentFilterProfileMissingFields } from '@/utils/state';
+import FieldName from './FieldName.vue';
 
 function addField(fieldName: string) {
   if (!fieldName) return;
   props.filterProfile.fieldNames.push(fieldName)
 }
 
+function renameField(fieldName: string, index: number){
+  props.filterProfile.fieldNames[index] = fieldName
+}
+
+function deleteField(index: number){
+  props.filterProfile.fieldNames = props.filterProfile.fieldNames.filter((_,i) => {
+    return i !== index
+  })
+}
+
 const props = defineProps<{ filterProfile: FilterProfile }>()
-const addFieldValue = ref('')
 
 const filterRecursionLevel = 0
 
