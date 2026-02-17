@@ -5,21 +5,35 @@ import {
   currentWebsiteSettings,
   filterProfileArray,
 } from '@/utils/state'
+import { ref } from 'vue';
+
+const isOpen = ref(false)
+
 </script>
 
 <template>
   <div class="settings-container">
-    <WebsiteFieldSettings />
-    <WebsiteAddFilterField />
-    <div class="label-container">
-      <label for="profile">Selected Profile: </label>
-      <span>
-        <select name="profile" v-model="currentWebsiteSettings!.selectedFilterId">
-          <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
-          </option>
-        </select>
-      </span>
+    <div class="header">
+      <h3>Website Settings</h3>
+      <button @click="isOpen = !isOpen">
+        {{ isOpen ? '-' : '+' }}
+      </button>
     </div>
+
+    <template v-if="isOpen">
+      <WebsiteFieldSettings />
+      <WebsiteAddFilterField />
+      <div class="label-container">
+        <label for="profile">Selected Profile: </label>
+        <span>
+          <select name="profile" v-model="currentWebsiteSettings!.selectedFilterId">
+            <option v-for="filterProfile in filterProfileArray" :value="filterProfile.name">{{ filterProfile.name }}
+            </option>
+          </select>
+        </span>
+      </div>
+    </template>
+
   </div>
 
 </template>
@@ -43,5 +57,15 @@ import {
 .settings-container {
   padding: 2px;
   background-color: #eee;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+  }
 }
 </style>

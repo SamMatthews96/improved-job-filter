@@ -37,22 +37,31 @@ function deleteSelectedFilter() {
 }
 
 const isNewFilterModal = ref(false)
+const isOpen = ref(false)
 
 </script>
 
 <template>
   <div class="container">
-    <NewFilterModel v-if="isNewFilterModal" @create="filterAdded" @cancel="filterCancel" />
+    <div class="header">
+      <h3>Filter Settings</h3>
+      <button @click="isOpen = !isOpen">
+        {{ isOpen ? '-' : '+' }}
+      </button>
+    </div>
 
-    <button @click="addFilterClicked">Add Filter Profile</button>
-    <br></br>
+    <template v-if="isOpen">
+      <NewFilterModel v-if="isNewFilterModal" @create="filterAdded" @cancel="filterCancel" />
 
-    <select name="filter-profile" id="filter-profile" v-model="state.filterProfileSettings.selectedFilterId">
-      <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
-    </select>
+      <select name="filter-profile" id="filter-profile" v-model="state.filterProfileSettings.selectedFilterId">
+        <option v-for="filterProfile in filterProfileArray">{{ filterProfile.name }}</option>
+      </select>
+      <button @click="addFilterClicked">Add Filter Profile</button>
 
-    <PopupEditFilterProfile v-if="selectedFilterProfile" :filterProfile="selectedFilterProfile"
-      @delete="deleteSelectedFilter()" />
+      <PopupEditFilterProfile v-if="selectedFilterProfile" :filterProfile="selectedFilterProfile"
+        @delete="deleteSelectedFilter()" />
+    </template>
+
   </div>
 </template>
 
@@ -63,5 +72,15 @@ const isNewFilterModal = ref(false)
   background-color: #d7fffd;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+  }
 }
 </style>

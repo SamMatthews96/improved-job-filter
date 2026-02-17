@@ -56,6 +56,6 @@ watch([firstSearchName, secondSearchName], () => {
 
 <style scoped>
 input {
-  width: calc(100% - 20px);
+  width: calc(100% - 50px);
 }
 </style>

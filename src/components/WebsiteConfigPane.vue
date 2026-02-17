@@ -40,14 +40,12 @@ const emit = defineEmits<{
 
 <template>
   <div class="config-pane" v-if="isShowing">
-    <button @click="emit('close')" class="close-button">Close</button>
-    <h2>Website Config Pane</h2>
+    <button @click="emit('close')" class="close-button">X</button>
+    <h2>Improved Search Filter</h2>
 
     <WebsiteSelectContainer @foundContainer="addWebsiteFilter" v-if="!currentWebsiteSettings?.containerProperties" />
-    <template v-else>
-      <WebsiteSettings />
-      <FilterProfiles />
-    </template>
+    <WebsiteSettings v-else />
+    <FilterProfiles />
   </div>
 
 </template>
